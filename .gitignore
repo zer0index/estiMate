@@ -1,0 +1,41 @@
+temp
+venv
+__pycache__
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# Logs and cache
+data/logs/
+*.log
+
+# Output
+data/output/
+*.xlsx
+
+# Secrets
+.env
+config.py  # only if it contains secrets; otherwise leave
+
+# Jupyter / VSCode / Cursor
+.ipynb_checkpoints/
+.vscode/
+.cursor/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python compiled
+*.pyd
+*.so

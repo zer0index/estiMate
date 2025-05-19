@@ -1,0 +1,62 @@
+"""
+Chunker node: Splits tagged PRD into chunks and saves as JSON.
+"""
+import json
+import re
+from typing import Any
+from graph.schemas.prd_chunk import PRDChunk, PRDChunkList
+
+def extract_title(heading_line: str) -> str:
+    """Extracts the title from a heading line."""
+    match = re.search(r"\*\*(.*?)\*\*", heading_line)
+    if match:
+        return match.group(1).strip()
+    return re.sub(r"^#+\s*\d*\.?\s*", "", heading_line).strip()
+
+def chunker(state: Any) -> Any:
+    """Splits tagged PRD into chunks and updates the state."""
+    print("Chunker node: splitting tagged PRD into chunks...")
+    chunks = []
+    current_chunk = []
+    current_heading = None
+    current_title = None
+    order = 1
+    in_chunk = False
+    with open("memory/1_tagged.md", encoding="utf-8") as f:
+        for line in f:
+            if line.startswith("<!-- CHUNK_H2_"):
+                if in_chunk and current_chunk and current_title:
+                    chunks.append(PRDChunk(
+                        id=f"H2_{order}_{current_title.replace(' ', '_')}",
+                        title=current_title,
+                        content="\n".join(current_chunk).strip(),
+                        order=order,
+                        type="section",
+                        raw_heading=current_heading
+                    ))
+                    order += 1
+                    current_chunk = []
+                current_heading = line.rstrip()
+                current_title = None
+                in_chunk = True
+                continue
+            if in_chunk and current_title is None and line.strip().startswith("##"):
+                current_title = extract_title(line.strip())
+                continue
+            if in_chunk:
+                current_chunk.append(line.rstrip())
+        if in_chunk and current_chunk and current_title:
+            chunks.append(PRDChunk(
+                id=f"H2_{order}_{current_title.replace(' ', '_')}",
+                title=current_title,
+                content="\n".join(current_chunk).strip(),
+                order=order,
+                type="section",
+                raw_heading=current_heading
+            ))
+    prd_chunk_list = PRDChunkList(chunks=chunks)
+    state.chunks = prd_chunk_list.chunks
+    with open("memory/prd_chunks.json", "w", encoding="utf-8") as f:
+        json.dump(prd_chunk_list.model_dump(), f, ensure_ascii=False, indent=2)
+    print(f"Chunker node: created {len(chunks)} chunks and saved to memory/prd_chunks.json.")
+    return state 

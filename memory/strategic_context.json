@@ -1,0 +1,82 @@
+{
+  "purpose": "Enable employees to request company-approved devices through a self-service Power App, triggering approval workflows and integrating with internal policies.",
+  "business_value": [
+    "Reduces manual processing time",
+    "Improves transparency in ordering",
+    "Enforces approval and budget policies",
+    "Scales across departments and locations"
+  ],
+  "mvp_components": [
+    {
+      "name": "Device Catalog",
+      "type": "CanvasApp",
+      "details": "Allows employees to browse available devices, view specs, photos, availability, and filter by department-approved models."
+    },
+    {
+      "name": "Order Request Form",
+      "type": "CanvasApp",
+      "details": "Form for device selection, business need justification, urgency level selection, and auto-population of employee details from Azure AD."
+    },
+    {
+      "name": "Approval Workflow",
+      "type": "PowerAutomate",
+      "details": "Workflow for managers to receive notifications, approve/reject requests with comments within a 2 business day SLA."
+    }
+  ],
+  "post_mvp_modules": [
+    {
+      "name": "Request Tracking",
+      "type": "Other",
+      "details": "Allows employees to view status of their requests and receive email notifications at each step. Optional Power BI dashboard for tracking."
+    },
+    {
+      "name": "Inventory Management",
+      "type": "CustomConnector",
+      "details": "Enables IT Admin to update stock levels, mark orders as fulfilled, and link to procurement system like SAP."
+    }
+  ],
+  "user_roles": [
+    {
+      "role_name": "Employee",
+      "permissions": [
+        "Submit order requests"
+      ]
+    },
+    {
+      "role_name": "Manager",
+      "permissions": [
+        "Approve/reject requests from reports"
+      ]
+    }
+  ],
+  "system_roles": [
+    {
+      "role_name": "IT Administrator",
+      "technical_scope": [
+        "Fulfill orders",
+        "Update stock"
+      ]
+    },
+    {
+      "role_name": "Procurement",
+      "technical_scope": [
+        "Track purchasing metrics"
+      ]
+    }
+  ],
+  "constraints": [
+    "Must use Power Apps Canvas App",
+    "Data must be stored in Dataverse",
+    "Approval process must use Power Automate",
+    "Device models filtered by department policy",
+    "App must support desktop + mobile usage",
+    "No external users (internal only via Azure AD)"
+  ],
+  "integration_points": [
+    "Dataverse for orders, devices, users",
+    "Power Automate for approvals and notifications",
+    "Azure AD for user authentication",
+    "Procurement system (e.g., SAP) for inventory management (Post-MVP)"
+  ],
+  "notes": "The app should have a clean, corporate design with device images, a responsive layout for phone and desktop, use dropdowns, cards, and status icons, and include a confirm order screen before submission. It must also be accessible (WCAG AA)."
+}
