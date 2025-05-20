@@ -33,6 +33,8 @@ def router_conditional(state: Any) -> str:
         if not getattr(comp, "processed", False):
             if comp_type == "CanvasApp":
                 return "canvas_app_agent"
+            elif comp_type == "ModelDrivenApp":
+                return "model_driven_agent"
             elif comp_type in ("PowerAutomate", "Flow"):
                 return "power_automate_agent"
     # If all are processed, go to database_node

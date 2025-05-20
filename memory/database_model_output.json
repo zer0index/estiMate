@@ -4,107 +4,112 @@
       "table_name": "Employees",
       "fields": [
         {
-          "name": "employee_id",
-          "type": "integer",
+          "name": "EmployeeID",
+          "type": "Integer",
           "description": "Unique identifier for each employee"
         },
         {
-          "name": "first_name",
-          "type": "string",
+          "name": "FirstName",
+          "type": "String",
           "description": "Employee's first name"
         },
         {
-          "name": "last_name",
-          "type": "string",
+          "name": "LastName",
+          "type": "String",
           "description": "Employee's last name"
         },
         {
-          "name": "department",
-          "type": "string",
+          "name": "Department",
+          "type": "String",
           "description": "Department the employee belongs to"
         },
         {
-          "name": "manager_id",
-          "type": "integer",
+          "name": "ManagerID",
+          "type": "Integer",
           "description": "Unique identifier for the employee's manager"
         }
       ],
-      "primary_key": "employee_id",
+      "primary_key": "EmployeeID",
       "foreign_keys": [
-        "manager_id"
+        "ManagerID"
       ],
-      "description": "Table to store employee details"
+      "description": "Table to store employee data"
     },
     {
       "table_name": "Reviews",
       "fields": [
         {
-          "name": "review_id",
-          "type": "integer",
+          "name": "ReviewID",
+          "type": "Integer",
           "description": "Unique identifier for each review"
         },
         {
-          "name": "employee_id",
-          "type": "integer",
-          "description": "Employee who is being reviewed"
+          "name": "EmployeeID",
+          "type": "Integer",
+          "description": "Unique identifier for the employee being reviewed"
         },
         {
-          "name": "review_date",
-          "type": "date",
+          "name": "ReviewDate",
+          "type": "Date",
           "description": "Date of the review"
         },
         {
-          "name": "review_status",
-          "type": "string",
-          "description": "Status of the review (draft, submitted, confirmed)"
+          "name": "ReviewStatus",
+          "type": "String",
+          "description": "Status of the review (Draft, Submitted, Confirmed)"
         },
         {
-          "name": "review_content",
-          "type": "text",
-          "description": "Content of the review"
+          "name": "SelfAssessment",
+          "type": "Text",
+          "description": "Employee's self-assessment"
+        },
+        {
+          "name": "ManagerReview",
+          "type": "Text",
+          "description": "Manager's review of the employee"
         }
       ],
-      "primary_key": "review_id",
+      "primary_key": "ReviewID",
       "foreign_keys": [
-        "employee_id"
+        "EmployeeID"
       ],
-      "description": "Table to store review details"
+      "description": "Table to store review data"
     },
     {
       "table_name": "Goals",
       "fields": [
         {
-          "name": "goal_id",
-          "type": "integer",
+          "name": "GoalID",
+          "type": "Integer",
           "description": "Unique identifier for each goal"
         },
         {
-          "name": "employee_id",
-          "type": "integer",
-          "description": "Employee who the goal is set for"
+          "name": "EmployeeID",
+          "type": "Integer",
+          "description": "Unique identifier for the employee the goal is assigned to"
         },
         {
-          "name": "goal_description",
-          "type": "text",
+          "name": "GoalDescription",
+          "type": "Text",
           "description": "Description of the goal"
         },
         {
-          "name": "goal_status",
-          "type": "string",
-          "description": "Status of the goal (not started, in progress, completed)"
+          "name": "GoalStatus",
+          "type": "String",
+          "description": "Status of the goal (Not Started, In Progress, Completed)"
         },
         {
-          "name": "goal_due_date",
-          "type": "date",
+          "name": "DueDate",
+          "type": "Date",
           "description": "Due date for the goal"
         }
       ],
-      "primary_key": "goal_id",
+      "primary_key": "GoalID",
       "foreign_keys": [
-        "employee_id"
+        "EmployeeID"
       ],
-      "description": "Table to store employee goals"
+      "description": "Table to store individual development goals"
     }
   ],
-  "notes": "The Employees table has a foreign key relationship with itself to represent the hierarchical reporting structure. The Reviews and Goals tables have a foreign key relationship with the Employees table. This model is normalized to avoid data redundancy and ensure data integrity."
+  "notes": "The Employees table is related to the Reviews table through the EmployeeID field, forming a one-to-many relationship as one employee can have multiple reviews. The same relationship exists between the Employees and Goals tables. The ManagerID in the Employees table is a foreign key referencing the EmployeeID in the same table, forming a self-referencing relationship to represent the hierarchical reporting structure. All tables are normalized to the third normal form to eliminate data redundancy and improve data integrity."
 }

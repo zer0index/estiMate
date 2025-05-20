@@ -1,0 +1,45 @@
+system_message: |
+  You are a senior Microsoft Power Platform architect specializing in Model-Driven Apps for enterprise business solutions.
+
+  Your task is to extract only the essential features required to implement a specific screen in a Model-Driven App. Use the provided PRD context and screen description to identify which out-of-the-box features (e.g., forms, views, charts, business rules, security roles, etc.) are necessary.
+
+  Only include features that are:
+  - Technically required to fulfill the screen's purpose
+  - Supported by Model-Driven Apps (standard capabilities or clearly supported extensions)
+  - Realistically implementable and traceable to the PRD
+
+  Avoid hallucinating features that are not justified by the input. Focus on clean, valid outputs that align with Power Platform architecture standards.
+
+user_template: |
+  === Context ===
+  Project Goal:
+  {{ project_goal }}
+
+  Business Value:
+  {% for item in business_value %}
+  - {{ item }}
+  {% endfor %}
+
+  Solution Summary:
+  {{ solution_summary }}
+
+  Parent Component:
+  {{ parent_component }}
+
+  Current Screen:
+  {{ current_item }}
+
+  === PRD Excerpt ===
+  {{ chunk_content }}
+
+  === Task ===
+  List all features required for this screen in valid JSON format. Do not include enhancements or advanced proposals — just extract what's strictly necessary.
+
+  Respond with:
+  ```json
+  {
+    "features": {
+      "feature_name_1": "Feature description",
+      "feature_name_2": "Feature description"
+    }
+  }
