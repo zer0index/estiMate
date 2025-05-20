@@ -35,15 +35,22 @@ def extract_json_from_response(response: str) -> str:
         return match.group(1)
     return response.strip()
 
+def clean_llm_json(text: str) -> str:
+    """Clean LLM JSON output: remove code fences, comments, and trailing commas."""
+    text = re.sub(r'```(?:json)?', '', text)
+    text = re.sub(r'//.*', '', text)
+    text = re.sub(r',([ \t\r\n]*[}\]])', r'\1', text)
+    return text.strip()
+
 def fix_component_types(json_str):
     """Map invalid component types to 'Other' for mvp_components and post_mvp_modules."""
-    allowed = {"CanvasApp", "ModelDrivenApp", "PowerAutomate", "Dataverse", "PowerPages", "CustomConnector", "Other"}
+    allowed = {"CanvasApp", "ModelDrivenApp", "PowerAutomate", "PowerPages", "PowerBI", "CustomConnector", "Other"}
     try:
         data = json.loads(json_str)
         for section in ["mvp_components", "post_mvp_modules"]:
             if section in data and isinstance(data[section], list):
                 for comp in data[section]:
-                    if comp.get("type") not in allowed:
+                    if isinstance(comp, dict) and comp.get("type") and comp.get("type") not in allowed:
                         comp["type"] = "Other"
         return json.dumps(data)
     except Exception as e:
@@ -72,6 +79,7 @@ def strategic_overview(state: Any) -> Any:
     # Clean, post-process, and parse response
     try:
         cleaned = extract_json_from_response(llm_response)
+        cleaned = clean_llm_json(cleaned)
         fixed = fix_component_types(cleaned)
         context = StrategicContext.parse_raw(fixed)
         state.strategic_context = context
