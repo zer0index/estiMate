@@ -4,6 +4,7 @@ Strategic Overview node: Extracts and processes the strategic overview section f
 from typing import Any
 from graph.schemas.strategic_overview import StrategicContext
 from graph.llm import call_llm
+from graph.utils import save_to_cache, load_from_cache
 import yaml
 import os
 import re
@@ -62,6 +63,17 @@ def strategic_overview(state: Any) -> Any:
     Extracts the strategic overview from PRD chunks using an LLM and validates output with StrategicContext schema.
     Writes the result to memory/strategic_context.json.
     """
+    print("Strategic Overview node: checking cache...")
+    
+    # Try to load from cache first
+    cached_data = load_from_cache("strategic_overview")
+    if cached_data is not None:
+        print("Strategic Overview node: using cached output")
+        # Convert dict back to StrategicContext
+        context = StrategicContext.parse_obj(cached_data)
+        state.strategic_context = context
+        return state
+
     print("Strategic Overview node: extracting strategic context from PRD chunks...")
     chunks = getattr(state, "chunks", [])
     prompt_path = os.path.join(os.path.dirname(__file__), "../prompts/strategic_overview.yaml")
@@ -83,10 +95,11 @@ def strategic_overview(state: Any) -> Any:
         fixed = fix_component_types(cleaned)
         context = StrategicContext.parse_raw(fixed)
         state.strategic_context = context
-        # Write output to memory/strategic_context.json
-        with open("memory/strategic_context.json", "w", encoding="utf-8") as f:
-            json.dump(context.model_dump(), f, ensure_ascii=False, indent=2)
-        print("Strategic context extracted, validated, and saved to memory/strategic_context.json.")
+        
+        # Save to cache
+        save_to_cache("strategic_overview", context)
+        
+        print("Strategic context extracted, validated, and saved to cache.")
     except Exception as e:
         print(f"[Error] Failed to parse LLM output: {e}")
         state.strategic_context = None

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "H2_1_Strategic_Overview",
+    "title": "Strategic Overview",
+    "content": "**Purpose**:\nEnable employees to request company-approved devices (notebooks and phones) through a self-service Power App, triggering approval workflows and integrating with internal policies.\n\n**Business Value**:\n- Reduces manual processing time\n- Improves transparency in ordering\n- Enforces approval and budget policies\n- Scales across departments and locations\n\n---",
+    "order": 1,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_1 -->"
+  },
+  {
+    "id": "H2_2_User_Roles",
+    "title": "User Roles",
+    "content": "| Role             | Permissions                             |\n|------------------|------------------------------------------|\n| Employee         | Submit order requests                    |\n| Manager          | Approve/reject requests from reports     |\n| IT Administrator | (Post-MVP) Fulfill orders, update stock  |\n| Procurement      | (Post-MVP) Track purchasing metrics      |\n\n---",
+    "order": 2,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_2 -->"
+  },
+  {
+    "id": "H2_3_Core_Features_—_MVP",
+    "title": "Core Features — MVP",
+    "content": "### 📦 Feature: Device Catalog\n- Browse available devices (notebooks, phones)\n- View specs, photos, availability\n- Filter by department-approved models\n\n### 📝 Feature: Order Request Form\n- Select device\n- Justify business need (textarea)\n- Select urgency level (Normal, Urgent)\n- Auto-populate employee name/department from Azure AD\n\n### ✅ Feature: Approval Workflow\n- Manager receives approval notification\n- Manager can approve/reject with comments\n- SLA: 2 business days for decision\n\n---",
+    "order": 3,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_3 -->"
+  },
+  {
+    "id": "H2_4_Post-MVP_Features",
+    "title": "Post-MVP Features",
+    "content": "### 📊 Feature: Request Tracking\n- Employee can view status (Submitted, Approved, Fulfilled)\n- Email notifications at each step\n- Optional Power BI dashboard for tracking\n\n### 🧾 Feature: Inventory Management\n- Admin updates stock levels\n- Mark orders as fulfilled\n- Link to procurement system (e.g., SAP)",
+    "order": 4,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_4 -->"
+  }
+]

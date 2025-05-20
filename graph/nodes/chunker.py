@@ -5,6 +5,7 @@ import json
 import re
 from typing import Any
 from graph.schemas.prd_chunk import PRDChunk, PRDChunkList
+from graph.utils import save_to_cache, load_from_cache
 
 def extract_title(heading_line: str) -> str:
     """Extracts the title from a heading line."""
@@ -15,6 +16,17 @@ def extract_title(heading_line: str) -> str:
 
 def chunker(state: Any) -> Any:
     """Splits tagged PRD into chunks and updates the state."""
+    print("Chunker node: checking cache...")
+    
+    # Try to load from cache first
+    cached_data = load_from_cache("chunker")
+    if cached_data is not None:
+        print("Chunker node: using cached output")
+        # Convert dict back to PRDChunk objects
+        chunks = [PRDChunk(**chunk) for chunk in cached_data]
+        state.chunks = chunks
+        return state
+
     print("Chunker node: splitting tagged PRD into chunks...")
     chunks = []
     current_chunk = []
@@ -54,9 +66,11 @@ def chunker(state: Any) -> Any:
                 type="section",
                 raw_heading=current_heading
             ))
-    prd_chunk_list = PRDChunkList(chunks=chunks)
-    state.chunks = prd_chunk_list.chunks
-    with open("memory/prd_chunks.json", "w", encoding="utf-8") as f:
-        json.dump(prd_chunk_list.model_dump(), f, ensure_ascii=False, indent=2)
-    print(f"Chunker node: created {len(chunks)} chunks and saved to memory/prd_chunks.json.")
+    
+    state.chunks = chunks
+    
+    # Save to cache
+    save_to_cache("chunker", [chunk.model_dump() for chunk in chunks])
+    
+    print(f"Chunker node: created {len(chunks)} chunks and saved to cache.")
     return state 

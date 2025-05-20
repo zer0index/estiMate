@@ -2,13 +2,14 @@
 Pydantic schemas for the Strategic Overview node.
 """
 
-from typing import List, Optional, Literal, Union
+from typing import List, Optional, Literal, Union, Dict
 from pydantic import BaseModel
 
 class AppScreen(BaseModel):
     screen_name: str
     screen_type: Literal["CanvasApp", "ModelDrivenApp", "PowerPages", "PowerBI", "Other"]
     screen_details: str
+    features: Optional[Dict[str, str]] = None
 
 class AppComponent(BaseModel):
     app_name: str
@@ -20,6 +21,7 @@ class FlowAction(BaseModel):
     action_name: str
     action_type: Literal["PowerAutomate", "Other"]
     action_details: str
+    features: Optional[Dict[str, str]] = None
 
 class FlowComponent(BaseModel):
     flow_name: str

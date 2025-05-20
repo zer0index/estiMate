@@ -1,4 +1,3 @@
-<!-- CHUNK_H2_1 -->
 ## 1. **Strategic Overview**
 
 **Purpose**:  
@@ -12,7 +11,6 @@ Enable employees to request company-approved devices (notebooks and phones) thro
 
 ---
 
-<!-- CHUNK_H2_2 -->
 ## 2. **User Roles**
 
 | Role             | Permissions                             |
@@ -24,7 +22,6 @@ Enable employees to request company-approved devices (notebooks and phones) thro
 
 ---
 
-<!-- CHUNK_H2_3 -->
 ## 3. **Core Features — MVP**
 
 ### 📦 Feature: Device Catalog
@@ -45,7 +42,6 @@ Enable employees to request company-approved devices (notebooks and phones) thro
 
 ---
 
-<!-- CHUNK_H2_4 -->
 ## 4. **Post-MVP Features**
 
 ### 📊 Feature: Request Tracking
