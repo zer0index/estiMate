@@ -85,7 +85,6 @@ def power_automate_agent(state: Any) -> Any:
     # Update the component in the state
     comp_dict["processed"] = True
     mvp_components[comp_index] = FlowComponent(**comp_dict)
-    print("[Debug] Updated FlowComponent:", mvp_components[comp_index].dict())
     solution.mvp_components = mvp_components
     state.strategic_context = solution
     print("[Debug] Updated strategic_context:", state.strategic_context.model_dump() if hasattr(state.strategic_context, 'model_dump') else state.strategic_context)

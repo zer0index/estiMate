@@ -1,60 +1,49 @@
 <!-- CHUNK_H2_1 -->
-## 1. **Strategic Overview**
+## 1. Strategic Overview
 
 **Purpose**:  
-Enable employees to request company-approved devices (notebooks and phones) through a self-service Power App, triggering approval workflows and integrating with internal policies.
+Support HR and leadership in conducting structured annual performance reviews with trackable employee evaluations and follow-up goals.
 
 **Business Value**:  
-- Reduces manual processing time  
-- Improves transparency in ordering  
-- Enforces approval and budget policies  
-- Scales across departments and locations
+- Ensures compliance with corporate evaluation processes  
+- Provides leadership with data to support promotions or training plans  
+- Allows HR to document improvement plans and actions
 
 ---
 
 <!-- CHUNK_H2_2 -->
-## 2. **User Roles**
+## 2. User Roles
 
-| Role             | Permissions                             |
-|------------------|------------------------------------------|
-| Employee         | Submit order requests                    |
-| Manager          | Approve/reject requests from reports     |
-| IT Administrator | (Post-MVP) Fulfill orders, update stock  |
-| Procurement      | (Post-MVP) Track purchasing metrics      |
+| Role         | Permissions                                         |
+|--------------|------------------------------------------------------|
+| Employee     | View and confirm evaluations, add self-assessment    |
+| Manager      | Submit and edit performance reviews for reports      |
+| HR Reviewer  | Monitor review cycles and track documentation        |
 
 ---
 
 <!-- CHUNK_H2_3 -->
-## 3. **Core Features — MVP**
+## 3. Core Features — MVP
 
-### 📦 Feature: Device Catalog
-- Browse available devices (notebooks, phones)
-- View specs, photos, availability
-- Filter by department-approved models
-
-### 📝 Feature: Order Request Form
-- Select device
-- Justify business need (textarea)
-- Select urgency level (Normal, Urgent)
-- Auto-populate employee name/department from Azure AD
-
-### ✅ Feature: Approval Workflow
-- Manager receives approval notification
-- Manager can approve/reject with comments
-- SLA: 2 business days for decision
+- Structured performance review form (self + manager input)  
+- Track review status by employee/department  
+- Support multi-step workflows: draft → review → confirm  
+- Reporting compliance (who is overdue?)
 
 ---
 
 <!-- CHUNK_H2_4 -->
-## 4. **Post-MVP Features**
+## 4. Post-MVP Features
 
-### 📊 Feature: Request Tracking
-- Employee can view status (Submitted, Approved, Fulfilled)
-- Email notifications at each step
-- Optional Power BI dashboard for tracking
+- Create individual development goals  
+- Integrate with internal LMS  
+- Add manager feedback history to employee profile  
 
-### 🧾 Feature: Inventory Management
-- Admin updates stock levels
-- Mark orders as fulfilled
-- Link to procurement system (e.g., SAP)
+---
 
+<!-- CHUNK_H2_5 -->
+## 5. Constraints & Requirements
+
+- Access must follow hierarchical reporting structure  
+- Review records must be read-only after final submission  
+- Must support company-wide reporting

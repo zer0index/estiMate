@@ -4,99 +4,107 @@
       "table_name": "Employees",
       "fields": [
         {
-          "name": "EmployeeID",
-          "type": "Integer",
+          "name": "employee_id",
+          "type": "integer",
           "description": "Unique identifier for each employee"
         },
         {
-          "name": "FirstName",
-          "type": "String",
+          "name": "first_name",
+          "type": "string",
           "description": "Employee's first name"
         },
         {
-          "name": "LastName",
-          "type": "String",
+          "name": "last_name",
+          "type": "string",
           "description": "Employee's last name"
         },
         {
-          "name": "Email",
-          "type": "String",
-          "description": "Employee's email address"
+          "name": "department",
+          "type": "string",
+          "description": "Department the employee belongs to"
         },
         {
-          "name": "Department",
-          "type": "String",
-          "description": "Department the employee belongs to"
+          "name": "manager_id",
+          "type": "integer",
+          "description": "Unique identifier for the employee's manager"
         }
       ],
-      "primary_key": "EmployeeID",
-      "foreign_keys": [],
+      "primary_key": "employee_id",
+      "foreign_keys": [
+        "manager_id"
+      ],
       "description": "Table to store employee details"
     },
     {
-      "table_name": "Devices",
+      "table_name": "Reviews",
       "fields": [
         {
-          "name": "DeviceID",
-          "type": "Integer",
-          "description": "Unique identifier for each device"
+          "name": "review_id",
+          "type": "integer",
+          "description": "Unique identifier for each review"
         },
         {
-          "name": "DeviceName",
-          "type": "String",
-          "description": "Name of the device"
+          "name": "employee_id",
+          "type": "integer",
+          "description": "Employee who is being reviewed"
         },
         {
-          "name": "DeviceSpecs",
-          "type": "String",
-          "description": "Specifications of the device"
+          "name": "review_date",
+          "type": "date",
+          "description": "Date of the review"
         },
         {
-          "name": "DeviceAvailability",
-          "type": "Boolean",
-          "description": "Availability status of the device"
+          "name": "review_status",
+          "type": "string",
+          "description": "Status of the review (draft, submitted, confirmed)"
+        },
+        {
+          "name": "review_content",
+          "type": "text",
+          "description": "Content of the review"
         }
       ],
-      "primary_key": "DeviceID",
-      "foreign_keys": [],
-      "description": "Table to store device details"
+      "primary_key": "review_id",
+      "foreign_keys": [
+        "employee_id"
+      ],
+      "description": "Table to store review details"
     },
     {
-      "table_name": "Orders",
+      "table_name": "Goals",
       "fields": [
         {
-          "name": "OrderID",
-          "type": "Integer",
-          "description": "Unique identifier for each order"
+          "name": "goal_id",
+          "type": "integer",
+          "description": "Unique identifier for each goal"
         },
         {
-          "name": "EmployeeID",
-          "type": "Integer",
-          "description": "Employee who placed the order"
+          "name": "employee_id",
+          "type": "integer",
+          "description": "Employee who the goal is set for"
         },
         {
-          "name": "DeviceID",
-          "type": "Integer",
-          "description": "Device requested in the order"
+          "name": "goal_description",
+          "type": "text",
+          "description": "Description of the goal"
         },
         {
-          "name": "OrderStatus",
-          "type": "String",
-          "description": "Status of the order"
+          "name": "goal_status",
+          "type": "string",
+          "description": "Status of the goal (not started, in progress, completed)"
         },
         {
-          "name": "OrderDate",
-          "type": "Date",
-          "description": "Date when the order was placed"
+          "name": "goal_due_date",
+          "type": "date",
+          "description": "Due date for the goal"
         }
       ],
-      "primary_key": "OrderID",
+      "primary_key": "goal_id",
       "foreign_keys": [
-        "EmployeeID",
-        "DeviceID"
+        "employee_id"
       ],
-      "description": "Table to store order details"
+      "description": "Table to store employee goals"
     }
   ],
-  "notes": "The Employees table and Devices table are related to the Orders table through foreign keys. This normalization allows us to reduce data redundancy and improve data integrity. The EmployeeID in the Orders table refers to the EmployeeID in the Employees table, and the DeviceID in the Orders table refers to the DeviceID in the Devices table."
+  "notes": "The Employees table has a foreign key relationship with itself to represent the hierarchical reporting structure. The Reviews and Goals tables have a foreign key relationship with the Employees table. This model is normalized to avoid data redundancy and ensure data integrity."
 }
