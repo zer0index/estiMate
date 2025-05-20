@@ -16,13 +16,49 @@
           "screen_name": "Device Catalog",
           "screen_type": "CanvasApp",
           "screen_details": "Allows users to browse available devices, view specs, photos, and availability, and filter by department-approved models.",
-          "features": null
+          "features": {
+            "feat_0001": "Device Gallery",
+            "feat_0002": "Device Specifications",
+            "feat_0003": "Device Photos",
+            "feat_0004": "Device Availability Indicator",
+            "feat_0005": "Department Filter",
+            "feat_0006": "Device Selection",
+            "feat_0007": "Business Justification Textarea",
+            "feat_0008": "Urgency Level Selector",
+            "feat_0009": "Employee Name Auto-Population",
+            "feat_0010": "Employee Department Auto-Population"
+          },
+          "sota_suggestions": {}
         },
         {
           "screen_name": "Order Request Form",
           "screen_type": "CanvasApp",
           "screen_details": "Form for selecting a device, justifying business need, selecting urgency level, and auto-populating employee details from Azure AD.",
-          "features": null
+          "features": {
+            "feat_0001": "Device Selection Dropdown",
+            "feat_0002": "Business Justification Textarea",
+            "feat_0003": "Urgency Level Radio Buttons",
+            "feat_0004": "Employee Name Text Label",
+            "feat_0005": "Employee Department Text Label",
+            "feat_0006": "Auto-Populate User Details from Azure AD",
+            "feat_0007": "Submit Request Button",
+            "feat_0008": "Form Validation for Required Fields",
+            "feat_0009": "Device Image Display",
+            "feat_0010": "Device Specifications Display",
+            "feat_0011": "Device Availability Indicator",
+            "feat_0012": "Reset Form Button",
+            "feat_0013": "Navigation to Device Catalog",
+            "feat_0014": "On-screen Help/Tooltip for Form Fields",
+            "feat_0015": "Confirmation Message on Submission",
+            "feat_0016": "Integration with Approval Workflow",
+            "feat_0017": "Responsive Design for Multiple Device Types",
+            "feat_0018": "Accessibility Features for Screen Readers",
+            "feat_0019": "Localization for Multi-language Support",
+            "feat_0020": "Save Draft Functionality",
+            "feat_0021": "Real-time Form Field Validation Feedback",
+            "feat_0022": "Back Button to Previous Screen"
+          },
+          "sota_suggestions": {}
         }
       ]
     },

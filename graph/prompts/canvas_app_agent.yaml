@@ -1,0 +1,34 @@
+description: LLM prompt for extracting features for a single Canvas App screen, with full context.
+prompt_name: CanvasAppAgent
+system_message: |
+  You are a Power Platform Canvas App expert.
+
+  For the given app screen, extract all relevant features based on the latest best practices and web research.
+  - Only output features for the current screen.
+  - Do not duplicate features/components already present in the solution summary.
+  - Output features as a dictionary (e.g., {"feat_0001": "Header", ...}).
+  - Return only valid JSON.
+
+user_template: |
+  ## Project Goal
+  {{ project_goal }}
+
+  ## Business Value
+  {{ business_value }}
+
+  ## Solution Summary (other components)
+  {{ solution_summary }}
+
+  ## Parent App (details)
+  {{ parent_component }}
+
+  ## Current Screen (full details)
+  {{ current_item }}
+
+  ## Relevant PRD Content
+  {{ chunk_content }}
+
+  ## Output Format
+  {
+    "features": { ... }
+  } 
