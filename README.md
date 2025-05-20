@@ -13,11 +13,11 @@ It uses a DAG of agents to process a PRD (Product Requirements Document) and ext
   - `prechunker`: Tags PRD sections for chunking.
   - `chunker`: Splits the tagged PRD into logical chunks.
   - `strategic_overview`: Uses an LLM to extract and validate strategic project context.
-  - `feature_extractor`: Extracts features for each app screen/flow action using a robust dictionary schema.
-- **Robust Caching**: Each node checks for cached output in `memory/` and skips execution if present, saving tokens and time.
-- **Reusable LLM Utility**: `graph/llm.py` for configurable OpenAI calls (model, temperature, etc).
+  - `canvas_app_agent`, `power_automate_agent`, `database_node`: Specialized extraction and modeling nodes.
+- **Robust Caching**: Each node checks for cached output in `memory/` and skips execution if present, saving tokens and time. Each node's cache is stored as `memory/{node}_output.json`.
+- **Reusable LLM Utility**: `graph/utils/llm.py` for configurable OpenAI calls (model, temperature, etc) and YAML prompt loading.
 - **Pydantic Schemas**: For state, PRD chunks, and strategic context, including features as `Dict[str, str]` for extensibility.
-- **Prompt Templates**: YAML-based, e.g., `strategic_overview.yaml`, `feature_extractor.yaml`.
+- **Prompt Templates**: YAML-based, e.g., `strategic_overview.yaml`, `database_node.yaml`.
 - **Memory Folder**: All node outputs are written to `memory/` as JSON or markdown files.
 
 ---
@@ -27,25 +27,32 @@ It uses a DAG of agents to process a PRD (Product Requirements Document) and ext
 ```
 graph/
   ├── graph.py                # DAG definition (nodes, edges, state schema)
-  ├── llm.py                  # LLM utility for OpenAI calls
-  ├── utils.py                # Helpers for chunking, caching, LLM cleaning
+  ├── utils/
+  │     ├── llm.py            # LLM utility for OpenAI calls and YAML prompt loading
+  │     ├── cache.py          # Per-node cache utility (get_cache, set_cache)
+  │     └── utils.py          # Helpers for chunking, LLM cleaning, etc.
   ├── nodes/
   │     ├── prechunker.py
   │     ├── chunker.py
   │     ├── strategic_overview.py
-  │     └── feature_extractor.py
+  │     ├── canvas_app_agent.py
+  │     ├── power_automate_agent.py
+  │     └── database_node.py
   ├── schemas/
   │     ├── state.py
   │     ├── prd_chunk.py
   │     └── strategic_overview.py
   └── prompts/
         ├── strategic_overview.yaml
-        └── feature_extractor.yaml
+        ├── database_node.yaml
+        └── ...
 memory/
   ├── prechunker_output.json
   ├── chunker_output.json
   ├── strategic_overview_output.json
-  ├── feature_extractor_output.json
+  ├── canvas_app_agent_output.json
+  ├── power_automate_agent_output.json
+  ├── database_node_output.json
   └── 1_tagged.md
 input/
   └── *.md (your PRD files)
@@ -78,7 +85,9 @@ requirements.txt             # Dependencies
    - `memory/prechunker_output.json`: Prechunker completion marker.
    - `memory/chunker_output.json`: List of PRD chunks.
    - `memory/strategic_overview_output.json`: Extracted and validated strategic context.
-   - `memory/feature_extractor_output.json`: MVP components with robust feature dictionaries.
+   - `memory/canvas_app_agent_output.json`: Canvas app features.
+   - `memory/power_automate_agent_output.json`: Power Automate actions/connectors.
+   - `memory/database_node_output.json`: Proposed normalized database model.
 
 ---
 
@@ -104,16 +113,15 @@ This schema is robust, extensible, and LLM-friendly.
 - **Add new prompt templates:** In `graph/prompts/`.
 - **Use the shared `call_llm` utility** for all LLM-based nodes.
 - **Cache management:**
-  - Node outputs are cached in `memory/` as `*_output.json`.
-  - To clear all caches, use:
-    ```python
-    from graph.utils import clear_cache
-    clear_cache()  # Clear all caches
-    ```
-  - Or clear a specific node:
-    ```python
-    clear_cache("feature_extractor")
-    ```
+  - Node outputs are cached in `memory/` as `{node}_output.json`.
+  - To clear a specific node's cache, delete the corresponding file in `memory/`.
+
+---
+
+## Requirements
+
+- Python 3.9+
+- `langgraph`, `pydantic`, `openai`, `python-dotenv`, `PyYAML`
 
 ---
 

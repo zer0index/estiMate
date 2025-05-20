@@ -5,7 +5,7 @@ import json
 import re
 from typing import Any
 from graph.schemas.prd_chunk import PRDChunk, PRDChunkList
-from graph.utils import save_to_cache, load_from_cache
+from graph.utils.utils import save_to_cache, load_from_cache
 
 def extract_title(heading_line: str) -> str:
     """Extracts the title from a heading line."""

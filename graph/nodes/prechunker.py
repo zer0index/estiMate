@@ -1,7 +1,7 @@
 """
 Prechunker node: Tags PRD for chunking by adding chunk markers.
 """
-from graph.utils import add_chunk_markers_and_save, load_from_cache, save_to_cache
+from graph.utils.utils import add_chunk_markers_and_save, load_from_cache, save_to_cache
 from typing import Any
 import os
 

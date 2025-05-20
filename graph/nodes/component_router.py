@@ -35,4 +35,5 @@ def router_conditional(state: Any) -> str:
                 return "canvas_app_agent"
             elif comp_type in ("PowerAutomate", "Flow"):
                 return "power_automate_agent"
-    return "END" 
+    # If all are processed, go to database_node
+    return "database_node" 

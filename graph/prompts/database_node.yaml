@@ -1,0 +1,51 @@
+description: LLM prompt for proposing a normalized database model for the project.
+prompt_name: DatabaseNode
+system_message: |
+  You are a senior database engineer.
+
+  Given the following project context, propose a normalized relational database model.
+  - List all tables needed for the MVP.
+  - For each table, specify the table name, fields (with name, type, and description), and primary/foreign keys.
+  - Add a brief note on any relationships or normalization choices.
+  - Return only valid JSON.
+
+user_template: |
+  ## Project Purpose
+  {purpose}
+
+  ## Business Value
+  {business_value}
+
+  ## MVP Components
+  {mvp_components}
+
+  ## Post-MVP Modules
+  {post_mvp_modules}
+
+  ## User Roles
+  {user_roles}
+
+  ## System Roles
+  {system_roles}
+
+  ## Constraints
+  {constraints}
+
+  ## Integration Points
+  {integration_points}
+
+  ## Output Format
+  {{
+    "tables": [
+      {{
+        "table_name": "...",
+        "fields": [
+          {{"name": "...", "type": "...", "description": "..."}}
+        ],
+        "primary_key": "...",
+        "foreign_keys": ["..."],
+        "description": "..."
+      }}
+    ],
+    "notes": "..."
+  }} 

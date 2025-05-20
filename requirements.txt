@@ -1,4 +1,5 @@
 langgraph
 pydantic
 openai
-python-dotenv 
+python-dotenv
+PyYAML 

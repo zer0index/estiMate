@@ -52,6 +52,22 @@ class SystemRole(BaseModel):
     role_name: str
     technical_scope: List[str]
 
+class TableField(BaseModel):
+    name: str
+    type: str
+    description: Optional[str] = None
+
+class TableModel(BaseModel):
+    table_name: str
+    fields: List[TableField]
+    primary_key: Optional[str] = None
+    foreign_keys: Optional[List[str]] = None
+    description: Optional[str] = None
+
+class DatabaseModel(BaseModel):
+    tables: List[TableModel]
+    notes: Optional[str] = None
+
 class StrategicContext(BaseModel):
     purpose: str
     business_value: List[str]
@@ -61,4 +77,5 @@ class StrategicContext(BaseModel):
     system_roles: List[SystemRole]
     constraints: List[str]
     integration_points: List[str]
-    notes: Optional[str] = None 
+    notes: Optional[str] = None
+    database_model: Optional[DatabaseModel] = None 

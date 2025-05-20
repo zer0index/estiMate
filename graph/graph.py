@@ -5,6 +5,7 @@ from graph.nodes.strategic_overview import strategic_overview
 from graph.nodes.component_router import component_router, router_conditional
 from graph.nodes.canvas_app_agent import canvas_app_agent
 from graph.nodes.power_automate_agent import power_automate_agent
+from graph.nodes.database_node import database_node
 from graph.schemas.state import State
 
 def build_graph():
@@ -15,6 +16,7 @@ def build_graph():
     graph.add_node("component_router", component_router)
     graph.add_node("canvas_app_agent", canvas_app_agent)
     graph.add_node("power_automate_agent", power_automate_agent)
+    graph.add_node("database_node", database_node)
     # Define edges
     graph.add_edge(START, "prechunker")
     graph.add_edge("prechunker", "chunker")
@@ -25,4 +27,5 @@ def build_graph():
     # After agent, return to router for next component (if any)
     graph.add_edge("canvas_app_agent", "component_router")
     graph.add_edge("power_automate_agent", "component_router")
+    graph.add_edge("database_node", END)
     return graph.compile() 

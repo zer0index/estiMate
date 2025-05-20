@@ -2,11 +2,12 @@
 Power Automate Agent node: Extracts actions and required connectors for Power Automate/Flow components.
 """
 from typing import Any
-from graph.utils import save_to_cache, clean_llm_json, load_from_cache
+from graph.utils.utils import save_to_cache, clean_llm_json, load_from_cache
 import yaml
 import os
 import json
 from graph.schemas.strategic_overview import FlowComponent
+from graph.utils.llm import call_llm
 
 def load_power_automate_prompt():
     PROMPT_PATH = os.path.join(os.path.dirname(__file__), "../prompts/power_automate_agent.yaml")
@@ -44,7 +45,6 @@ def power_automate_agent(state: Any) -> Any:
         solution.mvp_components = mvp_components
         state.strategic_context = solution
         return state
-    from graph.llm import call_llm
     comp_dict = comp.model_dump() if hasattr(comp, "model_dump") else dict(comp)
     parent_component = comp_dict.copy()
     parent_component.pop("flow_actions", None)

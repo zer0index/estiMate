@@ -1,6 +1,7 @@
 import os
 from typing import Optional
 import openai
+import yaml
 
 def call_llm(
     prompt: str,
@@ -29,3 +30,18 @@ def call_llm(
         **kwargs
     )
     return response.choices[0].message.content 
+
+def call_llm_with_yaml_prompt(prompt_path, context, model="gpt-4", temperature=0.2, max_tokens=2048):
+    with open(prompt_path, "r", encoding="utf-8") as f:
+        prompt_yaml = yaml.safe_load(f)
+    system_message = prompt_yaml.get("system_message", "")
+    user_template = prompt_yaml["user_template"]
+    # Render user prompt with context (using .format)
+    user_message = user_template.format(**context)
+    return call_llm(
+        prompt=user_message,
+        model=model,
+        temperature=temperature,
+        system_message=system_message,
+        max_tokens=max_tokens,
+    ) 
