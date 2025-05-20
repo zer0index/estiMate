@@ -10,18 +10,24 @@
     {
       "app_name": "Device Ordering System",
       "app_type": "CanvasApp",
-      "app_details": "A self-service app for employees to browse and request devices.",
+      "app_details": "A Power Apps Canvas App that allows employees to browse and request company-approved devices, with integration to Azure AD for user data.",
       "app_screens": [
         {
           "screen_name": "Device Catalog",
           "screen_type": "CanvasApp",
-          "screen_details": "Allows users to browse available devices, view specs, photos, and availability, and filter by department-approved models.",
+          "screen_details": "Browse available devices, view specs, photos, availability, and filter by department-approved models.",
           "features": null
         },
         {
           "screen_name": "Order Request Form",
           "screen_type": "CanvasApp",
-          "screen_details": "Form for selecting a device, justifying business need, selecting urgency level, and auto-populating employee details from Azure AD.",
+          "screen_details": "Form to select device, justify business need, select urgency level, and auto-populate employee name/department from Azure AD.",
+          "features": null
+        },
+        {
+          "screen_name": "Order Confirmation",
+          "screen_type": "CanvasApp",
+          "screen_details": "Confirm order details before submission, with a clean and accessible design.",
           "features": null
         }
       ]
@@ -29,7 +35,7 @@
     {
       "flow_name": "Approval Workflow",
       "flow_type": "PowerAutomate",
-      "flow_details": "Workflow to manage the approval process for device requests.",
+      "flow_details": "Workflow to manage the approval process, with notifications and a 2 business day SLA for decisions.",
       "flow_actions": [
         {
           "action_name": "Receive Approval Notification",
@@ -40,7 +46,7 @@
         {
           "action_name": "Approve/Reject Request",
           "action_type": "PowerAutomate",
-          "action_details": "Manager can approve or reject the request with comments within a 2 business day SLA.",
+          "action_details": "Manager can approve or reject the request with comments.",
           "features": null
         }
       ]
@@ -49,17 +55,17 @@
   "post_mvp_modules": [
     {
       "module_name": "Request Tracking",
-      "extension_type": "AppScreen",
+      "extension_type": "Dashboard",
       "extends_component": "Device Ordering System",
-      "details": "Add a screen to the app for employees to view the status of their requests and receive email notifications at each step. Optional Power BI dashboard for tracking.",
-      "recommendation": "Extend the existing CanvasApp to include a new screen for request tracking. This will keep the user experience consistent and centralized. A Power BI dashboard can be integrated for detailed tracking and reporting."
+      "details": "Allow employees to view the status of their requests and receive email notifications at each step. Include an optional Power BI dashboard for tracking.",
+      "recommendation": "PowerBI dashboard is recommended for its integration capabilities with Power Platform and ability to provide real-time insights."
     },
     {
       "module_name": "Inventory Management",
-      "extension_type": "PowerAutomate",
-      "extends_component": "Approval Workflow",
-      "details": "Extend the existing workflow to allow IT Administrators to update stock levels and mark orders as fulfilled. Integrate with procurement systems like SAP for inventory management.",
-      "recommendation": "Use Power Automate to extend the workflow capabilities for inventory management. This will automate the stock updates and order fulfillment process, and integration with systems like SAP will ensure data consistency."
+      "extension_type": "AppScreen",
+      "extends_component": "Device Ordering System",
+      "details": "Admin screen to update stock levels and mark orders as fulfilled, with integration to procurement systems like SAP.",
+      "recommendation": "Extend the Canvas App with additional screens for inventory management to keep the user experience consistent and leverage the existing data model in Dataverse."
     }
   ],
   "user_roles": [
@@ -91,10 +97,19 @@
       ]
     }
   ],
-  "constraints": [],
-  "integration_points": [
-    "Integration with Azure AD for auto-populating employee details",
-    "Integration with procurement system (e.g., SAP) for inventory management (Post-MVP)"
+  "constraints": [
+    "Must use Power Apps Canvas App",
+    "Data must be stored in Dataverse",
+    "Approval process must use Power Automate",
+    "Device models filtered by department policy",
+    "App must support desktop + mobile usage",
+    "No external users (internal only via Azure AD)"
   ],
-  "notes": "The MVP focuses on enabling employees to request devices and managers to approve those requests. Post-MVP features will add tracking and inventory management capabilities."
+  "integration_points": [
+    "Dataverse for orders, devices, users",
+    "Power Automate for approvals and notifications",
+    "Azure AD for user authentication",
+    "(Post-MVP) Procurement system (e.g., SAP)"
+  ],
+  "notes": "The design should be clean and corporate with a responsive layout for phone and desktop. Dropdowns, cards, and status icons should be used for a better user experience. The design must also be accessible (WCAG AA)."
 }
