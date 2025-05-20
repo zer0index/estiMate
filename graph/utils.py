@@ -1,6 +1,5 @@
-def add_chunk_markers_and_save():
+def add_chunk_markers_and_save(input_path="input/device_order_app_prd.md"):
     """Reads the PRD, inserts chunk markers before each H2 heading, and writes to memory/1_tagged.md."""
-    input_path = "input/device_order_app_prd.md"
     output_path = "memory/1_tagged.md"
     try:
         with open(input_path, "r", encoding="utf-8") as infile:

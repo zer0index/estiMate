@@ -1,125 +1,119 @@
 {
-  "purpose": "Enable employees to request company-approved devices through a self-service Power App, triggering approval workflows and integrating with internal policies.",
+  "purpose": "Support HR and leadership in conducting structured annual performance reviews with trackable employee evaluations and follow-up goals.",
   "business_value": [
-    "Reduces manual processing time",
-    "Improves transparency in ordering",
-    "Enforces approval and budget policies",
-    "Scales across departments and locations"
+    "Ensures compliance with corporate evaluation processes",
+    "Provides leadership with data to support promotions or training plans",
+    "Allows HR to document improvement plans and actions"
   ],
   "mvp_components": [
     {
-      "app_name": "Device Ordering System",
-      "app_type": "CanvasApp",
-      "app_details": "A self-service app for employees to browse and request devices, with integration to Azure AD for user data.",
+      "app_name": "PerformanceReviewApp",
+      "app_type": "ModelDrivenApp",
+      "app_details": "A model-driven app to manage the performance review process, including forms for self-assessment and manager input.",
       "app_screens": [
         {
-          "screen_name": "Device Catalog",
-          "screen_type": "CanvasApp",
-          "screen_details": "Allows users to browse available devices, view specs, photos, and availability, and filter by department-approved models."
+          "screen_name": "ReviewForm",
+          "screen_type": "ModelDrivenApp",
+          "screen_details": "Structured form for employees to add self-assessment and for managers to submit performance reviews."
         },
         {
-          "screen_name": "Order Request Form",
-          "screen_type": "CanvasApp",
-          "screen_details": "Form for selecting a device, justifying business need, selecting urgency level, and auto-populating employee name/department."
-        },
-        {
-          "screen_name": "Order Confirmation",
-          "screen_type": "CanvasApp",
-          "screen_details": "Screen to review and confirm the order before submission."
+          "screen_name": "ReviewStatusTracker",
+          "screen_type": "ModelDrivenApp",
+          "screen_details": "Dashboard to track the status of reviews by employee and department."
         }
       ]
     },
     {
-      "flow_name": "Approval Workflow",
+      "flow_name": "ReviewWorkflow",
       "flow_type": "PowerAutomate",
-      "flow_details": "Workflow for managers to receive notifications and approve or reject device requests with comments within a 2 business day SLA.",
+      "flow_details": "Multi-step workflow to manage the review process from draft to review to confirmation.",
       "flow_actions": [
         {
-          "action_name": "Receive Approval Notification",
+          "action_name": "DraftSubmission",
           "action_type": "PowerAutomate",
-          "action_details": "Sends a notification to the manager when a new order request is submitted."
+          "action_details": "Initiates the review process allowing for draft submissions."
         },
         {
-          "action_name": "Approve/Reject Request",
+          "action_name": "ManagerReview",
           "action_type": "PowerAutomate",
-          "action_details": "Allows managers to approve or reject the request and add comments."
+          "action_details": "Notifies managers to review and edit performance reviews."
+        },
+        {
+          "action_name": "EmployeeConfirmation",
+          "action_type": "PowerAutomate",
+          "action_details": "Allows employees to confirm the review outcome."
+        },
+        {
+          "action_name": "ReviewFinalization",
+          "action_type": "PowerAutomate",
+          "action_details": "Finalizes the review, making the record read-only."
+        }
+      ]
+    },
+    {
+      "app_name": "ComplianceReporting",
+      "app_type": "PowerBI",
+      "app_details": "Power BI dashboard to report on compliance and overdue reviews.",
+      "app_screens": [
+        {
+          "screen_name": "ComplianceDashboard",
+          "screen_type": "PowerBI",
+          "screen_details": "Visualizes the compliance status and highlights overdue reviews."
         }
       ]
     }
   ],
   "post_mvp_modules": [
     {
-      "module_name": "Request Tracking",
-      "extension_type": "Dashboard",
-      "extends_component": "Device Ordering System",
-      "details": "Allows employees to view the status of their orders and receive email notifications at each step. Includes an optional Power BI dashboard for tracking.",
-      "recommendation": "Integrate a Power BI dashboard within the Canvas App for real-time tracking and notifications to enhance transparency and user engagement."
+      "module_name": "DevelopmentGoals",
+      "extension_type": "AppScreen",
+      "extends_component": "PerformanceReviewApp",
+      "details": "Allows for the creation and tracking of individual development goals post-review.",
+      "recommendation": "Extend the ModelDrivenApp to include this feature, as it aligns with the existing performance review process."
     },
     {
-      "module_name": "Inventory Management",
+      "module_name": "LMSIntegration",
+      "extension_type": "Other",
+      "extends_component": "PerformanceReviewApp",
+      "details": "Integrate with the internal Learning Management System to track and recommend training plans.",
+      "recommendation": "Assess the LMS's API capabilities and consider a custom integration or Power Automate connectors if available."
+    },
+    {
+      "module_name": "ManagerFeedbackHistory",
       "extension_type": "AppScreen",
-      "extends_component": "Device Ordering System",
-      "details": "Enables IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system for inventory management.",
-      "recommendation": "Extend the Canvas App with additional screens for IT Administrators to manage inventory, ensuring seamless integration with the procurement system."
+      "extends_component": "PerformanceReviewApp",
+      "details": "Add a historical view of manager feedback to employee profiles.",
+      "recommendation": "Extend the ModelDrivenApp to include historical data views, ensuring it respects the hierarchical access constraints."
     }
   ],
   "user_roles": [
     {
       "role_name": "Employee",
       "permissions": [
-        "Submit order requests"
+        "View and confirm evaluations",
+        "Add self-assessment"
       ]
     },
     {
       "role_name": "Manager",
       "permissions": [
-        "Approve/reject requests from reports"
+        "Submit and edit performance reviews for reports"
       ]
     },
     {
-      "role_name": "IT Administrator",
+      "role_name": "HR Reviewer",
       "permissions": [
-        "Fulfill orders",
-        "Update stock"
-      ]
-    },
-    {
-      "role_name": "Procurement",
-      "permissions": [
-        "Track purchasing metrics"
+        "Monitor review cycles",
+        "Track documentation"
       ]
     }
   ],
-  "system_roles": [
-    {
-      "role_name": "Dataverse User",
-      "technical_scope": [
-        "Store and manage orders",
-        "Store device catalog",
-        "Store user data"
-      ]
-    },
-    {
-      "role_name": "Power Automate User",
-      "technical_scope": [
-        "Run approval workflows",
-        "Send notifications"
-      ]
-    }
-  ],
+  "system_roles": [],
   "constraints": [
-    "Must use Power Apps Canvas App",
-    "Data must be stored in Dataverse",
-    "Approval process must use Power Automate",
-    "Device models filtered by department policy",
-    "App must support desktop + mobile usage",
-    "No external users (internal only via Azure AD)"
+    "Access must follow hierarchical reporting structure",
+    "Review records must be read-only after final submission",
+    "Must support company-wide reporting"
   ],
-  "integration_points": [
-    "Dataverse for orders, devices, users",
-    "Power Automate for approvals and notifications",
-    "Azure AD for user authentication",
-    "Procurement system (e.g., SAP)"
-  ],
-  "notes": "The design should be clean and corporate with a responsive layout for phone and desktop. It should include dropdowns, cards, and status icons, and confirm the order screen before submission. The design must also be accessible (WCAG AA)."
+  "integration_points": [],
+  "notes": null
 }
