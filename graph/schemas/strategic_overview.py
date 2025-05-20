@@ -16,6 +16,7 @@ class AppComponent(BaseModel):
     app_type: Literal["CanvasApp", "ModelDrivenApp", "PowerPages", "PowerBI", "Other"]
     app_details: str
     app_screens: List[AppScreen]
+    processed: bool = False
 
 class FlowAction(BaseModel):
     action_name: str
@@ -28,6 +29,11 @@ class FlowComponent(BaseModel):
     flow_type: Literal["PowerAutomate", "Other"]
     flow_details: str
     flow_actions: List[FlowAction]
+    processed: bool = False
+    features: Optional[Dict[str, str]] = None
+    actions: Optional[Dict[str, str]] = None
+    connectors: Optional[Dict[str, str]] = None
+    trigger: Optional[str] = None
 
 MVPComponent = Union[AppComponent, FlowComponent]
 

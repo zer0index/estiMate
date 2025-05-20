@@ -1,0 +1,37 @@
+description: LLM prompt for extracting actions and connectors for a Power Automate flow.
+prompt_name: PowerAutomateAgent
+system_message: |
+  You are a Microsoft Power Automate expert.
+
+  For the given flow, extract all required actions (steps) and the connectors needed to implement them.
+  - Only output actions and connectors for the current flow.
+  - Output actions as a dictionary (e.g., {"action_0001": "Get new request from SharePoint", ...}).
+  - Output connectors as a dictionary (e.g., {"SharePoint": "Read/Write", "Outlook": "Send Email"}).
+  - If possible, specify the trigger for the flow.
+  - Return only valid JSON.
+
+user_template: |
+  ## Project Goal
+  {{ project_goal }}
+
+  ## Business Value
+  {{ business_value }}
+
+  ## Solution Summary (other components)
+  {{ solution_summary }}
+
+  ## Parent Flow (details)
+  {{ parent_component }}
+
+  ## Current Flow (full details)
+  {{ current_item }}
+
+  ## Relevant PRD Content
+  {{ chunk_content }}
+
+  ## Output Format
+  {
+    "trigger": "...",
+    "actions": { ... },
+    "connectors": { ... }
+  } 

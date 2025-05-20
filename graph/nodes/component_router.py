@@ -16,12 +16,10 @@ def component_router(state: Any) -> Any:
     mvp_components = getattr(solution, "mvp_components", [])
     for idx, comp in enumerate(mvp_components):
         comp_type = getattr(comp, "app_type", getattr(comp, "flow_type", None))
-        if comp_type in ("CanvasApp", "PowerAutomate", "Flow"):
-            # Only set component_index for the first unprocessed component
-            if getattr(state, "component_index", None) != idx:
-                new_state = state.copy(update={"component_index": idx})
-                return new_state
-    # If no more components, just return state (component_index unchanged or None)
+        if comp_type in ("CanvasApp", "PowerAutomate", "Flow") and not getattr(comp, "processed", False):
+            # Route to the first unprocessed component (no need to update state)
+            return state
+    # If all are processed, just return state (router_conditional will return END)
     return state
 
 def router_conditional(state: Any) -> str:
@@ -29,14 +27,12 @@ def router_conditional(state: Any) -> str:
     if not solution:
         return "END"
     mvp_components = getattr(solution, "mvp_components", [])
-    component_index = getattr(state, "component_index", None)
-    if component_index is None or component_index >= len(mvp_components):
-        return "END"
-    comp = mvp_components[component_index]
-    comp_type = getattr(comp, "app_type", getattr(comp, "flow_type", None))
-    if comp_type == "CanvasApp":
-        return "canvas_app_agent"
-    elif comp_type in ("PowerAutomate", "Flow"):
-        return "power_automate_agent"
-    else:
-        return "END" 
+    # Find the first unprocessed component
+    for comp in mvp_components:
+        comp_type = getattr(comp, "app_type", getattr(comp, "flow_type", None))
+        if not getattr(comp, "processed", False):
+            if comp_type == "CanvasApp":
+                return "canvas_app_agent"
+            elif comp_type in ("PowerAutomate", "Flow"):
+                return "power_automate_agent"
+    return "END" 

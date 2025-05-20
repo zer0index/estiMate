@@ -2,10 +2,11 @@
 Canvas App Agent node: Specialized feature extraction for CanvasApp components.
 """
 from typing import Any
-from graph.utils import save_to_cache, clean_llm_json
+from graph.utils import save_to_cache, clean_llm_json, load_from_cache
 import yaml
 import os
 import json
+from graph.schemas.strategic_overview import AppComponent
 
 def load_canvas_app_prompt():
     PROMPT_PATH = os.path.join(os.path.dirname(__file__), "../prompts/canvas_app_agent.yaml")
@@ -66,25 +67,40 @@ def canvas_app_agent(state: Any) -> Any:
     Processes a single CanvasApp component, extracting features and SOTA suggestions per screen.
     Updates the state with the new features for that component.
     """
-    from graph.llm import call_llm
-    component_index = getattr(state, "component_index", None)
-    print(f"Canvas App Agent: processing CanvasApp component at index {component_index}")
+    # Find the first unprocessed CanvasApp component
     solution = getattr(state, "strategic_context", None)
     if not solution:
         print("[Error] No strategic context found in state.")
         return state
     mvp_components = getattr(solution, "mvp_components", [])
-    if component_index is None or component_index >= len(mvp_components):
-        print(f"[Error] Component index {component_index} out of range.")
+    comp = None
+    comp_index = None
+    for idx, c in enumerate(mvp_components):
+        if getattr(c, "app_type", None) == "CanvasApp" and not getattr(c, "processed", False):
+            comp = c
+            comp_index = idx
+            break
+    if comp is None:
+        print("[CanvasAppAgent] No unprocessed CanvasApp component found.")
         return state
-    comp = mvp_components[component_index]
+    # Check for cached output
+    cached = load_from_cache("canvas_app_agent")
+    if cached:
+        print("[Cache] Using cached output for node 'canvas_app_agent'")
+        state.strategic_context = cached.get("strategic_context", state.strategic_context)
+        # Mark as processed
+        mvp_components[comp_index].processed = True
+        solution.mvp_components = mvp_components
+        state.strategic_context = solution
+        return state
+    from graph.llm import call_llm
     comp_dict = comp.model_dump() if hasattr(comp, "model_dump") else dict(comp)
     parent_component = comp_dict.copy()
     parent_component.pop("app_screens", None)
     prd_chunks = getattr(state, "chunks", [])
     project_goal = getattr(solution, "purpose", "")
     business_value = getattr(solution, "business_value", [])
-    summary = summarize_solution_structure(mvp_components, exclude_idx=component_index)
+    summary = summarize_solution_structure(mvp_components, exclude_idx=comp_index)
     prompt_yaml = load_canvas_app_prompt()
     system_message = prompt_yaml.get("system_message", "")
     user_template = prompt_yaml["user_template"]
@@ -115,7 +131,8 @@ def canvas_app_agent(state: Any) -> Any:
                 print(f"[Error] Failed to parse LLM output for screen '{screen.get('screen_name', '')}': {e}")
                 print(f"[Debug] Raw LLM response for screen '{screen.get('screen_name', '')}':\n{llm_response}\n")
     # Update the component in the state
-    mvp_components[component_index] = comp_dict
+    comp_dict["processed"] = True
+    mvp_components[comp_index] = AppComponent(**comp_dict)
     solution.mvp_components = mvp_components
     state.strategic_context = solution
     save_to_cache("canvas_app_agent", solution)

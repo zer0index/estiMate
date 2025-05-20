@@ -77,11 +77,19 @@
           "features": null
         }
       ],
-      "processed": false,
+      "processed": true,
       "features": null,
-      "actions": null,
-      "connectors": null,
-      "trigger": null
+      "actions": {
+        "action_0001": "Send an approval email to the manager",
+        "action_0002": "Condition to check if the request is approved or rejected",
+        "action_0003": "Update the SharePoint item with the approval status"
+      },
+      "connectors": {
+        "SharePoint": "Read/Write",
+        "Outlook": "Send Email",
+        "Approval": "Start an approval process"
+      },
+      "trigger": "When an item is created in SharePoint"
     }
   ],
   "post_mvp_modules": [

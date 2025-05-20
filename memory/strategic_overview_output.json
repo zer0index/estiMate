@@ -24,7 +24,8 @@
           "screen_details": "Form for selecting a device, justifying business need, selecting urgency level, and auto-populating employee details from Azure AD.",
           "features": null
         }
-      ]
+      ],
+      "processed": false
     },
     {
       "flow_name": "Approval Workflow",
@@ -34,16 +35,21 @@
         {
           "action_name": "Receive Approval Notification",
           "action_type": "PowerAutomate",
-          "action_details": "Managers receive a notification when there is a new request to approve.",
+          "action_details": "Sends a notification to the manager when a new request is submitted.",
           "features": null
         },
         {
           "action_name": "Approve/Reject Request",
           "action_type": "PowerAutomate",
-          "action_details": "Managers can approve or reject the request with comments within a 2 business day SLA.",
+          "action_details": "Allows the manager to approve or reject the request with comments within a 2 business day SLA.",
           "features": null
         }
-      ]
+      ],
+      "processed": false,
+      "features": null,
+      "actions": null,
+      "connectors": null,
+      "trigger": null
     }
   ],
   "post_mvp_modules": [
@@ -51,15 +57,15 @@
       "module_name": "Request Tracking",
       "extension_type": "AppScreen",
       "extends_component": "Device Ordering System",
-      "details": "Add a screen to the app for employees to view the status of their requests and receive email notifications at each step.",
-      "recommendation": "Integrate a Power BI dashboard within the app for a comprehensive tracking solution that provides real-time insights and analytics."
+      "details": "A new screen to allow employees to view the status of their requests and receive email notifications at each step. An optional Power BI dashboard for tracking can also be included.",
+      "recommendation": "Extend the existing CanvasApp to include a new screen for request tracking. This will provide a seamless experience for the user. Additionally, a Power BI dashboard should be considered for detailed tracking and reporting purposes."
     },
     {
       "module_name": "Inventory Management",
       "extension_type": "PowerAutomate",
       "extends_component": "Approval Workflow",
-      "details": "Extend the workflow to allow IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system (e.g., SAP).",
-      "recommendation": "Develop a model-driven app for IT Administrators to manage inventory, which can be integrated with the existing workflow for a seamless experience."
+      "details": "Enhance the workflow to allow IT Administrators to update stock levels and mark orders as fulfilled. Integrate with an external procurement system like SAP for inventory management.",
+      "recommendation": "Use Power Automate to extend the existing workflow, ensuring that stock levels are updated in real-time and orders are marked as fulfilled efficiently. Integration with an external system like SAP will require a secure and reliable connection, possibly using a custom connector if a standard one is not available."
     }
   ],
   "user_roles": [
@@ -92,8 +98,8 @@
   "system_roles": [],
   "constraints": [],
   "integration_points": [
-    "Auto-populate employee name/department from Azure AD",
-    "Link to procurement system (e.g., SAP) for inventory management"
+    "Integration with Azure AD for auto-populating employee details",
+    "Post-MVP integration with procurement system (e.g., SAP)"
   ],
   "notes": "The MVP focuses on the core functionality of device ordering and approval. Post-MVP features will enhance the system with tracking and inventory management capabilities."
 }
