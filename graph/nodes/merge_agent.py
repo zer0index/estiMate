@@ -42,9 +42,7 @@ def merge_agent(state: Any) -> Any:
             try:
                 with open(path, "r", encoding="utf-8") as f:
                     agent_outputs[agent_name] = json.load(f)
-                console.print(f"[MergeAgent][DEBUG] Loaded agent output: {agent_name}")
             except Exception as e:
-                console.print(f"[MergeAgent][DEBUG] Failed to load {agent_name}: {e}")
                 continue
         # Merge features for CanvasApp, ModelDrivenApp, PowerAutomate, PowerBI
         mvp_components = strategic_dict.get("mvp_components", [])
@@ -62,39 +60,28 @@ def merge_agent(state: Any) -> Any:
                 else:
                     agent_key = f"{app_type}_agent"
                 agent_data = agent_outputs.get(agent_key)
-                console.print(f"[MergeAgent][DEBUG] Matching app: {comp.get('app_name')} (agent_key: {agent_key})")
                 if agent_data and "mvp_components" in agent_data:
                     for agent_comp in agent_data["mvp_components"]:
-                        console.print(f"[MergeAgent][DEBUG]   Agent app: {agent_comp.get('app_name')}")
                         if agent_comp.get("app_name", "").strip().lower() == comp.get("app_name", "").strip().lower():
                             for screen in comp.get("app_screens", []):
-                                console.print(f"[MergeAgent][DEBUG]     Matching screen: {screen.get('screen_name')}")
                                 for agent_screen in agent_comp.get("app_screens", []):
-                                    console.print(f"[MergeAgent][DEBUG]       Agent screen: {agent_screen.get('screen_name')}")
                                     if agent_screen.get("screen_name", "").strip().lower() == screen.get("screen_name", "").strip().lower() and agent_screen.get("features"):
                                         screen["features"] = agent_screen["features"]
-                                        console.print(f"[MergeAgent][DEBUG]       Merged features for screen: {screen['screen_name']}")
             # PowerAutomate: merge features into flow_actions and copy actions/connectors/trigger
             if comp.get("flow_type") == "PowerAutomate":
                 agent_data = agent_outputs.get("power_automate_agent")
-                console.print(f"[MergeAgent][DEBUG] Matching flow: {comp.get('flow_name')}")
                 if agent_data and "mvp_components" in agent_data:
                     for agent_comp in agent_data["mvp_components"]:
-                        console.print(f"[MergeAgent][DEBUG]   Agent flow: {agent_comp.get('flow_name')}")
                         if agent_comp.get("flow_name", "").strip().lower() == comp.get("flow_name", "").strip().lower():
                             # Merge features for each action
                             for action in comp.get("flow_actions", []):
-                                console.print(f"[MergeAgent][DEBUG]     Matching action: {action.get('action_name')}")
                                 for agent_action in agent_comp.get("flow_actions", []):
-                                    console.print(f"[MergeAgent][DEBUG]       Agent action: {agent_action.get('action_name')}")
                                     if agent_action.get("action_name", "").strip().lower() == action.get("action_name", "").strip().lower() and agent_action.get("features"):
                                         action["features"] = agent_action["features"]
-                                        console.print(f"[MergeAgent][DEBUG]       Merged features for flow action: {action['action_name']}")
                             # Copy top-level actions/connectors/trigger if present
                             for key in ("actions", "connectors", "trigger"):
                                 if agent_comp.get(key) is not None:
                                     comp[key] = agent_comp[key]
-                                    console.print(f"[MergeAgent][DEBUG]       Merged {key} for flow: {comp.get('flow_name')}")
         strategic_dict["mvp_components"] = mvp_components
         merged["strategic_overview"] = strategic_dict
     # Database model
@@ -115,10 +102,36 @@ def merge_agent(state: Any) -> Any:
             except Exception:
                 merged[key] = str(value)
     # Save to file (pretty-printed)
+    from rich.panel import Panel
+    from rich.table import Table
+    from rich import box
+    from rich.text import Text
+    # Pretty CLI output for merge summary
+    table = Table(title="[bold cyan]Merge Agent: Pipeline Output Summary[/bold cyan]", box=box.ROUNDED, show_lines=True)
+    table.add_column("Section", style="bold magenta")
+    table.add_column("Details", style="white")
+    # Show strategic overview summary
+    if "strategic_overview" in merged:
+        so = merged["strategic_overview"]
+        mvp_count = len(so.get("mvp_components", []))
+        post_mvp_count = len(so.get("post_mvp_modules", []))
+        roles_count = len(so.get("user_roles", []))
+        table.add_row("MVP Components", str(mvp_count))
+        table.add_row("Post-MVP Modules", str(post_mvp_count))
+        table.add_row("User Roles", str(roles_count))
+    # Show database model summary
+    if "database_model" in merged:
+        db = merged["database_model"]
+        table.add_row("Database Tables", str(len(db.get("tables", []))))
+    # Show any additional agent outputs
+    for key in merged:
+        if key not in ("strategic_overview", "database_model"):
+            table.add_row(key.replace("_", " ").title(), "[dim]present[/dim]")
+    console.print(Panel(table, title="[b green]Merge Agent Output[/b green]", border_style="green"))
     with open(MERGED_OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(merged, f, indent=2, ensure_ascii=False)
     state.merged_output = merged
     # Also save to cache (for consistency with other agents)
     save_to_cache("merge_agent", merged)
-    console.print(f"[MergeAgent] Merged output written to {MERGED_OUTPUT_PATH}")
+    console.print(f"[bold green]✔ MergeAgent: Output written to [white]{MERGED_OUTPUT_PATH}[/white]\n[/bold green]")
     return state
