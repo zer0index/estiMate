@@ -1,0 +1,292 @@
+{
+  "components": {
+    "Canvas App": [
+      {
+        "level": 1,
+        "score_range": [
+          1,
+          3
+        ],
+        "effort_hours": [
+          8,
+          12
+        ],
+        "indicators": [
+          "1-2 screens",
+          "only 1 data source (e.g., SharePoint)",
+          "no navigation",
+          "basic controls (text input, labels)",
+          "no collections or variables",
+          "no conditional logic",
+          "no custom components or code",
+          "no offline capability"
+        ]
+      },
+      {
+        "level": 2,
+        "score_range": [
+          4,
+          6
+        ],
+        "effort_hours": [
+          16,
+          24
+        ],
+        "indicators": [
+          "3-5 screens",
+          "1-2 data sources (SharePoint, Excel, Dataverse)",
+          "simple navigation between screens",
+          "use of variables and collections",
+          "some conditional logic (If, Switch)",
+          "limited use of custom controls",
+          "basic layout customization"
+        ]
+      },
+      {
+        "level": 3,
+        "score_range": [
+          7,
+          9
+        ],
+        "effort_hours": [
+          28,
+          36
+        ],
+        "indicators": [
+          "5-8 screens",
+          "multiple data sources (>2)",
+          "complex navigation with dynamic screen loading",
+          "patching data to multiple sources",
+          "moderate UI complexity (tabs, forms, galleries)",
+          "reuse of components and collections",
+          "error handling and data validation"
+        ]
+      },
+      {
+        "level": 4,
+        "score_range": [
+          10,
+          12
+        ],
+        "effort_hours": [
+          40,
+          50
+        ],
+        "indicators": [
+          "8+ screens",
+          "high number of controls and logic expressions",
+          "custom components reused across screens",
+          "advanced state management",
+          "role-based visibility",
+          "device integration (e.g., camera, GPS)",
+          "data caching, retry logic"
+        ]
+      },
+      {
+        "level": 5,
+        "score_range": [
+          13,
+          15
+        ],
+        "effort_hours": [
+          55,
+          60
+        ],
+        "indicators": [
+          "very high UI complexity with dynamic rendering",
+          "offline capability",
+          "advanced error handling, performance tuning",
+          "fully responsive layout across devices",
+          "integration with complex external APIs",
+          "language/localization support",
+          "custom visual styling via theming or CSS hacks"
+        ]
+      }
+    ],
+    "Power Automate": [
+      {
+        "level": 1,
+        "score_range": [
+          1,
+          2
+        ],
+        "effort_hours": [
+          4,
+          6
+        ],
+        "indicators": [
+          "<5 actions",
+          "single trigger (manual or schedule)",
+          "no branching or loops",
+          "only standard connectors (e.g., Outlook, SharePoint)",
+          "no expressions",
+          "no variables"
+        ]
+      },
+      {
+        "level": 2,
+        "score_range": [
+          3,
+          4
+        ],
+        "effort_hours": [
+          6,
+          10
+        ],
+        "indicators": [
+          "5-10 actions",
+          "simple conditional branches",
+          "1 or 2 variables used",
+          "limited expressions (concat, length, etc.)",
+          "1-2 data sources"
+        ]
+      },
+      {
+        "level": 3,
+        "score_range": [
+          5,
+          6
+        ],
+        "effort_hours": [
+          12,
+          16
+        ],
+        "indicators": [
+          "10-20 actions",
+          "loops (Apply to each, Do until)",
+          "nested conditions",
+          "use of expressions with nesting",
+          "dynamic content manipulation",
+          "custom connectors or APIs"
+        ]
+      },
+      {
+        "level": 4,
+        "score_range": [
+          7,
+          9
+        ],
+        "effort_hours": [
+          18,
+          22
+        ],
+        "indicators": [
+          "20+ actions",
+          "multiple flows working together",
+          "robust error handling",
+          "adaptive cards or Teams integration",
+          "advanced scheduling or recurrence triggers"
+        ]
+      },
+      {
+        "level": 5,
+        "score_range": [
+          10,
+          12
+        ],
+        "effort_hours": [
+          24,
+          24
+        ],
+        "indicators": [
+          "complex flows calling external services",
+          "nested flows (child flows)",
+          "multi-step approval processes",
+          "custom connectors, HTTP/REST integration",
+          "high reusability and parameterization",
+          "fully automated CI/CD triggers"
+        ]
+      }
+    ],
+    "Model Driven App": [
+      {
+        "level": 1,
+        "score_range": [
+          1,
+          2
+        ],
+        "effort_hours": [
+          10,
+          15
+        ],
+        "indicators": [
+          "1-2 tables",
+          "default forms and views",
+          "no relationships",
+          "no Business Rules or BPFs",
+          "no custom UI"
+        ]
+      },
+      {
+        "level": 2,
+        "score_range": [
+          3,
+          4
+        ],
+        "effort_hours": [
+          16,
+          25
+        ],
+        "indicators": [
+          "3-5 tables",
+          "1:N and N:1 relationships",
+          "custom views/forms",
+          "basic security roles"
+        ]
+      },
+      {
+        "level": 3,
+        "score_range": [
+          5,
+          6
+        ],
+        "effort_hours": [
+          26,
+          35
+        ],
+        "indicators": [
+          "6+ entities",
+          "simple Business Process Flow",
+          "field-level security",
+          "basic automation (real-time workflows)"
+        ]
+      },
+      {
+        "level": 4,
+        "score_range": [
+          7,
+          9
+        ],
+        "effort_hours": [
+          36,
+          50
+        ],
+        "indicators": [
+          "complex BPF with branching",
+          "business rules and logic",
+          "custom forms with JavaScript",
+          "deep relationship models",
+          "role-based views and dashboards"
+        ]
+      },
+      {
+        "level": 5,
+        "score_range": [
+          10,
+          12
+        ],
+        "effort_hours": [
+          50,
+          60
+        ],
+        "indicators": [
+          "plugins or custom code (C#)",
+          "integration with external systems",
+          "advanced security layers",
+          "multi-stage workflows",
+          "custom PCF controls"
+        ]
+      }
+    ]
+  }
+}

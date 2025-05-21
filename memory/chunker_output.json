@@ -1,0 +1,82 @@
+[
+  {
+    "id": "H2_1_Strategic_Overview",
+    "title": "Strategic Overview",
+    "content": "**Purpose**:\nEnable employees to request company-approved devices (notebooks and phones) through a self-service Power App, triggering approval workflows and integrating with internal policies.\n\n**Business Value**:\n- Reduces manual processing time\n- Improves transparency in ordering\n- Enforces approval and budget policies\n- Scales across departments and locations\n\n---",
+    "order": 1,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_1 -->"
+  },
+  {
+    "id": "H2_2_User_Roles",
+    "title": "User Roles",
+    "content": "| Role             | Permissions                             |\n|------------------|------------------------------------------|\n| Employee         | Submit order requests                    |\n| Manager          | Approve/reject requests from reports     |\n| IT Administrator | (Post-MVP) Fulfill orders, update stock  |\n| Procurement      | (Post-MVP) Track purchasing metrics      |\n\n---",
+    "order": 2,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_2 -->"
+  },
+  {
+    "id": "H2_3_Core_Features_—_MVP",
+    "title": "Core Features — MVP",
+    "content": "### 📦 Feature: Device Catalog **CanvasApp**\n- Browse available devices (notebooks, phones)\n- View specs, photos, availability\n- Filter by department-approved models\n\n### 📝 Feature: Order Request Form **CanvasApp**\n- Select device\n- Justify business need (textarea)\n- Select urgency level (Normal, Urgent)\n- Auto-populate employee name/department from Azure AD\n\n### ✅ Feature: Approval Workflow **PowerAutomate**\n- Manager receives approval notification\n- Manager can approve/reject with comments\n- SLA: 2 business days for decision\n\n---",
+    "order": 3,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_3 -->"
+  },
+  {
+    "id": "H2_4_Post-MVP_Features",
+    "title": "Post-MVP Features",
+    "content": "### 📊 Feature: Request Tracking **CanvasApp**\n- Employee can view status (Submitted, Approved, Fulfilled)\n- Email notifications at each step\n- Optional Power BI dashboard for tracking\n\n### 🧾 Feature: Inventory Management **CanvasApp**\n- Admin updates stock levels\n- Mark orders as fulfilled\n- Link to procurement system (e.g., SAP)\n\n---",
+    "order": 4,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_4 -->"
+  },
+  {
+    "id": "H2_5_Constraints_&_Requirements",
+    "title": "Constraints & Requirements",
+    "content": "- ✅ Must use Power Apps Canvas App\n- ✅ Data must be stored in Dataverse\n- ✅ Approval process must use Power Automate\n- ✅ Device models filtered by department policy\n- ✅ App must support desktop + mobile usage\n- ❌ No external users (internal only via Azure AD)\n\n---",
+    "order": 5,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_5 -->"
+  },
+  {
+    "id": "H2_6_UX_&_Design_Notes",
+    "title": "UX & Design Notes",
+    "content": "- Clean, corporate design with device images\n- Responsive layout for phone and desktop\n- Use dropdowns, cards, and status icons\n- Confirm order screen before submission\n- Accessible design (WCAG AA)\n\n---",
+    "order": 6,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_6 -->"
+  },
+  {
+    "id": "H2_7_Integration_Points",
+    "title": "Integration Points",
+    "content": "- **Dataverse** for orders, devices, users\n- **Power Automate** for approvals and notifications\n- **Azure AD** for user authentication\n- (Post-MVP) Procurement system (e.g., SAP)\n\n---",
+    "order": 7,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_7 -->"
+  },
+  {
+    "id": "H2_8_Security_&_Compliance",
+    "title": "Security & Compliance",
+    "content": "- Role-based access via Dataverse security roles\n- Audit trail of approvals\n- Retain order data for 2 years per IT policy\n- No PII beyond employee ID and email\n\n---",
+    "order": 8,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_8 -->"
+  },
+  {
+    "id": "H2_9_User_Stories,_User_Journeys",
+    "title": "User Stories, User Journeys",
+    "content": "- to be defined!\n\n---",
+    "order": 9,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_9 -->"
+  },
+  {
+    "id": "H2_10_Success_Criteria",
+    "title": "Success Criteria",
+    "content": "- >90% of orders submitted via the app within 3 months\n- <2 day average approval time\n- Full traceability of device requests (Post-MVP)\n- Minimal support requests after go-live",
+    "order": 10,
+    "type": "section",
+    "raw_heading": "<!-- CHUNK_H2_10 -->"
+  }
+]
