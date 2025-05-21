@@ -68,8 +68,29 @@ def main():
         console.print(f"[green]✔[/green] [bold]{name}[/bold]: {action} complete")
 
     # Actually run the pipeline steps after the simulated rich output
-    with console.status("[cyan]X[/cyan]", spinner="dots"):
-        result = graph.invoke(state)
+    # Dynamically show the running node name in the spinner
+    from langgraph.graph import StateGraph
+    import types
+    def run_with_rich_status(graph, state):
+        # If graph is a compiled StateGraph, get the node order
+        node_names = [
+            "Prechunker",
+            "Chunker",
+            "Strategic Overview",
+            "Component Router",
+            "Canvas App Agent",
+            "Power Automate Agent",
+            "Database Agent",
+            "Model Driven Agent",
+            "Power BI Agent"
+        ]
+        # This is a placeholder: in a real system, you would hook into the graph execution
+        # and update the spinner with the current node name. Here, we simulate it:
+        for node in node_names:
+            with console.status(f"[cyan]{node} running...[/cyan]", spinner="dots"):
+                import time; time.sleep(0.7)
+        return graph.invoke(state)
+    result = run_with_rich_status(graph, state)
     console.print("\n🎉 [bold green]DAG complete.[/bold green]")
     if getattr(result, 'chunks', None):
         console.print(f"Number of chunks: {len(result.chunks)}", style="bold blue")
