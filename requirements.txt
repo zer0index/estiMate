@@ -2,4 +2,5 @@ langgraph
 pydantic
 openai
 python-dotenv
-PyYAML 
+PyYAML
+rich
