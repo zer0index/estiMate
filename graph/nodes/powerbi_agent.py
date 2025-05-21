@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import track
 from rich.markdown import Markdown
+from graph.utils.log import log_info, log_success, log_warning, log_error
 
 console = Console()
 
@@ -56,7 +57,7 @@ def powerbi_agent(state: Any) -> Any:
     # Find the first unprocessed PowerBI component
     solution = getattr(state, "strategic_context", None)
     if not solution:
-        print("[PowerBIAgent] No strategic context found in state.")
+        log_error("[PowerBIAgent] No strategic context found in state.")
         return state
     mvp_components = getattr(solution, "mvp_components", [])
     comp = None
@@ -67,12 +68,12 @@ def powerbi_agent(state: Any) -> Any:
             comp_index = idx
             break
     if comp is None:
-        print("[PowerBIAgent] No unprocessed PowerBI component found.")
+        log_warning("[PowerBIAgent] No unprocessed PowerBI component found.")
         return state
     # Check for cached output
     cached = load_from_cache("powerbi_agent")
     if cached:
-        print("[Cache] Using cached output for node 'powerbi_agent'")
+        log_success("[Cache] Using cached output for node 'powerbi_agent'")
         state.strategic_context = cached.get("strategic_context", state.strategic_context)
         # Mark as processed
         mvp_components[comp_index].processed = True
@@ -108,8 +109,8 @@ def powerbi_agent(state: Any) -> Any:
         if "features" in data and data["features"]:
             comp_dict["features"] = data["features"]
     except Exception as e:
-        print(f"[Error] Failed to parse LLM output for PowerBI '{comp_dict.get('app_name', '')}': {e}")
-        print(f"[Debug] Raw LLM response for PowerBI '{comp_dict.get('app_name', '')}':\n{llm_response}\n")
+        log_error(f"[PowerBIAgent] Failed to parse LLM output for PowerBI '{comp_dict.get('app_name', '')}': {e}")
+        log_info(f"[PowerBIAgent] Raw LLM response for PowerBI '{comp_dict.get('app_name', '')}':\n{llm_response}\n")
     # Update the component in the state
     comp_dict["processed"] = True
     mvp_components[comp_index] = AppComponent(**comp_dict)
@@ -117,8 +118,5 @@ def powerbi_agent(state: Any) -> Any:
     state.strategic_context = solution
     save_to_cache("powerbi_agent", solution)
     # Use rich for status output
-    if console:
-        console.print("[bold cyan]Power BI Agent: feature extraction complete.[/bold cyan]")
-    else:
-        print("Power BI Agent: feature extraction complete.")
+    log_success("Power BI Agent: feature extraction complete.")
     return state

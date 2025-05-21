@@ -6,6 +6,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import track
 from rich.markdown import Markdown
+from graph.utils.log import log_info, log_error
 
 console = Console()
 
@@ -13,15 +14,11 @@ def component_router(state: Any) -> Any:
     """
     Updates the state with the next component_index to process, if any.
     """
-    # Use rich for status output
-    if console:
-        console.print("[bold cyan]Component Router node: routing MVP components to specialized agents...[/bold cyan]")
-    else:
-        print("Component Router node: routing MVP components to specialized agents...")
+    log_info("Component Router node: routing MVP components to specialized agents...")
     solution = getattr(state, "strategic_context", None)
     if not solution:
-        print("[Error] No strategic context found in state.")
-        print("[Router] Returning next: END")
+        log_error("No strategic context found in state.")
+        log_error("[Router] Returning next: END")
         return state
     mvp_components = getattr(solution, "mvp_components", [])
     for idx, comp in enumerate(mvp_components):

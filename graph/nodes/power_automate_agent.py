@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import track
 from rich.markdown import Markdown
+from graph.utils.log import log_info, log_success, log_warning, log_error
 
 console = Console()
 
@@ -28,7 +29,7 @@ def power_automate_agent(state: Any) -> Any:
     # Find the first unprocessed PowerAutomate/Flow component
     solution = getattr(state, "strategic_context", None)
     if not solution:
-        print("[PowerAutomateAgent] No strategic context found in state.")
+        log_error("[PowerAutomateAgent] No strategic context found in state.")
         return state
     mvp_components = getattr(solution, "mvp_components", [])
     comp = None
@@ -39,12 +40,12 @@ def power_automate_agent(state: Any) -> Any:
             comp_index = idx
             break
     if comp is None:
-        print("[PowerAutomateAgent] No unprocessed PowerAutomate component found.")
+        log_warning("[PowerAutomateAgent] No unprocessed PowerAutomate component found.")
         return state
     # Check for cached output
     cached = load_from_cache("power_automate_agent")
     if cached:
-        print("[Cache] Using cached output for node 'power_automate_agent'")
+        log_success("[Cache] Using cached output for node 'power_automate_agent'")
         state.strategic_context = cached.get("strategic_context", state.strategic_context)
         # Mark as processed
         mvp_components[comp_index].processed = True
@@ -83,8 +84,8 @@ def power_automate_agent(state: Any) -> Any:
             comp_dict["actions"] = data.get("actions", {})
             comp_dict["connectors"] = data.get("connectors", {})
         except Exception as e:
-            print(f"[Error] Failed to parse LLM output for flow '{comp_dict.get('flow_name', '')}': {e}")
-            print(f"[Debug] Raw LLM response for flow '{comp_dict.get('flow_name', '')}':\n{llm_response}\n")
+            log_error(f"[PowerAutomateAgent] Failed to parse LLM output for flow '{comp_dict.get('flow_name', '')}': {e}")
+            log_info(f"[PowerAutomateAgent] Raw LLM response for flow '{comp_dict.get('flow_name', '')}':\n{llm_response}\n")
             comp_dict["trigger"] = ""
             comp_dict["actions"] = {}
             comp_dict["connectors"] = {}
@@ -97,8 +98,5 @@ def power_automate_agent(state: Any) -> Any:
     # print("[Debug] Updated strategic_context:", state.strategic_context.model_dump() if hasattr(state.strategic_context, 'model_dump') else state.strategic_context)
     save_to_cache("power_automate_agent", solution)
     # Use rich for status output
-    if console:
-        console.print("[bold cyan][PowerAutomateAgent] Action and connector extraction complete.[/bold cyan]")
-    else:
-        print("[PowerAutomateAgent] Action and connector extraction complete.")
+    log_success("Power Automate Agent: action and connector extraction complete.")
     return state

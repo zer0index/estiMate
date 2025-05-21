@@ -1,5 +1,6 @@
 import os
 import json
+from graph.utils.log import log_success
 
 MEMORY_DIR = "memory"
 
@@ -18,4 +19,4 @@ def set_cache(key, value):
     cache_file = os.path.join(MEMORY_DIR, f"{key}_output.json")
     with open(cache_file, "w", encoding="utf-8") as f:
         json.dump(value, f, ensure_ascii=False, indent=2)
-    print(f"[Cache] Saved output for node '{key}' to {cache_file}") 
+    log_success(f"[Cache] Saved output for node '{key}' to {cache_file}")

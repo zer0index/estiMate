@@ -5,6 +5,7 @@ from typing import Any
 from graph.schemas.strategic_overview import StrategicContext
 from graph.utils.llm import call_llm
 from graph.utils.utils import save_to_cache, load_from_cache
+from graph.utils.log import log_info, log_success, log_warning, log_error
 import yaml
 import os
 import re
@@ -61,7 +62,7 @@ def fix_component_types(json_str):
                         comp["type"] = "Other"
         return json.dumps(data)
     except Exception as e:
-        print(f"[Warning] Could not post-process component types: {e}")
+        log_warning(f"Could not post-process component types: {e}")
         return json_str
 
 def strategic_overview(state: Any) -> Any:
@@ -70,27 +71,18 @@ def strategic_overview(state: Any) -> Any:
     Writes the result to memory/strategic_context.json.
     """
     # Use rich for status output
-    if console:
-        console.print("[bold cyan]Strategic Overview node: checking cache...[/bold cyan]")
-    else:
-        print("Strategic Overview node: checking cache...")
+    log_info("Strategic Overview node: checking cache...")
     
     # Try to load from cache first
     cached_data = load_from_cache("strategic_overview")
     if cached_data is not None:
-        if console:
-            console.print("[green][Cache] Strategic Overview node: using cached output[/green]")
-        else:
-            print("Strategic Overview node: using cached output")
+        log_success("[Cache] Strategic Overview node: using cached output")
         # Convert dict back to StrategicContext
         context = StrategicContext.parse_obj(cached_data)
         state.strategic_context = context
         return state
 
-    if console:
-        console.print("[yellow]Strategic Overview node: extracting strategic context from PRD chunks...[/yellow]")
-    else:
-        print("Strategic Overview node: extracting strategic context from PRD chunks...")
+    log_warning("Strategic Overview node: extracting strategic context from PRD chunks...")
     chunks = getattr(state, "chunks", [])
     prompt_path = os.path.join(os.path.dirname(__file__), "../prompts/strategic_overview.yaml")
     system_message, user_prompt = render_prompt(chunks, prompt_path)
@@ -109,7 +101,7 @@ def strategic_overview(state: Any) -> Any:
         with open("memory/strategic_overview_llm_raw.json", "w", encoding="utf-8") as f:
             f.write(llm_response)
     except Exception as log_exc:
-        print(f"[Warning] Could not log raw LLM output: {log_exc}")
+        log_warning(f"Could not log raw LLM output: {log_exc}")
     # Clean, post-process, and parse response
     try:
         cleaned = extract_json_from_response(llm_response)
@@ -149,10 +141,9 @@ def strategic_overview(state: Any) -> Any:
 
         state.strategic_context = context
         save_to_cache("strategic_overview", context)
-        if console:
-            console.print("[green]Strategic context extracted, validated, and saved to cache.[/green]")
+        log_success("Strategic context extracted, validated, and saved to cache.")
     except Exception as e:
-        print(f"[Error] Failed to parse LLM output: {e}")
+        log_error(f"Failed to parse LLM output: {e}")
         # Attempt a simple auto-fix: fix missing commas between objects in arrays, close unclosed braces/brackets at the END, and retry once
         try:
             fixed2 = cleaned.rstrip()
@@ -171,9 +162,7 @@ def strategic_overview(state: Any) -> Any:
             context = StrategicContext.parse_raw(fixed2)
             state.strategic_context = context
             save_to_cache("strategic_overview", context)
-            if console:
-                console.print("[yellow]Strategic context auto-fixed and parsed after initial failure (comma/truncation fix).[/yellow]")
+            log_warning("Strategic context auto-fixed and parsed after initial failure (comma/truncation fix).")
         except Exception as e2:
-            print(f"[Error] Strategic Overview node failed after auto-fix: {e2}")
-            state.strategic_context = None
+            log_error(f"Strategic Overview node failed after auto-fix: {e2}")
     return state

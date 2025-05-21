@@ -7,6 +7,7 @@ from graph.schemas.strategic_overview import StrategicContext, DatabaseModel
 # You may need to adjust these imports based on your project structure
 from graph.utils.llm import call_llm_with_yaml_prompt  # Updated import after moving llm.py
 from graph.utils.cache import get_cache, set_cache      # Assumed cache utilities
+from graph.utils.log import log_info, log_success, log_error
 
 from rich.console import Console
 from rich.panel import Panel
@@ -28,10 +29,7 @@ def database_node(state: Dict[str, Any]) -> Dict[str, Any]:
     cache = get_cache(CACHE_KEY)
     if cache is not None:
         state.database_model = DatabaseModel(**cache)
-        if console:
-            console.print("[bold cyan][DatabaseNode] Loaded database model from cache.[/bold cyan]")
-        else:
-            print("[DatabaseNode] Loaded database model from cache.")
+        log_info("[DatabaseNode] Loaded database model from cache.")
         return state
 
     # 2. Prepare context for prompt
@@ -55,17 +53,11 @@ def database_node(state: Dict[str, Any]) -> Dict[str, Any]:
         db_model_dict = json.loads(llm_response)
         db_model = DatabaseModel(**db_model_dict)
     except (json.JSONDecodeError, ValidationError) as e:
-        if console:
-            console.print("[bold red][DatabaseNode] Error parsing LLM output:[/bold red]", e)
-        else:
-            print("[DatabaseNode] Error parsing LLM output:", e)
+        log_error(f"[DatabaseNode] Error parsing LLM output: {e}")
         raise
 
     # 5. Update state and cache
     state.database_model = db_model
     set_cache(CACHE_KEY, db_model.dict())
-    if console:
-        console.print("[bold cyan][DatabaseNode] Database model generated and cached.[/bold cyan]")
-    else:
-        print("[DatabaseNode] Database model generated and cached.")
+    log_success("[DatabaseNode] Database model generated and cached.")
     return state

@@ -6,6 +6,7 @@ import json
 import os
 from graph.utils.utils import save_to_cache, load_from_cache
 from rich.console import Console
+from graph.utils.log import log_info, log_success, log_warning
 
 console = Console()
 
@@ -21,7 +22,7 @@ def merge_agent(state: Any) -> Any:
     import glob
     # Check for cached output
     if os.path.exists(MERGED_OUTPUT_PATH):
-        console.print(f"[Cache] Using cached output for node 'merge_agent' at {MERGED_OUTPUT_PATH}")
+        log_success(f"[Cache] Using cached output for node 'merge_agent' at {MERGED_OUTPUT_PATH}")
         with open(MERGED_OUTPUT_PATH, "r", encoding="utf-8") as f:
             merged = json.load(f)
         state.merged_output = merged
@@ -133,5 +134,5 @@ def merge_agent(state: Any) -> Any:
     state.merged_output = merged
     # Also save to cache (for consistency with other agents)
     save_to_cache("merge_agent", merged)
-    console.print(f"[bold green]✔ MergeAgent: Output written to [white]{MERGED_OUTPUT_PATH}[/white]\n[/bold green]")
+    log_success(f"✔ MergeAgent: Output written to {MERGED_OUTPUT_PATH}\n")
     return state

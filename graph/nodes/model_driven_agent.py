@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import track
 from rich.markdown import Markdown
+from graph.utils.log import log_info, log_success, log_warning, log_error
 
 console = Console()
 
@@ -72,7 +73,7 @@ def model_driven_agent(state: Any) -> Any:
     # Find the first unprocessed ModelDrivenApp component
     solution = getattr(state, "strategic_context", None)
     if not solution:
-        print("[ModelDrivenAgent] No strategic context found in state.")
+        log_error("[ModelDrivenAgent] No strategic context found in state.")
         return state
     mvp_components = getattr(solution, "mvp_components", [])
     comp = None
@@ -83,12 +84,12 @@ def model_driven_agent(state: Any) -> Any:
             comp_index = idx
             break
     if comp is None:
-        print("[ModelDrivenAgent] No unprocessed ModelDrivenApp component found.")
+        log_warning("[ModelDrivenAgent] No unprocessed ModelDrivenApp component found.")
         return state
     # Check for cached output
     cached = load_from_cache("model_driven_agent")
     if cached:
-        print("[Cache] Using cached output for node 'model_driven_agent'")
+        log_success("[Cache] Using cached output for node 'model_driven_agent'")
         state.strategic_context = cached.get("strategic_context", state.strategic_context)
         # Mark as processed
         mvp_components[comp_index].processed = True
@@ -125,8 +126,8 @@ def model_driven_agent(state: Any) -> Any:
                 if "sota_suggestions" in data:
                     screen["sota_suggestions"] = data["sota_suggestions"]
             except Exception as e:
-                print(f"[Error] Failed to parse LLM output for screen '{screen.get('screen_name', '')}': {e}")
-                print(f"[Debug] Raw LLM response for screen '{screen.get('screen_name', '')}':\n{llm_response}\n")
+                log_error(f"[ModelDrivenAgent] Failed to parse LLM output for screen '{screen.get('screen_name', '')}': {e}")
+                log_info(f"[ModelDrivenAgent] Raw LLM response for screen '{screen.get('screen_name', '')}':\n{llm_response}\n")
     # Update the component in the state
     comp_dict["processed"] = True
     mvp_components[comp_index] = AppComponent(**comp_dict)
@@ -134,8 +135,5 @@ def model_driven_agent(state: Any) -> Any:
     state.strategic_context = solution
     save_to_cache("model_driven_agent", solution)
     # Use rich for status output
-    if console:
-        console.print("[bold cyan]Model Driven Agent: feature extraction complete.[/bold cyan]")
-    else:
-        print("Model Driven Agent: feature extraction complete.")
+    log_success("Model Driven Agent: feature extraction complete.")
     return state
