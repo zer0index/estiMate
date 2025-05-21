@@ -9,6 +9,12 @@ import yaml
 import os
 import re
 import json
+from rich.console import Console
+from rich.panel import Panel
+from rich.progress import track
+from rich.markdown import Markdown
+
+console = Console()
 
 def render_prompt(chunks, prompt_path):
     """Render the YAML prompt with the PRD chunks."""
@@ -63,18 +69,28 @@ def strategic_overview(state: Any) -> Any:
     Extracts the strategic overview from PRD chunks using an LLM and validates output with StrategicContext schema.
     Writes the result to memory/strategic_context.json.
     """
-    print("Strategic Overview node: checking cache...")
+    # Use rich for status output
+    if console:
+        console.print("[bold cyan]Strategic Overview node: checking cache...[/bold cyan]")
+    else:
+        print("Strategic Overview node: checking cache...")
     
     # Try to load from cache first
     cached_data = load_from_cache("strategic_overview")
     if cached_data is not None:
-        print("Strategic Overview node: using cached output")
+        if console:
+            console.print("[green][Cache] Strategic Overview node: using cached output[/green]")
+        else:
+            print("Strategic Overview node: using cached output")
         # Convert dict back to StrategicContext
         context = StrategicContext.parse_obj(cached_data)
         state.strategic_context = context
         return state
 
-    print("Strategic Overview node: extracting strategic context from PRD chunks...")
+    if console:
+        console.print("[yellow]Strategic Overview node: extracting strategic context from PRD chunks...[/yellow]")
+    else:
+        print("Strategic Overview node: extracting strategic context from PRD chunks...")
     chunks = getattr(state, "chunks", [])
     prompt_path = os.path.join(os.path.dirname(__file__), "../prompts/strategic_overview.yaml")
     system_message, user_prompt = render_prompt(chunks, prompt_path)
@@ -99,8 +115,9 @@ def strategic_overview(state: Any) -> Any:
         # Save to cache
         save_to_cache("strategic_overview", context)
         
-        print("Strategic context extracted, validated, and saved to cache.")
+        if console:
+            console.print("[green]Strategic context extracted, validated, and saved to cache.[/green]")
     except Exception as e:
         print(f"[Error] Failed to parse LLM output: {e}")
         state.strategic_context = None
-    return state 
+    return state

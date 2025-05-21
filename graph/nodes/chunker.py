@@ -6,6 +6,12 @@ import re
 from typing import Any
 from graph.schemas.prd_chunk import PRDChunk, PRDChunkList
 from graph.utils.utils import save_to_cache, load_from_cache
+from rich.console import Console
+from rich.panel import Panel
+from rich.progress import track
+from rich.markdown import Markdown
+
+console = Console()
 
 def extract_title(heading_line: str) -> str:
     """Extracts the title from a heading line."""
@@ -16,18 +22,27 @@ def extract_title(heading_line: str) -> str:
 
 def chunker(state: Any) -> Any:
     """Splits tagged PRD into chunks and updates the state."""
-    print("Chunker node: checking cache...")
+    if console:
+        console.print("[bold cyan]Chunker node: checking cache...[/bold cyan]")
+    else:
+        print("Chunker node: checking cache...")
     
     # Try to load from cache first
     cached_data = load_from_cache("chunker")
     if cached_data is not None:
-        print("Chunker node: using cached output")
+        if console:
+            console.print("[green][Cache] Chunker node: using cached output[/green]")
+        else:
+            print("Chunker node: using cached output")
         # Convert dict back to PRDChunk objects
         chunks = [PRDChunk(**chunk) for chunk in cached_data]
         state.chunks = chunks
         return state
 
-    print("Chunker node: splitting tagged PRD into chunks...")
+    if console:
+        console.print("[yellow]Chunker node: splitting tagged PRD into chunks...[/yellow]")
+    else:
+        print("Chunker node: splitting tagged PRD into chunks...")
     chunks = []
     current_chunk = []
     current_heading = None
@@ -72,5 +87,8 @@ def chunker(state: Any) -> Any:
     # Save to cache
     save_to_cache("chunker", [chunk.model_dump() for chunk in chunks])
     
-    print(f"Chunker node: created {len(chunks)} chunks and saved to cache.")
-    return state 
+    if console:
+        console.print("[green]Chunker node: created {len(chunks)} chunks and saved to cache.[/green]")
+    else:
+        print(f"Chunker node: created {len(chunks)} chunks and saved to cache.")
+    return state

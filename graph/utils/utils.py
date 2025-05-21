@@ -30,6 +30,11 @@ def get_cache_path(node_name: str) -> str:
 
 def save_to_cache(node_name: str, data: Any) -> None:
     """Saves node output to cache file."""
+    try:
+        from rich.console import Console
+        console = Console()
+    except ImportError:
+        console = None
     cache_path = get_cache_path(node_name)
     try:
         # Convert Pydantic models to dict if needed
@@ -37,9 +42,17 @@ def save_to_cache(node_name: str, data: Any) -> None:
             data = data.model_dump()
         with open(cache_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
-        print(f"[Cache] Saved output for node '{node_name}' to {cache_path}")
+        msg = f"[Cache] Saved output for node '{node_name}' to {cache_path}"
+        if console:
+            console.print(f"[green]{msg}[/green]")
+        else:
+            print(msg)
     except Exception as e:
-        print(f"[Error] Failed to cache output for node '{node_name}': {e}")
+        err = f"[Error] Failed to cache output for node '{node_name}': {e}"
+        if console:
+            console.print(f"[red]{err}[/red]")
+        else:
+            print(err)
 
 def load_from_cache(node_name: str) -> Optional[Any]:
     """Loads node output from cache file if it exists."""
@@ -57,20 +70,33 @@ def load_from_cache(node_name: str) -> Optional[Any]:
 
 def clear_cache(node_name: Optional[str] = None) -> None:
     """Clears cache for a specific node or all nodes."""
+    try:
+        from rich.console import Console
+        console = Console()
+    except ImportError:
+        console = None
     if node_name:
         cache_path = get_cache_path(node_name)
         if os.path.exists(cache_path):
             os.remove(cache_path)
-            print(f"[Cache] Cleared cache for node '{node_name}'")
+            msg = f"[Cache] Cleared cache for node '{node_name}'"
+            if console:
+                console.print(f"[yellow]{msg}[/yellow]")
+            else:
+                print(msg)
     else:
         cache_files = Path("memory").glob("*_output.json")
         for cache_file in cache_files:
             os.remove(cache_file)
-        print("[Cache] Cleared all node caches")
+        msg = "[Cache] Cleared all node caches"
+        if console:
+            console.print(f"[yellow]{msg}[/yellow]")
+        else:
+            print(msg)
 
 def clean_llm_json(text: str) -> str:
     """Clean LLM JSON output: remove code fences, comments, and trailing commas."""
     text = re.sub(r'```(?:json)?', '', text)
     text = re.sub(r'//.*', '', text)
     text = re.sub(r',([ \t\r\n]*[}\]])', r'\1', text)
-    return text.strip() 
+    return text.strip()

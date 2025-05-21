@@ -8,6 +8,12 @@ import os
 import json
 from graph.schemas.strategic_overview import AppComponent
 from graph.utils.llm import call_llm
+from rich.console import Console
+from rich.panel import Panel
+from rich.progress import track
+from rich.markdown import Markdown
+
+console = Console()
 
 def load_model_driven_prompt():
     PROMPT_PATH = os.path.join(os.path.dirname(__file__), "../prompts/model_driven_agent.yaml")
@@ -115,5 +121,9 @@ def model_driven_agent(state: Any) -> Any:
     solution.mvp_components = mvp_components
     state.strategic_context = solution
     save_to_cache("model_driven_agent", solution)
-    print("Model Driven App Agent: feature extraction complete.")
-    return state 
+    # Use rich for status output
+    if console:
+        console.print("[bold cyan]Model Driven Agent: feature extraction complete.[/bold cyan]")
+    else:
+        print("Model Driven Agent: feature extraction complete.")
+    return state

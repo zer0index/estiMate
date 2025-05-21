@@ -8,6 +8,12 @@ import os
 import json
 from graph.schemas.strategic_overview import FlowComponent
 from graph.utils.llm import call_llm
+from rich.console import Console
+from rich.panel import Panel
+from rich.progress import track
+from rich.markdown import Markdown
+
+console = Console()
 
 def load_power_automate_prompt():
     PROMPT_PATH = os.path.join(os.path.dirname(__file__), "../prompts/power_automate_agent.yaml")
@@ -90,5 +96,9 @@ def power_automate_agent(state: Any) -> Any:
     # Remove debug print of updated strategic_context
     # print("[Debug] Updated strategic_context:", state.strategic_context.model_dump() if hasattr(state.strategic_context, 'model_dump') else state.strategic_context)
     save_to_cache("power_automate_agent", solution)
-    print("[PowerAutomateAgent] Action and connector extraction complete.")
+    # Use rich for status output
+    if console:
+        console.print("[bold cyan][PowerAutomateAgent] Action and connector extraction complete.[/bold cyan]")
+    else:
+        print("[PowerAutomateAgent] Action and connector extraction complete.")
     return state

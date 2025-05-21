@@ -2,12 +2,22 @@
 Component Router node: Routes each MVP component to the correct specialized agent node based on its type.
 """
 from typing import Any
+from rich.console import Console
+from rich.panel import Panel
+from rich.progress import track
+from rich.markdown import Markdown
+
+console = Console()
 
 def component_router(state: Any) -> Any:
     """
     Updates the state with the next component_index to process, if any.
     """
-    print("Component Router node: routing MVP components to specialized agents...")
+    # Use rich for status output
+    if console:
+        console.print("[bold cyan]Component Router node: routing MVP components to specialized agents...[/bold cyan]")
+    else:
+        print("Component Router node: routing MVP components to specialized agents...")
     solution = getattr(state, "strategic_context", None)
     if not solution:
         print("[Error] No strategic context found in state.")
@@ -40,4 +50,4 @@ def router_conditional(state: Any) -> str:
             elif comp_type == "PowerBI":
                 return "powerbi_agent"
     # If all are processed, go to database_node
-    return "database_node" 
+    return "database_node"

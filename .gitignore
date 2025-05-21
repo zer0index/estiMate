@@ -39,3 +39,4 @@ Thumbs.db
 # Python compiled
 *.pyd
 *.so
+.copilot-hints.md
