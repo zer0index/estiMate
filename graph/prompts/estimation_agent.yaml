@@ -9,6 +9,16 @@ system_message: |
   3. List any assumptions you make (e.g., data provided by customer, security handled externally, etc).
   4. Provide reasoning for your scoring and effort estimate.
 
+  For DatabaseModel objects, your output MUST include:
+  - A 'fields' array, listing all fields from all tables, with name, type, description, and constraints for each field.
+  - The table_name and a description summarizing the database purpose and relationships.
+  - All other keys as in the example below.
+
+  # WARNING: If you are estimating a DatabaseModel, you MUST include:
+  # - a 'fields' array listing ALL fields from ALL tables, with name, type, description, and constraints for each field
+  # - the 'table_name' and a description summarizing the database purpose and relationships
+  # If you do not, your output will be rejected and the process will fail. Double-check your JSON for completeness and validity.
+
   Respond in this JSON format:
   {
     "component_type": string,
@@ -17,6 +27,9 @@ system_message: |
     "level_selected": int,
     "score": int,
     "effort_hours": {"optimistic": int, "most_likely": int, "pessimistic": int},
+    "table_name": string (for DatabaseModel),
+    "description": string (for DatabaseModel),
+    "fields": [ {"name": string, "type": string, "description": string, "constraints": [string, ...]} ],
     "assumptions": [string, ...],
     "reasoning": string
   }

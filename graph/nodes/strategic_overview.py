@@ -104,6 +104,12 @@ def strategic_overview(state: Any) -> Any:
         temperature=temperature,
         system_message=system_message
     )
+    # Log raw LLM output for debugging
+    try:
+        with open("memory/strategic_overview_llm_raw.json", "w", encoding="utf-8") as f:
+            f.write(llm_response)
+    except Exception as log_exc:
+        print(f"[Warning] Could not log raw LLM output: {log_exc}")
     # Clean, post-process, and parse response
     try:
         cleaned = extract_json_from_response(llm_response)
@@ -147,5 +153,27 @@ def strategic_overview(state: Any) -> Any:
             console.print("[green]Strategic context extracted, validated, and saved to cache.[/green]")
     except Exception as e:
         print(f"[Error] Failed to parse LLM output: {e}")
-        state.strategic_context = None
+        # Attempt a simple auto-fix: fix missing commas between objects in arrays, close unclosed braces/brackets at the END, and retry once
+        try:
+            fixed2 = cleaned.rstrip()
+            # Fix missing commas between objects in arrays (e.g., ...}{... → ...},{...)
+            fixed2 = re.sub(r'}\s*{', '},\n{', fixed2)
+            # Only add closing brackets/braces at the end if missing
+            open_braces = fixed2.count('{')
+            close_braces = fixed2.count('}')
+            open_brackets = fixed2.count('[')
+            close_brackets = fixed2.count(']')
+            if close_braces < open_braces:
+                fixed2 = fixed2 + ('}' * (open_braces - close_braces))
+            if close_brackets < open_brackets:
+                fixed2 = fixed2 + (']' * (open_brackets - close_brackets))
+            fixed2 = fix_component_types(fixed2)
+            context = StrategicContext.parse_raw(fixed2)
+            state.strategic_context = context
+            save_to_cache("strategic_overview", context)
+            if console:
+                console.print("[yellow]Strategic context auto-fixed and parsed after initial failure (comma/truncation fix).[/yellow]")
+        except Exception as e2:
+            print(f"[Error] Strategic Overview node failed after auto-fix: {e2}")
+            state.strategic_context = None
     return state

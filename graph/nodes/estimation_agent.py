@@ -118,6 +118,69 @@ def estimation_agent(state: Any) -> Any:
                 except Exception:
                     result = {"error": "LLM output not valid JSON", "raw": llm_response}
                 results.append(result)
+    # Database Model estimation (if present)
+    database_model = merged.get("database_model")
+    if database_model:
+        matrix_section = get_matrix_section("DatabaseModel")
+        obj = database_model
+        # Compose a prompt for the LLM to estimate the whole database, including table/field/type summary
+        system_message, user_template = load_estimation_prompt()
+        # Add a summary of tables/fields/types for the LLM
+        table_summaries = []
+        all_fields = []
+        for table in obj.get("tables", []):
+            fields = table.get("fields", [])
+            field_summaries = [f"{f['name']} ({f['type']})" for f in fields]
+            table_summaries.append(f"- {table['table_name']}: " + ", ".join(field_summaries))
+            for f in fields:
+                field_obj = {
+                    "name": f.get("name"),
+                    "type": f.get("type"),
+                    "description": f.get("description", ""),
+                    "constraints": []
+                }
+                # Try to infer constraints from table definition
+                if table.get("primary_key") == f.get("name"):
+                    field_obj["constraints"].append("PRIMARY KEY")
+                if f.get("type", "").lower() in ["int", "integer"]:
+                    field_obj["constraints"].append("NOT NULL")
+                # Add foreign key info
+                if table.get("foreign_keys") and f.get("name") in table.get("foreign_keys"):
+                    field_obj["constraints"].append(f"FOREIGN KEY REFERENCES {table['table_name']}({f['name']})")
+                all_fields.append(field_obj)
+        obj["table_summary"] = "\n".join(table_summaries)
+        # Compose a single output object as in the user's example
+        db_output = {
+            "component_type": "DatabaseModel",
+            "component_name": obj.get("notes", "Database Model"),
+            "screen_name": None,
+            "level_selected": None,  # Will be filled by LLM
+            "score": None,           # Will be filled by LLM
+            "effort_hours": None,    # Will be filled by LLM
+            "table_name": obj.get("notes", "Database Model"),
+            "description": obj.get("notes", ""),
+            "fields": all_fields,
+            "assumptions": [],       # Will be filled by LLM
+            "reasoning": ""         # Will be filled by LLM
+        }
+        # Pass this object to the LLM for estimation
+        db_prompt = user_template.replace(
+            "{{ matrix }}", json.dumps({"name": "DatabaseModel", "levels": matrix_section}, ensure_ascii=False)
+        ).replace(
+            "{{ object }}", json.dumps(db_output, ensure_ascii=False)
+        )
+        llm_response = call_llm(
+            prompt=db_prompt,
+            model="gpt-4-1106-preview",
+            temperature=0.1,
+            system_message=system_message
+        )
+        try:
+            cleaned = clean_llm_json(llm_response)
+            db_estimate = json.loads(cleaned)
+        except Exception:
+            db_estimate = {"error": "LLM output not valid JSON", "raw": llm_response}
+        results.append(db_estimate)
     # Save and update state
     with open(ESTIMATION_OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)

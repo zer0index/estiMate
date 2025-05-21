@@ -1,0 +1,230 @@
+{
+  "strategic_overview": {
+    "purpose": "Support HR and leadership in conducting structured annual performance reviews with trackable employee evaluations and follow-up goals.",
+    "business_value": [
+      "Ensures compliance with corporate evaluation processes",
+      "Provides leadership with data to support promotions or training plans",
+      "Allows HR to document improvement plans and actions"
+    ],
+    "mvp_components": [
+      {
+        "app_name": "Performance Review Management",
+        "app_type": "ModelDrivenApp",
+        "app_details": "A model-driven app to manage the performance review process including forms for self and manager input, tracking review status, and reporting compliance.",
+        "app_screens": [
+          {
+            "screen_name": "Performance Review Form",
+            "screen_type": "ModelDrivenApp",
+            "screen_details": "Structured performance review form that allows input from both the employee and their manager.",
+            "features": {
+              "entity_forms": "Customizable forms to capture performance review data, including sections for self-assessment and manager input.",
+              "form_business_rules": "Rules to ensure form fields are filled out according to the evaluation process and to enforce read-only status after final submission.",
+              "security_roles": "Configured roles to control access permissions for employees, managers, and HR reviewers according to the hierarchical reporting structure.",
+              "workflows": "Automated multi-step workflows to manage the review cycle from draft to review to confirmation.",
+              "views": "Custom views to track review status by employee and department, and to identify overdue evaluations.",
+              "charts": "Visual charts to support company-wide reporting on the performance review process.",
+              "auditing": "Track changes to review records to maintain a history of manager feedback and other updates.",
+              "record_associations": "Relationships between performance review records and employee profiles to add manager feedback history."
+            }
+          },
+          {
+            "screen_name": "Review Status Tracker",
+            "screen_type": "ModelDrivenApp",
+            "screen_details": "Tracks the status of reviews by employee and department, indicating who is overdue.",
+            "features": {
+              "entity": "Custom entity to store review status data with fields for employee, department, review status, and due dates.",
+              "views": "Custom views to display review status by employee and department, including filters for overdue reviews.",
+              "security_roles": "employee_role: Read access to own review status and ability to confirm evaluations and add self-assessment., manager_role: Read and write access to performance reviews for direct reports., hr_reviewer_role: Read and write access to all review statuses to monitor review cycles and track documentation.",
+              "business_rules": "To enforce read-only access on review records after final submission.",
+              "workflows": "To support the multi-step review process: draft, review, and confirm stages.",
+              "hierarchical_security_model": "To ensure access follows the hierarchical reporting structure.",
+              "dashboards": "To provide HR and leadership with an overview of the review process compliance and overdue reviews.",
+              "charts": "To visualize data related to review status and compliance within dashboards."
+            }
+          },
+          {
+            "screen_name": "Compliance Reporting",
+            "screen_type": "ModelDrivenApp",
+            "screen_details": "Reports on the compliance of the review process across the company.",
+            "features": {
+              "views": "Custom views to display compliance data such as 'Reviews Due', 'Overdue Reviews', and 'Completed Reviews'.",
+              "charts": "Visual representations of compliance data, like pie charts or bar graphs showing the percentage of completed vs. pending reviews.",
+              "dashboards": "A dashboard to aggregate the views and charts for a comprehensive compliance report.",
+              "security_roles": "Configured security roles to ensure that only HR Reviewers have access to monitor and track the compliance data.",
+              "business_rules": "Rules to enforce that review records become read-only after final submission.",
+              "workflows": "Automated workflows to notify HR and leadership about overdue reviews and to manage the multi-step review process.",
+              "reporting_features": "Built-in reporting tools to generate company-wide compliance reports, which can be filtered by department or other criteria."
+            }
+          }
+        ],
+        "processed": true
+      }
+    ],
+    "post_mvp_modules": [
+      {
+        "module_name": "Development Goals Integration",
+        "extension_type": "AppScreen",
+        "extends_component": "Performance Review Management",
+        "details": "Allows managers and employees to create and track individual development goals, integrated with the internal Learning Management System (LMS).",
+        "recommendation": "Extend the ModelDrivenApp to include a new screen for managing development goals, leveraging the existing data model and ensuring a seamless user experience."
+      },
+      {
+        "module_name": "Manager Feedback History",
+        "extension_type": "AppScreen",
+        "extends_component": "Performance Review Management",
+        "details": "Adds a historical view of manager feedback to the employee profiles, allowing for better tracking of performance over time.",
+        "recommendation": "Incorporate a feedback history screen into the ModelDrivenApp to provide context for performance reviews and support informed decision-making."
+      }
+    ],
+    "user_roles": [
+      {
+        "role_name": "Employee",
+        "permissions": [
+          "View and confirm evaluations",
+          "Add self-assessment"
+        ]
+      },
+      {
+        "role_name": "Manager",
+        "permissions": [
+          "Submit and edit performance reviews for reports"
+        ]
+      },
+      {
+        "role_name": "HR Reviewer",
+        "permissions": [
+          "Monitor review cycles and track documentation"
+        ]
+      }
+    ],
+    "system_roles": [
+      {
+        "role_name": "ModelDrivenApp",
+        "technical_scope": [
+          "Manage structured performance review forms",
+          "Track review status and compliance",
+          "Support multi-step workflows"
+        ]
+      }
+    ],
+    "constraints": [
+      "Access must follow hierarchical reporting structure",
+      "Review records must be read-only after final submission",
+      "Must support company-wide reporting"
+    ],
+    "integration_points": [
+      "Integration with internal LMS for development goals"
+    ],
+    "notes": null,
+    "database_model": null
+  },
+  "database_model": {
+    "tables": [
+      {
+        "table_name": "Employees",
+        "fields": [
+          {
+            "name": "employee_id",
+            "type": "integer",
+            "description": "Unique identifier for each employee"
+          },
+          {
+            "name": "first_name",
+            "type": "string",
+            "description": "Employee's first name"
+          },
+          {
+            "name": "last_name",
+            "type": "string",
+            "description": "Employee's last name"
+          },
+          {
+            "name": "department",
+            "type": "string",
+            "description": "Department the employee belongs to"
+          },
+          {
+            "name": "manager_id",
+            "type": "integer",
+            "description": "Unique identifier for the employee's manager"
+          }
+        ],
+        "primary_key": "employee_id",
+        "foreign_keys": [
+          "manager_id"
+        ],
+        "description": "Stores information about all employees"
+      },
+      {
+        "table_name": "Performance_Reviews",
+        "fields": [
+          {
+            "name": "review_id",
+            "type": "integer",
+            "description": "Unique identifier for each performance review"
+          },
+          {
+            "name": "employee_id",
+            "type": "integer",
+            "description": "Unique identifier for the employee being reviewed"
+          },
+          {
+            "name": "review_date",
+            "type": "date",
+            "description": "Date the review was conducted"
+          },
+          {
+            "name": "review_status",
+            "type": "string",
+            "description": "Current status of the review (draft, review, confirmed)"
+          },
+          {
+            "name": "review_content",
+            "type": "text",
+            "description": "Content of the performance review"
+          }
+        ],
+        "primary_key": "review_id",
+        "foreign_keys": [
+          "employee_id"
+        ],
+        "description": "Stores information about all performance reviews"
+      },
+      {
+        "table_name": "Goals",
+        "fields": [
+          {
+            "name": "goal_id",
+            "type": "integer",
+            "description": "Unique identifier for each goal"
+          },
+          {
+            "name": "employee_id",
+            "type": "integer",
+            "description": "Unique identifier for the employee the goal is assigned to"
+          },
+          {
+            "name": "goal_description",
+            "type": "text",
+            "description": "Description of the goal"
+          },
+          {
+            "name": "due_date",
+            "type": "date",
+            "description": "Date by which the goal should be achieved"
+          }
+        ],
+        "primary_key": "goal_id",
+        "foreign_keys": [
+          "employee_id"
+        ],
+        "description": "Stores information about all goals set during performance reviews"
+      }
+    ],
+    "notes": "The Employees table is related to the Performance_Reviews table through the employee_id field, which is a foreign key in the Performance_Reviews table. This relationship allows us to track all reviews for a particular employee. Similarly, the Employees table is related to the Goals table through the employee_id field, allowing us to track all goals for a particular employee. The manager_id field in the Employees table is a self-referencing foreign key, allowing us to establish a hierarchical reporting structure."
+  },
+  "input_path": "input\\use_case_1_hr_performance_review.md",
+  "chunks": "[PRDChunk(id='H2_1_Strategic_Overview', title='Strategic Overview', content='**Purpose**:\\nSupport HR and leadership in conducting structured annual performance reviews with trackable employee evaluations and follow-up goals.\\n\\n**Business Value**:\\n- Ensures compliance with corporate evaluation processes\\n- Provides leadership with data to support promotions or training plans\\n- Allows HR to document improvement plans and actions\\n\\n---', order=1, type='section', raw_heading='<!-- CHUNK_H2_1 -->'), PRDChunk(id='H2_2_User_Roles', title='User Roles', content='| Role         | Permissions                                         |\\n|--------------|------------------------------------------------------|\\n| Employee     | View and confirm evaluations, add self-assessment    |\\n| Manager      | Submit and edit performance reviews for reports      |\\n| HR Reviewer  | Monitor review cycles and track documentation        |\\n\\n---', order=2, type='section', raw_heading='<!-- CHUNK_H2_2 -->'), PRDChunk(id='H2_3_ModelDrivenApp', title='ModelDrivenApp', content='- Structured performance review form (self + manager input)\\n- Track review status by employee/department\\n- Reporting compliance (who is overdue?)\\n- Support multi-step workflows: draft → review → confirm\\n\\n\\n---', order=3, type='section', raw_heading='<!-- CHUNK_H2_3 -->'), PRDChunk(id='H2_4_ModelDrivenApp', title='ModelDrivenApp', content='- Create individual development goals\\n- Integrate with internal LMS\\n- Add manager feedback history to employee profile\\n\\n---', order=4, type='section', raw_heading='<!-- CHUNK_H2_4 -->'), PRDChunk(id='H2_5_Constraints_&_Requirements', title='Constraints & Requirements', content='- Access must follow hierarchical reporting structure\\n- Review records must be read-only after final submission\\n- Must support company-wide reporting', order=5, type='section', raw_heading='<!-- CHUNK_H2_5 -->')]",
+  "component_index": null,
+  "estimation_output": null
+}

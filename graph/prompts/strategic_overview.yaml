@@ -16,6 +16,9 @@ prompt: |
   - Do NOT invent new types. If unsure, use "Other".
   - Ignore features without a {ComponentType} label or mark them as "Other".
   - Output must be valid JSON and must NOT contain trailing commas, comments, or any non-JSON text. Only output the JSON object, nothing else.
+  - Do NOT use markdown code fences (no ``` or ```).
+  - Double-check your output for missing commas, unclosed brackets, or any JSON syntax errors. If your output is not valid JSON, it will be rejected and the process will fail.
+  - If you are unsure, output a minimal valid JSON object with all required top-level fields.
   
   # Example
   # PRD: ### 📦 Feature: Device Catalog **CanvasApp**

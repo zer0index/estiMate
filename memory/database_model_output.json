@@ -1,0 +1,105 @@
+{
+  "tables": [
+    {
+      "table_name": "Employees",
+      "fields": [
+        {
+          "name": "employee_id",
+          "type": "integer",
+          "description": "Unique identifier for each employee"
+        },
+        {
+          "name": "first_name",
+          "type": "string",
+          "description": "Employee's first name"
+        },
+        {
+          "name": "last_name",
+          "type": "string",
+          "description": "Employee's last name"
+        },
+        {
+          "name": "department",
+          "type": "string",
+          "description": "Department the employee belongs to"
+        },
+        {
+          "name": "manager_id",
+          "type": "integer",
+          "description": "Unique identifier for the employee's manager"
+        }
+      ],
+      "primary_key": "employee_id",
+      "foreign_keys": [
+        "manager_id"
+      ],
+      "description": "Stores information about all employees"
+    },
+    {
+      "table_name": "Performance_Reviews",
+      "fields": [
+        {
+          "name": "review_id",
+          "type": "integer",
+          "description": "Unique identifier for each performance review"
+        },
+        {
+          "name": "employee_id",
+          "type": "integer",
+          "description": "Unique identifier for the employee being reviewed"
+        },
+        {
+          "name": "review_date",
+          "type": "date",
+          "description": "Date the review was conducted"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "description": "Current status of the review (draft, review, confirmed)"
+        },
+        {
+          "name": "review_content",
+          "type": "text",
+          "description": "Content of the performance review"
+        }
+      ],
+      "primary_key": "review_id",
+      "foreign_keys": [
+        "employee_id"
+      ],
+      "description": "Stores information about all performance reviews"
+    },
+    {
+      "table_name": "Goals",
+      "fields": [
+        {
+          "name": "goal_id",
+          "type": "integer",
+          "description": "Unique identifier for each goal"
+        },
+        {
+          "name": "employee_id",
+          "type": "integer",
+          "description": "Unique identifier for the employee the goal is assigned to"
+        },
+        {
+          "name": "goal_description",
+          "type": "text",
+          "description": "Description of the goal"
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "description": "Date by which the goal should be achieved"
+        }
+      ],
+      "primary_key": "goal_id",
+      "foreign_keys": [
+        "employee_id"
+      ],
+      "description": "Stores information about all goals set during performance reviews"
+    }
+  ],
+  "notes": "The Employees table is related to the Performance_Reviews table through the employee_id field, which is a foreign key in the Performance_Reviews table. This relationship allows us to track all reviews for a particular employee. Similarly, the Employees table is related to the Goals table through the employee_id field, allowing us to track all goals for a particular employee. The manager_id field in the Employees table is a self-referencing foreign key, allowing us to establish a hierarchical reporting structure."
+}

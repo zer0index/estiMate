@@ -52,6 +52,18 @@ def find_relevant_chunk_content(screen, prd_chunks):
         relevant_chunks = [chunk.content if hasattr(chunk, 'content') else chunk.get('content', '') for chunk in prd_chunks]
     return "\n\n".join(relevant_chunks)
 
+def flatten_features(features):
+    if not isinstance(features, dict):
+        return features
+    flat = {}
+    for k, v in features.items():
+        if isinstance(v, dict):
+            # Convert nested dict to a string description
+            flat[k] = ", ".join(f"{subk}: {subv}" for subk, subv in v.items())
+        else:
+            flat[k] = v
+    return flat
+
 def model_driven_agent(state: Any) -> Any:
     """
     Processes a single ModelDrivenApp component, extracting features per screen using LLM.
@@ -109,7 +121,7 @@ def model_driven_agent(state: Any) -> Any:
                 cleaned_response = clean_llm_json(llm_response)
                 data = json.loads(cleaned_response)
                 if "features" in data and data["features"]:
-                    screen["features"] = data["features"]
+                    screen["features"] = flatten_features(data["features"])
                 if "sota_suggestions" in data:
                     screen["sota_suggestions"] = data["sota_suggestions"]
             except Exception as e:
