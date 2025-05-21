@@ -47,13 +47,17 @@ component_router ──► canvas_app_agent ─┐
         ↓                              │
        (route) ───► power_automate_agent
         ↓                              │
-       (route) ───► database_node ─────┘
+       (route) ───► database_node      │
+        ↓                              │
+       (route) ───► model_driven_agent │
+        ↓                              │
+       (route) ───► powerbi_agent ─────┘
                                       ↓
                                      END
 ```
 
 - Built with `StateGraph` from LangGraph
-- Routes data dynamically to specialized agents
+- Routes data dynamically to specialized agents (Canvas App, Power Automate, Database, Model Driven, Power BI)
 - Automatically loops until all data is processed
 
 ---
