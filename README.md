@@ -179,10 +179,10 @@ To contribute:
 ## 📄 License
 
 Licensed under the MIT License.  
-© Avanade AI Innovation
+© Avanade
 
 ---
 
 <p align="center">
-  Made with ❤️ by the Avanade AI Innovation Team
+  Made with ❤️
 </p>
