@@ -1,0 +1,235 @@
+[
+  {
+    "component_type": "Canvas App",
+    "component_name": "Order Request Form",
+    "screen_name": "Device Browser",
+    "level_selected": 3,
+    "score": 7,
+    "effort_hours": {
+      "optimistic": 28,
+      "most_likely": 32,
+      "pessimistic": 36
+    },
+    "assumptions": [
+      "Data sources for devices and department approvals are pre-existing and accessible",
+      "Device images are stored and accessible in a compatible format",
+      "User roles and permissions are managed externally",
+      "UI design mockups or guidelines are provided"
+    ],
+    "reasoning": "The 'Device Browser' screen appears to be moderately complex, featuring a catalog with filtering capabilities, device details, images, and departmental approval filters. This suggests the use of multiple controls, conditional logic for filtering, and possibly patching data to multiple sources if the approval status is updated. The availability indicator also implies some form of real-time data processing or status checking. The screen does not seem to require offline capabilities, advanced error handling, or custom components that would push it to a level 4. Therefore, level 3 is the best match, with a score of 7 indicating moderate complexity. The effort hours are adjusted slightly above the minimum to account for potential complexities in implementing the filtering and availability features."
+  },
+  {
+    "component_type": "Canvas App",
+    "component_name": "Order Request Form",
+    "screen_name": "Device Details",
+    "level_selected": 3,
+    "score": 8,
+    "effort_hours": {
+      "optimistic": 28,
+      "most_likely": 32,
+      "pessimistic": 36
+    },
+    "assumptions": [
+      "The data source for the device catalog is already set up and accessible.",
+      "The parent app's UI design and theming are provided.",
+      "Standard accessibility features are to be implemented without the need for specialized controls.",
+      "The loading spinner and error handling will be implemented using standard Power Apps components and patterns."
+    ],
+    "reasoning": "The 'Device Details' screen has several features that align with level 3 complexity: it integrates with a data source (Device Catalog), has error handling for data retrieval, and includes a loading spinner for asynchronous operations, indicating multiple data sources and patching data. The screen also has a responsive design, which adds to the UI complexity. The presence of a gallery and indicators suggests moderate UI complexity. The navigation buttons imply some navigation logic, although it seems limited. The screen is part of a larger app, suggesting some reuse of components and collections. The effort hours are adjusted to the higher end of the range due to the inclusion of responsive design and accessibility features, which can add complexity to the development process."
+  },
+  {
+    "component_type": "Canvas App",
+    "component_name": "Order Request Form",
+    "screen_name": "Request Form",
+    "level_selected": 3,
+    "score": 8,
+    "effort_hours": {
+      "optimistic": 28,
+      "most_likely": 32,
+      "pessimistic": 36
+    },
+    "assumptions": [
+      "Employee data is available and accessible for auto-population.",
+      "Device images are provided and accessible for preview.",
+      "Integration with Azure AD is for authentication and user data retrieval only.",
+      "Form validation rules are well-defined and provided by the customer.",
+      "The navigation bar and back button imply simple navigation within the app."
+    ],
+    "reasoning": "The 'Request Form' screen has several features that align with level 3 complexity: multiple controls (dropdown, textarea, radio buttons, labels, buttons), form validation, auto-population of data, and integration with Azure AD. The presence of a navigation bar and back button indicates some level of navigation is required. The device image preview and confirmation dialog add to the UI complexity. Although there is no mention of multiple screens, the complexity of the single screen with these features justifies a level 3 selection. The effort hours are adjusted slightly higher within the range to account for the integration with Azure AD, which can be complex and time-consuming."
+  },
+  {
+    "component_type": "Canvas App",
+    "component_name": "Order Request Form",
+    "screen_name": "Order Confirmation",
+    "level_selected": 4,
+    "score": 11,
+    "effort_hours": {
+      "optimistic": 40,
+      "most_likely": 45,
+      "pessimistic": 50
+    },
+    "assumptions": [
+      "Data sources and APIs for integration are already available and accessible.",
+      "Approval workflow is pre-built and only requires integration.",
+      "User roles and permissions are predefined and available.",
+      "Design assets and requirements for responsive design are provided.",
+      "Email system for triggering confirmation emails is in place.",
+      "Accessibility guidelines and requirements are provided."
+    ],
+    "reasoning": "The 'Order Confirmation' screen has a high number of features that indicate a complex screen with advanced functionality. Features such as integration with an approval workflow, data validation, conditional visibility based on user role, responsive design, and error handling suggest a level of complexity that aligns with Level 4 indicators. The screen requires custom logic for submission, error handling, and conditional logic for field visibility. Additionally, the need for accessibility compliance and responsive design indicates a requirement for advanced UI customization and testing across different devices. The presence of a loading spinner and confirmation dialog also suggests the need for state management. The effort hours are set to the standard range for Level 4, as the features listed are comprehensive and align well with the indicators for this level."
+  },
+  {
+    "component_type": "Power Automate",
+    "component_name": "Approval Workflow",
+    "level_selected": 2,
+    "score": 3,
+    "effort_hours": {
+      "optimistic": 6,
+      "most_likely": 8,
+      "pessimistic": 10
+    },
+    "assumptions": [
+      "The SharePoint and Outlook connectors are considered standard connectors.",
+      "The approval process is straightforward without complex branching logic.",
+      "The SLA of 2 business days is managed through the workflow logic without the need for additional custom development.",
+      "The workflow does not require custom connectors or API integrations.",
+      "The workflow is expected to handle standard approval notifications and responses without extensive error handling or multiple flows."
+    ],
+    "reasoning": "The Approval Workflow described has two main actions: 'Receive Notification' and 'Approve/Reject'. It uses standard connectors (SharePoint for triggering and reading/writing, Outlook for sending emails) and is triggered by the creation of an item in SharePoint. There is no mention of complex branching, loops, or the use of variables and expressions. However, it does involve a simple conditional branch to handle the approve/reject logic. The workflow is also expected to adhere to an SLA of 2 business days, which may require some scheduling logic but does not necessarily imply advanced scheduling features. Given these details, the workflow fits best within Level 2, which includes 5-10 actions, simple conditional branches, and limited expressions. The effort hours have been adjusted slightly to account for the SLA requirement, which may add some complexity to the workflow design."
+  },
+  {
+    "component_type": "DatabaseModel",
+    "component_name": "Employee and Device Order Management",
+    "screen_name": null,
+    "level_selected": 3,
+    "score": 75,
+    "effort_hours": {
+      "optimistic": 32,
+      "most_likely": 40,
+      "pessimistic": 48
+    },
+    "table_name": "Employees, Devices, Orders",
+    "description": "The database consists of three tables: 'Employees', 'Devices', and 'Orders'. The 'Employees' table stores employee details and is related to the 'Orders' table via the 'EmployeeID' foreign key. The 'Devices' table contains device details and is related to the 'Orders' table through the 'DeviceID' foreign key. This structure allows for efficient data management and integrity by reducing redundancy.",
+    "fields": [
+      {
+        "name": "EmployeeID",
+        "type": "Integer",
+        "description": "Unique identifier for each employee",
+        "constraints": [
+          "PRIMARY KEY",
+          "NOT NULL"
+        ]
+      },
+      {
+        "name": "FirstName",
+        "type": "String",
+        "description": "Employee's first name",
+        "constraints": []
+      },
+      {
+        "name": "LastName",
+        "type": "String",
+        "description": "Employee's last name",
+        "constraints": []
+      },
+      {
+        "name": "Department",
+        "type": "String",
+        "description": "Department the employee belongs to",
+        "constraints": []
+      },
+      {
+        "name": "Role",
+        "type": "String",
+        "description": "Role of the employee within the company",
+        "constraints": []
+      },
+      {
+        "name": "DeviceID",
+        "type": "Integer",
+        "description": "Unique identifier for each device",
+        "constraints": [
+          "PRIMARY KEY",
+          "NOT NULL"
+        ]
+      },
+      {
+        "name": "DeviceName",
+        "type": "String",
+        "description": "Name of the device",
+        "constraints": []
+      },
+      {
+        "name": "DeviceType",
+        "type": "String",
+        "description": "Type of the device (e.g., notebook, phone)",
+        "constraints": []
+      },
+      {
+        "name": "Specs",
+        "type": "String",
+        "description": "Specifications of the device",
+        "constraints": []
+      },
+      {
+        "name": "Availability",
+        "type": "Boolean",
+        "description": "Availability status of the device",
+        "constraints": []
+      },
+      {
+        "name": "OrderID",
+        "type": "Integer",
+        "description": "Unique identifier for each order",
+        "constraints": [
+          "PRIMARY KEY",
+          "NOT NULL"
+        ]
+      },
+      {
+        "name": "EmployeeID_FK",
+        "type": "Integer",
+        "description": "ID of the employee who placed the order",
+        "constraints": [
+          "NOT NULL",
+          "FOREIGN KEY REFERENCES Employees(EmployeeID)"
+        ]
+      },
+      {
+        "name": "DeviceID_FK",
+        "type": "Integer",
+        "description": "ID of the device ordered",
+        "constraints": [
+          "NOT NULL",
+          "FOREIGN KEY REFERENCES Devices(DeviceID)"
+        ]
+      },
+      {
+        "name": "Justification",
+        "type": "String",
+        "description": "Business justification for the order",
+        "constraints": []
+      },
+      {
+        "name": "UrgencyLevel",
+        "type": "String",
+        "description": "Urgency level of the order",
+        "constraints": []
+      },
+      {
+        "name": "OrderStatus",
+        "type": "String",
+        "description": "Current status of the order",
+        "constraints": []
+      }
+    ],
+    "assumptions": [
+      "The database schema provided is complete and no additional tables or fields are required.",
+      "The customer has provided all necessary business rules and validation requirements for the fields.",
+      "Standard indexing strategies will be applied to foreign keys and other frequently queried fields.",
+      "No complex triggers, stored procedures, or advanced database features are required beyond basic CRUD operations.",
+      "The database will be implemented in a relational database management system (RDBMS) that supports the specified data types and constraints."
+    ],
+    "reasoning": "The level is selected based on the complexity of the relationships between the tables and the number of fields. The effort hours are estimated considering the design, creation, and basic testing of the three tables with their relationships and constraints. The range accounts for potential complexities in setting up foreign key relationships and data integrity rules. The assumptions are made to clarify the scope of the database setup and to ensure that the estimate is based on the information provided."
+  }
+]

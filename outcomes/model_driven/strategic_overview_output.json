@@ -1,0 +1,101 @@
+{
+  "purpose": "Support HR and leadership in conducting structured annual performance reviews with trackable employee evaluations and follow-up goals.",
+  "business_value": [
+    "Ensures compliance with corporate evaluation processes",
+    "Provides leadership with data to support promotions or training plans",
+    "Allows HR to document improvement plans and actions"
+  ],
+  "mvp_components": [
+    {
+      "app_name": "Performance Review Management",
+      "app_type": "ModelDrivenApp",
+      "app_details": "A model-driven app to manage the performance review process, including forms for self-assessment and manager input, tracking of review status, and reporting compliance.",
+      "app_screens": [
+        {
+          "screen_name": "Performance Review Form",
+          "screen_type": "ModelDrivenApp",
+          "screen_details": "Structured performance review form that supports input from both the employee and their manager.",
+          "features": null
+        },
+        {
+          "screen_name": "Review Status Tracking",
+          "screen_type": "ModelDrivenApp",
+          "screen_details": "Allows users to track the status of reviews by employee and department.",
+          "features": null
+        },
+        {
+          "screen_name": "Compliance Reporting",
+          "screen_type": "ModelDrivenApp",
+          "screen_details": "Reports on compliance, indicating which reviews are overdue.",
+          "features": null
+        }
+      ],
+      "processed": false
+    }
+  ],
+  "post_mvp_modules": [
+    {
+      "module_name": "Development Goals",
+      "extension_type": "AppScreen",
+      "extends_component": "Performance Review Management",
+      "details": "Allows managers and employees to create and track individual development goals.",
+      "recommendation": "Extend the ModelDrivenApp to include functionality for setting and tracking development goals, as this aligns with the strategic goal of supporting leadership in creating training plans."
+    },
+    {
+      "module_name": "LMS Integration",
+      "extension_type": "Other",
+      "extends_component": "Performance Review Management",
+      "details": "Integrate the app with the internal Learning Management System (LMS) to align development goals with available training.",
+      "recommendation": "Integration with the LMS is crucial for aligning employee development goals with training opportunities, hence it should be prioritized in the post-MVP phase."
+    },
+    {
+      "module_name": "Manager Feedback History",
+      "extension_type": "AppScreen",
+      "extends_component": "Performance Review Management",
+      "details": "Add a section to the employee profile for managers to record and view historical feedback.",
+      "recommendation": "Incorporating manager feedback history into employee profiles will provide valuable context for performance reviews and should be included in the post-MVP phase."
+    }
+  ],
+  "user_roles": [
+    {
+      "role_name": "Employee",
+      "permissions": [
+        "View and confirm evaluations",
+        "Add self-assessment"
+      ]
+    },
+    {
+      "role_name": "Manager",
+      "permissions": [
+        "Submit and edit performance reviews for reports"
+      ]
+    },
+    {
+      "role_name": "HR Reviewer",
+      "permissions": [
+        "Monitor review cycles",
+        "Track documentation"
+      ]
+    }
+  ],
+  "system_roles": [
+    {
+      "role_name": "ModelDrivenApp",
+      "technical_scope": [
+        "Manage structured performance reviews",
+        "Track review status and compliance",
+        "Support multi-step workflows"
+      ]
+    }
+  ],
+  "constraints": [
+    "Access must follow hierarchical reporting structure",
+    "Review records must be read-only after final submission",
+    "Must support company-wide reporting"
+  ],
+  "integration_points": [
+    "Integration with internal LMS"
+  ],
+  "notes": null,
+  "database_model": null
+}

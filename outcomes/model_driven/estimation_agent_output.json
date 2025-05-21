@@ -1,0 +1,171 @@
+[
+  {
+    "component_type": "ModelDriven App",
+    "component_name": "Performance Review Management",
+    "screen_name": "Performance Review Form",
+    "level_selected": 4,
+    "score": 8,
+    "effort_hours": {
+      "optimistic": 36,
+      "most_likely": 43,
+      "pessimistic": 50
+    },
+    "assumptions": [
+      "Data model and relationships are well-defined and provided by the customer.",
+      "The customer has an existing Learning Management System (LMS) with an API for integration.",
+      "Security roles and hierarchical security model requirements are clearly defined.",
+      "The customer will provide access to necessary systems for integration testing.",
+      "The customer has a clear reporting structure that can be used to implement the hierarchical security model."
+    ],
+    "reasoning": "The Performance Review Form is a complex component of the ModelDriven App. It includes a custom entity with multiple fields, a main form with sections for different types of input, a multi-step business process flow, custom security roles, a hierarchical security model, workflows or business rules, custom views, a dashboard, and integration with an external system (LMS). This aligns with level 4 indicators such as complex BPF with branching, business rules and logic, custom forms, deep relationship models, and role-based views and dashboards. The integration with an external system suggests a higher complexity, but since it's limited to one system and the other indicators match level 4, the score is set to 8. The effort hours are adjusted to the higher end of the range to account for the complexity of the integration and the hierarchical security model."
+  },
+  {
+    "component_type": "ModelDriven App",
+    "component_name": "Performance Review Management",
+    "screen_name": "Review Status Tracking",
+    "level_selected": 4,
+    "score": 8,
+    "effort_hours": {
+      "optimistic": 36,
+      "most_likely": 43,
+      "pessimistic": 50
+    },
+    "assumptions": [
+      "Data schema for employees, managers, and departments is provided by the customer.",
+      "Predefined security roles are well-defined and do not require extensive customization.",
+      "Business rules complexity is moderate and does not involve complex logic or calculations.",
+      "Workflows are assumed to be multi-step but not overly complex or requiring custom code.",
+      "Dashboards will be created using out-of-the-box components with some customizations.",
+      "Entity relationships are assumed to be hierarchical but not excessively complex."
+    ],
+    "reasoning": "The 'Performance Review Management' app includes several features that align with a Level 4 complexity: custom views, predefined security roles, business rules, multi-step workflows, dashboards, entity relationships, and structured forms. The app does not seem to require plugins or custom code, integration with external systems, or advanced security layers, which would indicate a Level 5 complexity. Therefore, Level 4 is the best match. The score of 8 is chosen as it is within the score range for Level 4 (7-9) and reflects the presence of multiple complex features such as business rules, workflows, and dashboards. The effort hours are adjusted to the higher end of the range to account for the complexity of the workflows and the need for custom dashboards."
+  },
+  {
+    "component_type": "ModelDriven App",
+    "component_name": "Performance Review Management",
+    "screen_name": "Compliance Reporting",
+    "level_selected": 4,
+    "score": 8,
+    "effort_hours": {
+      "optimistic": 36,
+      "most_likely": 43,
+      "pessimistic": 50
+    },
+    "assumptions": [
+      "The data model and entities for the performance reviews are already in place.",
+      "Custom views and charts will be created using out-of-the-box capabilities without the need for custom code.",
+      "Security roles are predefined and will be configured within the existing security model.",
+      "Business rules will be implemented using the platform's standard business rule engine.",
+      "Dashboards and reporting features will be created using existing platform tools and widgets."
+    ],
+    "reasoning": "The 'Compliance Reporting' screen includes custom views, charts, predefined security roles, business rules, and dashboards, which aligns with the indicators for level 4. The complexity of creating visual representations of data and enforcing security constraints, along with the need for a dashboard that aggregates compliance data, suggests a more advanced implementation than level 3 but does not require plugins, custom code, or integration with external systems as indicated in level 5. Therefore, level 4 is the best match. The effort hours have been adjusted to the middle of the range to account for the combination of features and complexity, with a slight lean towards the optimistic side due to the assumption that existing platform capabilities will be leveraged."
+  },
+  {
+    "component_type": "DatabaseModel",
+    "component_name": "EmployeePerformanceReviewDB",
+    "screen_name": null,
+    "level_selected": 3,
+    "score": 75,
+    "effort_hours": {
+      "optimistic": 32,
+      "most_likely": 40,
+      "pessimistic": 48
+    },
+    "table_name": "Employees, PerformanceReviews",
+    "description": "The database consists of two tables: Employees and PerformanceReviews. The Employees table contains employee details and a self-referencing foreign key to define managerial hierarchy. The PerformanceReviews table holds records of employee performance reviews, each linked to an employee in the Employees table.",
+    "fields": [
+      {
+        "name": "EmployeeID",
+        "type": "Integer",
+        "description": "Unique identifier for each employee",
+        "constraints": [
+          "PRIMARY KEY",
+          "NOT NULL"
+        ]
+      },
+      {
+        "name": "FirstName",
+        "type": "String",
+        "description": "Employee's first name",
+        "constraints": []
+      },
+      {
+        "name": "LastName",
+        "type": "String",
+        "description": "Employee's last name",
+        "constraints": []
+      },
+      {
+        "name": "Department",
+        "type": "String",
+        "description": "Department the employee belongs to",
+        "constraints": []
+      },
+      {
+        "name": "ManagerID",
+        "type": "Integer",
+        "description": "Unique identifier for the employee's manager",
+        "constraints": [
+          "FOREIGN KEY REFERENCES Employees(EmployeeID)"
+        ]
+      },
+      {
+        "name": "ReviewID",
+        "type": "Integer",
+        "description": "Unique identifier for each review",
+        "constraints": [
+          "PRIMARY KEY",
+          "NOT NULL"
+        ]
+      },
+      {
+        "name": "EmployeeID",
+        "type": "Integer",
+        "description": "Unique identifier for the employee being reviewed",
+        "constraints": [
+          "NOT NULL",
+          "FOREIGN KEY REFERENCES Employees(EmployeeID)"
+        ]
+      },
+      {
+        "name": "ReviewDate",
+        "type": "Date",
+        "description": "Date of the review",
+        "constraints": []
+      },
+      {
+        "name": "SelfAssessment",
+        "type": "Text",
+        "description": "Employee's self-assessment",
+        "constraints": []
+      },
+      {
+        "name": "ManagerAssessment",
+        "type": "Text",
+        "description": "Manager's assessment of the employee",
+        "constraints": []
+      },
+      {
+        "name": "ReviewStatus",
+        "type": "String",
+        "description": "Status of the review (draft, submitted, confirmed)",
+        "constraints": []
+      },
+      {
+        "name": "DevelopmentGoals",
+        "type": "Text",
+        "description": "Employee's development goals",
+        "constraints": []
+      }
+    ],
+    "assumptions": [
+      "The database schema is already designed and only needs to be implemented.",
+      "All necessary indexes for optimization are included in the constraints.",
+      "The data types provided are supported by the database system being used.",
+      "No additional tables or fields are required beyond what has been specified.",
+      "The database will be implemented in a relational database management system (RDBMS).",
+      "No complex triggers, stored procedures, or views are required for this implementation."
+    ],
+    "reasoning": "The level is selected based on the complexity of the database model, which includes normalization and self-referencing foreign keys. The score reflects the need for careful implementation of the hierarchical relationship and the foreign key constraints. The effort hours are estimated based on the complexity of the database model, with a range provided to account for potential complications in setting up the relationships and constraints. The optimistic estimate assumes a smooth implementation with no issues, the most likely estimate accounts for some minor issues, and the pessimistic estimate allows for more significant challenges that could arise."
+  }
+]

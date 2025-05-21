@@ -1,78 +1,117 @@
 [
   {
-    "component_type": "ModelDriven App",
-    "component_name": "Performance Review Management",
-    "screen_name": "Performance Review Form",
-    "level_selected": 4,
-    "score": 8,
+    "component_type": "Canvas App",
+    "component_name": "Order Request Form",
+    "screen_name": "Device Browser",
+    "level_selected": 3,
+    "score": 7,
     "effort_hours": {
-      "optimistic": 36,
-      "most_likely": 43,
-      "pessimistic": 50
+      "optimistic": 28,
+      "most_likely": 32,
+      "pessimistic": 36
     },
     "assumptions": [
-      "Data model and entities are predefined and provided by the customer.",
-      "Security roles and hierarchical structure are well-defined and documented.",
-      "The workflows are not overly complex and do not require custom code.",
-      "Custom views and charts are based on existing data within the system.",
-      "Auditing features are supported by the platform and do not require custom development."
+      "Data sources and APIs for device catalog, images, and availability are pre-existing and accessible.",
+      "Azure AD integration for authentication is handled by standard Power Platform connectors.",
+      "Order request integration implies a simple form submission to a pre-existing system or data source.",
+      "Device filtering and department filter will use standard controls and not require complex custom development.",
+      "No additional screens beyond the 'Device Browser' are being estimated at this time."
     ],
-    "reasoning": "The Performance Review Form is a complex component of the ModelDriven App. It includes customizable forms with business rules, security roles based on hierarchical structure, multi-step workflows, custom views, charts for reporting, auditing, and record associations. These features align with a Level 4 complexity due to the presence of business rules and logic, deep relationship models, role-based views, and dashboards. The effort hours are adjusted to the higher end of the range to account for the complexity of the workflows and the need to ensure that the form captures data accurately from multiple user roles (employees, managers, HR reviewers)."
+    "reasoning": "The 'Device Browser' screen appears to be moderately complex. It involves multiple features such as a device catalog, filtering options, device details, images, availability indicators, and integration with order requests and Azure AD. This suggests the use of multiple data sources, conditional logic for filtering, and possibly some custom controls for a better user experience. The integration with Azure AD and order requests also implies some complexity in data handling and security. However, the screen does not seem to require offline capabilities, advanced error handling, or fully responsive layout across devices, which are characteristics of higher levels. Therefore, level 3 is selected, which aligns with the screen having multiple data sources, moderate UI complexity, and some data validation. The effort hours are adjusted slightly upwards to account for potential complexities in integrating with Azure AD and the order request system."
   },
   {
-    "component_type": "ModelDriven App",
-    "component_name": "Performance Review Management",
-    "screen_name": "Review Status Tracker",
-    "level_selected": 4,
-    "score": 8,
+    "component_type": "Canvas App",
+    "component_name": "Order Request Form",
+    "screen_name": "Device Details",
+    "level_selected": 2,
+    "score": 5,
     "effort_hours": {
-      "optimistic": 36,
-      "most_likely": 43,
-      "pessimistic": 50
+      "optimistic": 16,
+      "most_likely": 20,
+      "pessimistic": 24
     },
     "assumptions": [
-      "The customer will provide detailed requirements for each feature.",
-      "The customer will provide the data model for the custom entity.",
-      "Security roles and access rights are well-defined and documented by the customer.",
-      "The hierarchical security model is already in place or there is clear guidance on how it should be structured.",
-      "No integration with external systems is required beyond the scope of the ModelDriven App.",
-      "All necessary licenses for creating and deploying the ModelDriven App are in place."
+      "Data for device details, images, and availability is provided by the customer.",
+      "Images are pre-uploaded and available in a data source.",
+      "Device specifications are structured and can be easily displayed.",
+      "Navigation is limited to going back to a previous screen.",
+      "Add to Cart or Request functionality involves simple data patching to a single data source.",
+      "No complex business logic or data processing is required.",
+      "Basic error handling is included for data operations."
     ],
-    "reasoning": "The 'Performance Review Management' app includes a custom entity with multiple fields, custom views with filters, multiple security roles with different access levels, business rules, workflows for a multi-step process, a hierarchical security model, dashboards, and charts. This complexity aligns with level 4 indicators such as business rules and logic, custom forms (implied by the need for custom views and filters), deep relationship models (implied by the hierarchical security model and the need to track reviews by employee and department), and role-based views and dashboards. The score of 8 is chosen as it falls within the score range of level 4 (7-9). The effort hours are adjusted slightly upwards to the middle of the range to account for the complexity of the hierarchical security model and the multi-step workflows."
+    "reasoning": "The 'Device Details' screen has a moderate level of complexity. It includes a gallery for device images (feat_0002), which is a custom control but not overly complex. Displaying device specifications (feat_0003) and availability (feat_0004) will likely involve conditional logic to show/hide information based on the device selected. The back navigation button (feat_0005) and the 'Add to Cart or Request' button (feat_0006) imply some navigation and data patching, but this is still considered simple. The screen does not seem to require multiple data sources, advanced state management, or complex navigation. Therefore, Level 2 is the best match, with a score of 5, which falls within the score range of 4-6 for this level. The effort hours are adjusted slightly upwards to account for the potential complexity in setting up the image gallery and ensuring the display of specifications is well-formatted."
   },
   {
-    "component_type": "ModelDriven App",
-    "component_name": "Performance Review Management",
-    "screen_name": "Compliance Reporting",
+    "component_type": "Canvas App",
+    "component_name": "Order Request Form",
+    "screen_name": "Request Form",
     "level_selected": 4,
-    "score": 8,
+    "score": 11,
     "effort_hours": {
-      "optimistic": 36,
-      "most_likely": 43,
+      "optimistic": 40,
+      "most_likely": 45,
       "pessimistic": 50
     },
     "assumptions": [
-      "The customer provides all necessary data for compliance reporting.",
-      "Security roles are predefined and do not require complex customization.",
-      "Automated workflows are limited to notification and state management.",
-      "No integration with external systems is required for this component.",
-      "Custom JavaScript for forms is limited to basic validation and UI enhancements."
+      "Data sources like Device Catalog and Azure AD are already available and accessible.",
+      "Approval workflow exists and just needs to be integrated, not created from scratch.",
+      "Design mockups or specifications are provided for the UI elements.",
+      "Accessibility requirements are standard and do not require extensive custom development."
     ],
-    "reasoning": "The 'Compliance Reporting' screen in the 'Performance Review Management' app includes custom views, dashboards, configured security roles, business rules, and automated workflows. This aligns with level 4 indicators such as custom forms with JavaScript, business rules and logic, and role-based views and dashboards. The complexity of the workflows and the need for custom views and dashboards suggest a higher level of effort than level 3. However, there is no mention of complex BPF with branching or deep relationship models, which might have pushed it to a higher level. The effort hours are adjusted slightly towards the higher end of the range to account for potential complexities in implementing the custom reporting features and workflows."
+    "reasoning": "The 'Request Form' screen has a variety of features that indicate a higher level of complexity. Features such as form validation, integration with approval workflow, responsive design, accessibility features, and error handling suggest a more advanced implementation. The presence of multiple data source connections, dynamic content like device image preview and specifications display, and async operations with a loading spinner also contribute to the complexity. The screen seems to be a key part of the app with both input and output elements, and it includes navigation elements, which implies some level of navigation complexity. Given these factors, level 4 is the best match, with a score of 11 falling within the score range of 10-12 for this level. The effort hours are set to the standard range for level 4, as the features listed do not suggest a need for significant deviation from the estimated effort."
+  },
+  {
+    "component_type": "Canvas App",
+    "component_name": "Order Request Form",
+    "screen_name": "Order Confirmation",
+    "level_selected": 3,
+    "score": 8,
+    "effort_hours": {
+      "optimistic": 28,
+      "most_likely": 32,
+      "pessimistic": 36
+    },
+    "assumptions": [
+      "Data sources and APIs for the approval workflow, device specs, and employee details are pre-existing and accessible.",
+      "Image preview functionality relies on device capabilities and is supported by the platform.",
+      "The business logic for SLA-based estimated approval time is provided.",
+      "Standard Power Apps controls are sufficient for UI elements.",
+      "No complex theming or CSS customizations are required."
+    ],
+    "reasoning": "The 'Order Confirmation' screen has several features that indicate moderate complexity. Features such as device image preview, integration with an approval workflow, data validation, and dynamic displays (urgency level, estimated approval time) suggest a level of complexity that aligns with Level 3. The screen involves patching data to multiple sources (feat_0009), moderate UI complexity with forms and galleries (feat_0001, feat_0003, feat_0005), and error handling and data validation (feat_0012). The presence of navigation (feat_0011) and auto-populated fields (feat_0013) also contribute to this assessment. The effort hours have been adjusted slightly upwards to account for the integration with external workflows and the potential need for testing the image preview functionality."
+  },
+  {
+    "component_type": "Power Automate",
+    "component_name": "Approval Workflow",
+    "level_selected": 2,
+    "score": 4,
+    "effort_hours": {
+      "optimistic": 6,
+      "most_likely": 8,
+      "pessimistic": 10
+    },
+    "assumptions": [
+      "Standard connectors are sufficient for the workflow.",
+      "The SharePoint list or library is already set up and configured.",
+      "Email templates for notifications are provided or standard.",
+      "The approval process is standard without complex business logic.",
+      "The customer has a clear SLA and process for approvals."
+    ],
+    "reasoning": "The Approval Workflow described has a trigger based on SharePoint item creation, uses standard connectors (SharePoint, Outlook, Approvals), and consists of two main actions: receiving a notification and approving/rejecting with comments. This fits within the Level 2 indicators, which include 5-10 actions, simple conditional branches, and limited expressions. The workflow likely includes a conditional branch to determine if the approval is accepted or rejected and may use a couple of variables to handle the approval data and comments. The effort hours are adjusted to the higher end of the range provided for Level 2 (6-10 hours) to account for potential complexities in setting up the approval notifications and handling the approval/rejection logic."
   },
   {
     "component_type": "DatabaseModel",
-    "component_name": "Employee Management System",
+    "component_name": "Employee-Device-Order Relationship",
     "screen_name": null,
     "level_selected": 3,
     "score": 75,
     "effort_hours": {
-      "optimistic": 40,
-      "most_likely": 60,
-      "pessimistic": 80
+      "optimistic": 24,
+      "most_likely": 32,
+      "pessimistic": 40
     },
-    "table_name": "Employees, Performance_Reviews, Goals",
-    "description": "The database consists of three tables: Employees, Performance_Reviews, and Goals. The Employees table contains employee details and a self-referencing manager_id to establish hierarchy. Performance_Reviews tracks reviews for each employee, linked by employee_id. Goals table tracks employee goals, also linked by employee_id.",
+    "table_name": "Employees, Devices, Orders",
+    "description": "The database consists of three tables: Employees, Devices, and Orders. The Employees table stores employee details and is related to the Orders table via the employee_id field. The Devices table contains device information and is related to the Orders table through the device_id field. This setup ensures data normalization and integrity by preventing redundancy.",
     "fields": [
       {
         "name": "employee_id",
@@ -84,104 +123,97 @@
         ]
       },
       {
-        "name": "first_name",
+        "name": "employee_name",
         "type": "string",
-        "description": "Employee's first name",
-        "constraints": []
-      },
-      {
-        "name": "last_name",
-        "type": "string",
-        "description": "Employee's last name",
+        "description": "Full name of the employee",
         "constraints": []
       },
       {
         "name": "department",
         "type": "string",
-        "description": "Department the employee belongs to",
+        "description": "Department of the employee",
         "constraints": []
       },
       {
-        "name": "manager_id",
+        "name": "device_id",
         "type": "integer",
-        "description": "Unique identifier for the employee's manager",
-        "constraints": [
-          "FOREIGN KEY REFERENCES Employees(employee_id)"
-        ]
-      },
-      {
-        "name": "review_id",
-        "type": "integer",
-        "description": "Unique identifier for each performance review",
+        "description": "Unique identifier for each device",
         "constraints": [
           "PRIMARY KEY",
           "NOT NULL"
         ]
       },
       {
-        "name": "review_employee_id",
-        "type": "integer",
-        "description": "Unique identifier for the employee being reviewed",
-        "constraints": [
-          "NOT NULL",
-          "FOREIGN KEY REFERENCES Employees(employee_id)"
-        ]
-      },
-      {
-        "name": "review_date",
-        "type": "date",
-        "description": "Date the review was conducted",
-        "constraints": []
-      },
-      {
-        "name": "review_status",
+        "name": "device_name",
         "type": "string",
-        "description": "Current status of the review (draft, review, confirmed)",
+        "description": "Name of the device",
         "constraints": []
       },
       {
-        "name": "review_content",
-        "type": "text",
-        "description": "Content of the performance review",
+        "name": "device_specs",
+        "type": "string",
+        "description": "Specifications of the device",
         "constraints": []
       },
       {
-        "name": "goal_id",
+        "name": "device_availability",
+        "type": "boolean",
+        "description": "Availability status of the device",
+        "constraints": []
+      },
+      {
+        "name": "order_id",
         "type": "integer",
-        "description": "Unique identifier for each goal",
+        "description": "Unique identifier for each order",
         "constraints": [
           "PRIMARY KEY",
           "NOT NULL"
         ]
       },
       {
-        "name": "goal_employee_id",
+        "name": "employee_id_fk",
         "type": "integer",
-        "description": "Unique identifier for the employee the goal is assigned to",
+        "description": "Employee who placed the order",
         "constraints": [
           "NOT NULL",
           "FOREIGN KEY REFERENCES Employees(employee_id)"
         ]
       },
       {
-        "name": "goal_description",
-        "type": "text",
-        "description": "Description of the goal",
+        "name": "device_id_fk",
+        "type": "integer",
+        "description": "Device requested in the order",
+        "constraints": [
+          "NOT NULL",
+          "FOREIGN KEY REFERENCES Devices(device_id)"
+        ]
+      },
+      {
+        "name": "justification",
+        "type": "string",
+        "description": "Business justification for the order",
         "constraints": []
       },
       {
-        "name": "due_date",
-        "type": "date",
-        "description": "Date by which the goal should be achieved",
+        "name": "urgency_level",
+        "type": "string",
+        "description": "Urgency level of the order",
+        "constraints": []
+      },
+      {
+        "name": "order_status",
+        "type": "string",
+        "description": "Status of the order",
         "constraints": []
       }
     ],
     "assumptions": [
-      "The database schema provided is complete and no additional tables or fields are required.",
-      "All necessary indexes for optimization are included in the constraints.",
-      "The customer will provide any necessary data for populating the tables.",
-      "Security and access control will be handled externally or is not part of this estimation."
+      "The data types provided are assumed to be supported by the database system in use.",
+      "The constraints are standard SQL constraints.",
+      "No additional tables or relationships are required beyond what is described.",
+      "Indexes, triggers, and stored procedures are not considered in this estimate.",
+      "The customer will provide any necessary data for populating the tables."
     ],
-    "reasoning": "The level is selected as 3 due to the complexity of the relationships between the tables, including a self-referencing foreign key for hierarchical data. The score of 75 reflects the moderate complexity of the database model. The effort hours are estimated based on the need to design and implement three interrelated tables with various data types and constraints. The optimistic estimate assumes smooth progress with no complications, the most likely estimate accounts for typical challenges and validations, and the pessimistic estimate allows for unexpected issues and more complex business rules that may arise."
+    "reasoning": "The level is selected based on the complexity of the relationships between the tables and the number of fields. The effort hours are estimated considering the design, creation, and testing of three interrelated tables with foreign key constraints. The most likely effort is set at 32 hours, allowing for proper design and testing, with some buffer for potential complexities or revisions. The optimistic estimate assumes a smooth process with no complications, while the pessimistic estimate allows for unexpected issues or additional complexity."
   }
 ]

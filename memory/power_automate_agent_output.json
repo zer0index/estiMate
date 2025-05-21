@@ -16,28 +16,82 @@
           "screen_name": "Device Browser",
           "screen_type": "CanvasApp",
           "screen_details": "Screen to browse and filter available devices.",
-          "features": null
+          "features": {
+            "feat_0001": "Device Catalog",
+            "feat_0002": "Device Filtering",
+            "feat_0003": "Device Details",
+            "feat_0004": "Device Images",
+            "feat_0005": "Availability Indicator",
+            "feat_0006": "Department Filter",
+            "feat_0007": "Order Request Integration",
+            "feat_0008": "Azure AD Integration"
+          }
         },
         {
           "screen_name": "Device Details",
           "screen_type": "CanvasApp",
           "screen_details": "Screen to view specs, photos, and availability of selected device.",
-          "features": null
+          "features": {
+            "feat_0001": "Device Details Screen",
+            "feat_0002": "Device Image Gallery",
+            "feat_0003": "Device Specifications Display",
+            "feat_0004": "Device Availability Indicator",
+            "feat_0005": "Back Navigation Button",
+            "feat_0006": "Add to Cart or Request Button"
+          }
         },
         {
           "screen_name": "Request Form",
           "screen_type": "CanvasApp",
           "screen_details": "Form to submit a new device order request.",
-          "features": null
+          "features": {
+            "feat_0001": "Device Selection Dropdown",
+            "feat_0002": "Business Justification Textarea",
+            "feat_0003": "Urgency Level Radio Buttons",
+            "feat_0004": "Employee Name Text Label",
+            "feat_0005": "Employee Department Text Label",
+            "feat_0006": "Submit Button",
+            "feat_0007": "Reset Form Button",
+            "feat_0008": "Auto-Population of Employee Data",
+            "feat_0009": "Form Validation",
+            "feat_0010": "On-Screen Instructions",
+            "feat_0011": "Navigation Bar",
+            "feat_0012": "Back Button",
+            "feat_0013": "Device Image Preview",
+            "feat_0014": "Device Specifications Display",
+            "feat_0015": "Confirmation Message on Submission",
+            "feat_0016": "Integration with Approval Workflow",
+            "feat_0017": "Loading Spinner for Async Operations",
+            "feat_0018": "Error Handling and User Notifications",
+            "feat_0019": "Responsive Design for Multiple Devices",
+            "feat_0020": "Accessibility Features",
+            "feat_0021": "Data Source Connection to Device Catalog",
+            "feat_0022": "Data Source Connection to Azure AD"
+          }
         },
         {
           "screen_name": "Order Confirmation",
           "screen_type": "CanvasApp",
           "screen_details": "Screen to confirm the order before submission.",
-          "features": null
+          "features": {
+            "feat_0001": "Confirmation Summary",
+            "feat_0002": "Device Image Preview",
+            "feat_0003": "Selected Device Specs",
+            "feat_0004": "Business Justification Review",
+            "feat_0005": "Urgency Level Display",
+            "feat_0006": "Employee Details Confirmation",
+            "feat_0007": "Order Submission Button",
+            "feat_0008": "Order Edit Option",
+            "feat_0009": "Integration with Approval Workflow",
+            "feat_0010": "Confirmation Message upon Submission",
+            "feat_0011": "Back Navigation to Device Catalog or Order Form",
+            "feat_0012": "Data Validation before Submission",
+            "feat_0013": "Auto-populated Order Date",
+            "feat_0014": "Estimated Approval Time Display based on SLA"
+          }
         }
       ],
-      "processed": false
+      "processed": true
     },
     {
       "flow_name": "Approval Workflow",
@@ -57,11 +111,18 @@
           "features": null
         }
       ],
-      "processed": false,
+      "processed": true,
       "features": null,
-      "actions": null,
-      "connectors": null,
-      "trigger": null
+      "actions": {
+        "action_0001": "Receive Notification",
+        "action_0002": "Approve/Reject"
+      },
+      "connectors": {
+        "SharePoint": "Read",
+        "Outlook": "Send Email",
+        "Approvals": "Create/Track"
+      },
+      "trigger": "When an item is created in SharePoint"
     }
   ],
   "post_mvp_modules": [

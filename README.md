@@ -13,7 +13,7 @@
 
 ## 📌 Overview
 
-**estiMate** intelligently breaks down Power Platform project documentation using LLM-powered agents and LangGraph’s orchestration system. Each component is processed by a specialized agent, ensuring fast, structured estimates—visualized in a live CLI.
+**estiMate** intelligently breaks down Power Platform project documentation using LLM-powered agents and LangGraph's orchestration system. Each component is processed by a specialized agent, ensuring fast, structured estimates—visualized in a live CLI.
 
 ---
 
@@ -24,6 +24,7 @@
 - [✨ Core Features](#-core-features)
 - [🚀 Getting Started](#-getting-started)
 - [💾 Caching System](#-caching-system)
+- [🎨 CLI Output](#-cli-output)
 - [🛠️ Extending estiMate](#️-extending-estimate)
 - [📚 Tech Stack](#-tech-stack)
 - [🎥 Demo](#-demo)
@@ -141,6 +142,14 @@ To re-run: delete the corresponding file.
 
 ---
 
+## 🎨 CLI Output
+
+- The pipeline provides real-time, colorized feedback in the terminal.
+- Each step uses spinners and color-coded status messages for progress, success, and errors.
+- If the spinner-based logger is missing, some nodes may fall back to plain or `rich`-styled output.
+
+---
+
 ## 🛠️ Extending estiMate
 
 Want to add a new component handler?
@@ -149,6 +158,17 @@ Want to add a new component handler?
 2. Register the node in `graph.py`
 3. Add or update the schema in `graph/schemas/`
 4. Write a new YAML prompt in `graph/prompts/`
+
+**For consistent CLI output:**
+- Use a logger pattern in your node:
+  ```python
+  def my_node(state, logger):
+      logger.start("Processing...")
+      # ...work...
+      logger.success("Done!")
+      return state
+  ```
+- If the logger is not available, fallback to `print` or `rich.console` output.
 
 Follow the modular pattern and you're good to go!
 

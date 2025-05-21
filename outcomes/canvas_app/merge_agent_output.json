@@ -11,7 +11,7 @@
       {
         "app_name": "Order Request Form",
         "app_type": "CanvasApp",
-        "app_details": "Allows employees to browse available devices, view specs, photos, and availability, and filter by department-approved models. Form for employees to select a device, justify business need, select urgency level, and auto-populate employee name/department from Azure AD.",
+        "app_details": "Allows employees to browse available devices, view specs, photos, availability, and filter by department-approved models. Form for employees to select a device, justify business need, select urgency level, and auto-populate employee name/department from Azure AD.",
         "app_screens": [
           {
             "screen_name": "Device Browser",
@@ -22,23 +22,27 @@
               "feat_0002": "Device Filtering",
               "feat_0003": "Device Details",
               "feat_0004": "Device Images",
-              "feat_0005": "Availability Indicator",
-              "feat_0006": "Department Filter",
-              "feat_0007": "Order Request Integration",
-              "feat_0008": "Azure AD Integration"
+              "feat_0005": "Department Approval Filter",
+              "feat_0006": "Device Availability Indicator"
             }
           },
           {
             "screen_name": "Device Details",
             "screen_type": "CanvasApp",
-            "screen_details": "Screen to view specs, photos, and availability of selected device.",
+            "screen_details": "Screen to view device specs, photos, and availability.",
             "features": {
               "feat_0001": "Device Details Screen",
               "feat_0002": "Device Image Gallery",
               "feat_0003": "Device Specifications Display",
               "feat_0004": "Device Availability Indicator",
               "feat_0005": "Back Navigation Button",
-              "feat_0006": "Add to Cart or Request Button"
+              "feat_0006": "Device Selection Button",
+              "feat_0007": "Screen Responsive Design",
+              "feat_0008": "Integration with Device Catalog Data Source",
+              "feat_0009": "Error Handling for Data Retrieval",
+              "feat_0010": "Loading Spinner for Asynchronous Operations",
+              "feat_0011": "Accessibility Features for Screen Content",
+              "feat_0012": "User Interface Consistency with Parent App"
             }
           },
           {
@@ -59,15 +63,8 @@
               "feat_0011": "Navigation Bar",
               "feat_0012": "Back Button",
               "feat_0013": "Device Image Preview",
-              "feat_0014": "Device Specifications Display",
-              "feat_0015": "Confirmation Message on Submission",
-              "feat_0016": "Integration with Approval Workflow",
-              "feat_0017": "Loading Spinner for Async Operations",
-              "feat_0018": "Error Handling and User Notifications",
-              "feat_0019": "Responsive Design for Multiple Devices",
-              "feat_0020": "Accessibility Features",
-              "feat_0021": "Data Source Connection to Device Catalog",
-              "feat_0022": "Data Source Connection to Azure AD"
+              "feat_0014": "Confirmation Dialog",
+              "feat_0015": "Integration with Azure AD"
             }
           },
           {
@@ -75,20 +72,26 @@
             "screen_type": "CanvasApp",
             "screen_details": "Screen to confirm the order before submission.",
             "features": {
-              "feat_0001": "Confirmation Summary",
-              "feat_0002": "Device Image Preview",
-              "feat_0003": "Selected Device Specs",
-              "feat_0004": "Business Justification Review",
-              "feat_0005": "Urgency Level Display",
-              "feat_0006": "Employee Details Confirmation",
-              "feat_0007": "Order Submission Button",
-              "feat_0008": "Order Edit Option",
-              "feat_0009": "Integration with Approval Workflow",
-              "feat_0010": "Confirmation Message upon Submission",
-              "feat_0011": "Back Navigation to Device Catalog or Order Form",
-              "feat_0012": "Data Validation before Submission",
-              "feat_0013": "Auto-populated Order Date",
-              "feat_0014": "Estimated Approval Time Display based on SLA"
+              "feat_0001": "Confirmation Message",
+              "feat_0002": "Summary of Selected Device",
+              "feat_0003": "Business Justification Review",
+              "feat_0004": "Urgency Level Display",
+              "feat_0005": "Employee Details Confirmation",
+              "feat_0006": "Submit Order Button",
+              "feat_0007": "Edit Order Button",
+              "feat_0008": "Integration with Approval Workflow",
+              "feat_0009": "Data Validation before Submission",
+              "feat_0010": "Confirmation Dialog on Submission",
+              "feat_0011": "Auto-populate Order Details for Review",
+              "feat_0012": "Back Navigation to Modify Selection",
+              "feat_0013": "Read-only View of Order Details",
+              "feat_0014": "Visual Indicators for Required Fields",
+              "feat_0015": "Accessibility Compliance for Screen Content",
+              "feat_0016": "Responsive Design for Different Devices",
+              "feat_0017": "Loading Spinner while Processing Submission",
+              "feat_0018": "Error Handling for Submission Failures",
+              "feat_0019": "Confirmation Email Trigger upon Submission",
+              "feat_0020": "Conditional Visibility of Fields based on User Role"
             }
           }
         ],
@@ -97,7 +100,7 @@
       {
         "flow_name": "Approval Workflow",
         "flow_type": "PowerAutomate",
-        "flow_details": "Workflow for managers to receive approval notifications and approve/reject with comments within a 2 business day SLA.",
+        "flow_details": "Workflow for managers to receive approval notifications and approve/reject with comments within an SLA of 2 business days.",
         "flow_actions": [
           {
             "action_name": "Receive Notification",
@@ -119,11 +122,10 @@
           "action_0002": "Approve/Reject"
         },
         "connectors": {
-          "SharePoint": "Read",
-          "Outlook": "Send Email",
-          "Approvals": "Create/Track"
+          "SharePoint": "Read/Write",
+          "Outlook": "Send Email"
         },
-        "trigger": "When an item is created in SharePoint"
+        "trigger": "When an item is created (SharePoint)"
       }
     ],
     "post_mvp_modules": [
@@ -131,15 +133,15 @@
         "module_name": "Request Tracking",
         "extension_type": "AppScreen",
         "extends_component": "Order Request Form",
-        "details": "Allows employees to view the status of their order requests and receive email notifications at each step. An optional Power BI dashboard for tracking could be added.",
-        "recommendation": "Extend the Order Request Form with a new screen for tracking to keep all order-related features within a single app, enhancing user experience and adoption."
+        "details": "Allows employees to view the status of their requests and receive email notifications at each step. An optional Power BI dashboard for tracking could be added.",
+        "recommendation": "Extend the Order Request Form with additional screens for status tracking to provide transparency and improve user experience."
       },
       {
         "module_name": "Inventory Management",
         "extension_type": "AppScreen",
         "extends_component": "Device Catalog",
-        "details": "Enables IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system (e.g., SAP).",
-        "recommendation": "Extend the Device Catalog app to include inventory management features for IT Administrators, ensuring a centralized system for device-related management."
+        "details": "Enables IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system.",
+        "recommendation": "Extend the Device Catalog app with additional screens for inventory management to streamline the fulfillment process and maintain accurate stock levels."
       }
     ],
     "user_roles": [
@@ -161,13 +163,13 @@
         "role_name": "IT Administrator",
         "technical_scope": [
           "Fulfill orders",
-          "Update stock"
+          "Update stock (Post-MVP)"
         ]
       },
       {
         "role_name": "Procurement",
         "technical_scope": [
-          "Track purchasing metrics"
+          "Track purchasing metrics (Post-MVP)"
         ]
       }
     ],
@@ -184,7 +186,7 @@
       "Power Automate for approvals and notifications",
       "Azure AD for user authentication"
     ],
-    "notes": "The app should have a clean, corporate design with device images, a responsive layout for phone and desktop, use dropdowns, cards, and status icons, and confirm order screen before submission. It should also be accessible (WCAG AA). Security & compliance requirements include role-based access via Dataverse security roles, an audit trail of approvals, and retaining order data for 2 years per IT policy.",
+    "notes": "The design should be clean and corporate with responsive layout for phone and desktop, using dropdowns, cards, and status icons. Confirm order screen before submission and ensure accessible design (WCAG AA).",
     "database_model": null
   },
   "database_model": {
@@ -193,96 +195,111 @@
         "table_name": "Employees",
         "fields": [
           {
-            "name": "employee_id",
-            "type": "integer",
+            "name": "EmployeeID",
+            "type": "Integer",
             "description": "Unique identifier for each employee"
           },
           {
-            "name": "employee_name",
-            "type": "string",
-            "description": "Full name of the employee"
+            "name": "FirstName",
+            "type": "String",
+            "description": "Employee's first name"
           },
           {
-            "name": "department",
-            "type": "string",
-            "description": "Department of the employee"
+            "name": "LastName",
+            "type": "String",
+            "description": "Employee's last name"
+          },
+          {
+            "name": "Department",
+            "type": "String",
+            "description": "Department the employee belongs to"
+          },
+          {
+            "name": "Role",
+            "type": "String",
+            "description": "Role of the employee within the company"
           }
         ],
-        "primary_key": "employee_id",
+        "primary_key": "EmployeeID",
         "foreign_keys": [],
-        "description": "Table storing all employee data"
+        "description": "Table to store employee details"
       },
       {
         "table_name": "Devices",
         "fields": [
           {
-            "name": "device_id",
-            "type": "integer",
+            "name": "DeviceID",
+            "type": "Integer",
             "description": "Unique identifier for each device"
           },
           {
-            "name": "device_name",
-            "type": "string",
+            "name": "DeviceName",
+            "type": "String",
             "description": "Name of the device"
           },
           {
-            "name": "device_specs",
-            "type": "string",
+            "name": "DeviceType",
+            "type": "String",
+            "description": "Type of the device (notebook or phone)"
+          },
+          {
+            "name": "Specs",
+            "type": "String",
             "description": "Specifications of the device"
           },
           {
-            "name": "device_availability",
-            "type": "boolean",
+            "name": "Availability",
+            "type": "Boolean",
             "description": "Availability status of the device"
           }
         ],
-        "primary_key": "device_id",
+        "primary_key": "DeviceID",
         "foreign_keys": [],
-        "description": "Table storing all device data"
+        "description": "Table to store device details"
       },
       {
         "table_name": "Orders",
         "fields": [
           {
-            "name": "order_id",
-            "type": "integer",
+            "name": "OrderID",
+            "type": "Integer",
             "description": "Unique identifier for each order"
           },
           {
-            "name": "employee_id",
-            "type": "integer",
-            "description": "Employee who placed the order"
+            "name": "EmployeeID",
+            "type": "Integer",
+            "description": "ID of the employee who placed the order"
           },
           {
-            "name": "device_id",
-            "type": "integer",
-            "description": "Device requested in the order"
+            "name": "DeviceID",
+            "type": "Integer",
+            "description": "ID of the device ordered"
           },
           {
-            "name": "justification",
-            "type": "string",
+            "name": "Justification",
+            "type": "String",
             "description": "Business justification for the order"
           },
           {
-            "name": "urgency_level",
-            "type": "string",
+            "name": "UrgencyLevel",
+            "type": "String",
             "description": "Urgency level of the order"
           },
           {
-            "name": "order_status",
-            "type": "string",
-            "description": "Status of the order"
+            "name": "OrderStatus",
+            "type": "String",
+            "description": "Current status of the order"
           }
         ],
-        "primary_key": "order_id",
+        "primary_key": "OrderID",
         "foreign_keys": [
-          "employee_id",
-          "device_id"
+          "EmployeeID",
+          "DeviceID"
         ],
-        "description": "Table storing all order data"
+        "description": "Table to store order details"
       }
     ],
-    "notes": "The Employees table is related to the Orders table through the employee_id field, which is a foreign key in the Orders table. Similarly, the Devices table is related to the Orders table through the device_id field. This normalization allows us to avoid redundancy and maintain data integrity."
+    "notes": "The 'Employees' table is related to the 'Orders' table through the 'EmployeeID' foreign key. Similarly, the 'Devices' table is related to the 'Orders' table through the 'DeviceID' foreign key. This normalization choice allows us to reduce data redundancy and improve data integrity."
   },
   "input_path": "input\\device_order_app_prd.md",
   "chunks": "[PRDChunk(id='H2_1_Strategic_Overview', title='Strategic Overview', content='**Purpose**:\\nEnable employees to request company-approved devices (notebooks and phones) through a self-service Power App, triggering approval workflows and integrating with internal policies.\\n\\n**Business Value**:\\n- Reduces manual processing time\\n- Improves transparency in ordering\\n- Enforces approval and budget policies\\n- Scales across departments and locations\\n\\n---', order=1, type='section', raw_heading='<!-- CHUNK_H2_1 -->'), PRDChunk(id='H2_2_User_Roles', title='User Roles', content='| Role             | Permissions                             |\\n|------------------|------------------------------------------|\\n| Employee         | Submit order requests                    |\\n| Manager          | Approve/reject requests from reports     |\\n| IT Administrator | (Post-MVP) Fulfill orders, update stock  |\\n| Procurement      | (Post-MVP) Track purchasing metrics      |\\n\\n---', order=2, type='section', raw_heading='<!-- CHUNK_H2_2 -->'), PRDChunk(id='H2_3_Core_Features_—_MVP', title='Core Features — MVP', content='### 📦 Feature: Device Catalog **CanvasApp**\\n- Browse available devices (notebooks, phones)\\n- View specs, photos, availability\\n- Filter by department-approved models\\n\\n### 📝 Feature: Order Request Form **CanvasApp**\\n- Select device\\n- Justify business need (textarea)\\n- Select urgency level (Normal, Urgent)\\n- Auto-populate employee name/department from Azure AD\\n\\n### ✅ Feature: Approval Workflow **PowerAutomate**\\n- Manager receives approval notification\\n- Manager can approve/reject with comments\\n- SLA: 2 business days for decision\\n\\n---', order=3, type='section', raw_heading='<!-- CHUNK_H2_3 -->'), PRDChunk(id='H2_4_Post-MVP_Features', title='Post-MVP Features', content='### 📊 Feature: Request Tracking **CanvasApp**\\n- Employee can view status (Submitted, Approved, Fulfilled)\\n- Email notifications at each step\\n- Optional Power BI dashboard for tracking\\n\\n### 🧾 Feature: Inventory Management **CanvasApp**\\n- Admin updates stock levels\\n- Mark orders as fulfilled\\n- Link to procurement system (e.g., SAP)\\n\\n---', order=4, type='section', raw_heading='<!-- CHUNK_H2_4 -->'), PRDChunk(id='H2_5_Constraints_&_Requirements', title='Constraints & Requirements', content='- ✅ Must use Power Apps Canvas App\\n- ✅ Data must be stored in Dataverse\\n- ✅ Approval process must use Power Automate\\n- ✅ Device models filtered by department policy\\n- ✅ App must support desktop + mobile usage\\n- ❌ No external users (internal only via Azure AD)\\n\\n---', order=5, type='section', raw_heading='<!-- CHUNK_H2_5 -->'), PRDChunk(id='H2_6_UX_&_Design_Notes', title='UX & Design Notes', content='- Clean, corporate design with device images\\n- Responsive layout for phone and desktop\\n- Use dropdowns, cards, and status icons\\n- Confirm order screen before submission\\n- Accessible design (WCAG AA)\\n\\n---', order=6, type='section', raw_heading='<!-- CHUNK_H2_6 -->'), PRDChunk(id='H2_7_Integration_Points', title='Integration Points', content='- **Dataverse** for orders, devices, users\\n- **Power Automate** for approvals and notifications\\n- **Azure AD** for user authentication\\n- (Post-MVP) Procurement system (e.g., SAP)\\n\\n---', order=7, type='section', raw_heading='<!-- CHUNK_H2_7 -->'), PRDChunk(id='H2_8_Security_&_Compliance', title='Security & Compliance', content='- Role-based access via Dataverse security roles\\n- Audit trail of approvals\\n- Retain order data for 2 years per IT policy\\n- No PII beyond employee ID and email\\n\\n---', order=8, type='section', raw_heading='<!-- CHUNK_H2_8 -->'), PRDChunk(id='H2_9_User_Stories,_User_Journeys', title='User Stories, User Journeys', content='- to be defined!\\n\\n---', order=9, type='section', raw_heading='<!-- CHUNK_H2_9 -->'), PRDChunk(id='H2_10_Success_Criteria', title='Success Criteria', content='- >90% of orders submitted via the app within 3 months\\n- <2 day average approval time\\n- Full traceability of device requests (Post-MVP)\\n- Minimal support requests after go-live', order=10, type='section', raw_heading='<!-- CHUNK_H2_10 -->')]",

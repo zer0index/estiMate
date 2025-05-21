@@ -1,0 +1,85 @@
+{
+  "tables": [
+    {
+      "table_name": "Employees",
+      "fields": [
+        {
+          "name": "EmployeeID",
+          "type": "Integer",
+          "description": "Unique identifier for each employee"
+        },
+        {
+          "name": "FirstName",
+          "type": "String",
+          "description": "Employee's first name"
+        },
+        {
+          "name": "LastName",
+          "type": "String",
+          "description": "Employee's last name"
+        },
+        {
+          "name": "Department",
+          "type": "String",
+          "description": "Department the employee belongs to"
+        },
+        {
+          "name": "ManagerID",
+          "type": "Integer",
+          "description": "Unique identifier for the employee's manager"
+        }
+      ],
+      "primary_key": "EmployeeID",
+      "foreign_keys": [
+        "ManagerID"
+      ],
+      "description": "Table to store employee information. ManagerID is a foreign key referencing the EmployeeID in the same table, establishing a hierarchical relationship."
+    },
+    {
+      "table_name": "PerformanceReviews",
+      "fields": [
+        {
+          "name": "ReviewID",
+          "type": "Integer",
+          "description": "Unique identifier for each review"
+        },
+        {
+          "name": "EmployeeID",
+          "type": "Integer",
+          "description": "Unique identifier for the employee being reviewed"
+        },
+        {
+          "name": "ReviewDate",
+          "type": "Date",
+          "description": "Date of the review"
+        },
+        {
+          "name": "SelfAssessment",
+          "type": "Text",
+          "description": "Employee's self-assessment"
+        },
+        {
+          "name": "ManagerAssessment",
+          "type": "Text",
+          "description": "Manager's assessment of the employee"
+        },
+        {
+          "name": "ReviewStatus",
+          "type": "String",
+          "description": "Status of the review (draft, submitted, confirmed)"
+        },
+        {
+          "name": "DevelopmentGoals",
+          "type": "Text",
+          "description": "Employee's development goals"
+        }
+      ],
+      "primary_key": "ReviewID",
+      "foreign_keys": [
+        "EmployeeID"
+      ],
+      "description": "Table to store performance review records. EmployeeID is a foreign key referencing the EmployeeID in the Employees table."
+    }
+  ],
+  "notes": "The database model is normalized to reduce data redundancy and improve data integrity. The Employees table includes a self-referencing foreign key to establish a hierarchical relationship between employees and their managers. The PerformanceReviews table stores performance review records, with a foreign key to link each review to the corresponding employee."
+}

@@ -1,0 +1,184 @@
+{
+  "purpose": "Enable employees to request company-approved devices (notebooks and phones) through a self-service Power App, triggering approval workflows and integrating with internal policies.",
+  "business_value": [
+    "Reduces manual processing time",
+    "Improves transparency in ordering",
+    "Enforces approval and budget policies",
+    "Scales across departments and locations"
+  ],
+  "mvp_components": [
+    {
+      "app_name": "Order Request Form",
+      "app_type": "CanvasApp",
+      "app_details": "Allows employees to browse available devices, view specs, photos, availability, and filter by department-approved models. Form for employees to select a device, justify business need, select urgency level, and auto-populate employee name/department from Azure AD.",
+      "app_screens": [
+        {
+          "screen_name": "Device Browser",
+          "screen_type": "CanvasApp",
+          "screen_details": "Screen to browse and filter available devices.",
+          "features": {
+            "feat_0001": "Device Catalog",
+            "feat_0002": "Device Filtering",
+            "feat_0003": "Device Details",
+            "feat_0004": "Device Images",
+            "feat_0005": "Department Approval Filter",
+            "feat_0006": "Device Availability Indicator"
+          }
+        },
+        {
+          "screen_name": "Device Details",
+          "screen_type": "CanvasApp",
+          "screen_details": "Screen to view device specs, photos, and availability.",
+          "features": {
+            "feat_0001": "Device Details Screen",
+            "feat_0002": "Device Image Gallery",
+            "feat_0003": "Device Specifications Display",
+            "feat_0004": "Device Availability Indicator",
+            "feat_0005": "Back Navigation Button",
+            "feat_0006": "Device Selection Button",
+            "feat_0007": "Screen Responsive Design",
+            "feat_0008": "Integration with Device Catalog Data Source",
+            "feat_0009": "Error Handling for Data Retrieval",
+            "feat_0010": "Loading Spinner for Asynchronous Operations",
+            "feat_0011": "Accessibility Features for Screen Content",
+            "feat_0012": "User Interface Consistency with Parent App"
+          }
+        },
+        {
+          "screen_name": "Request Form",
+          "screen_type": "CanvasApp",
+          "screen_details": "Form to submit a new device order request.",
+          "features": {
+            "feat_0001": "Device Selection Dropdown",
+            "feat_0002": "Business Justification Textarea",
+            "feat_0003": "Urgency Level Radio Buttons",
+            "feat_0004": "Employee Name Text Label",
+            "feat_0005": "Employee Department Text Label",
+            "feat_0006": "Submit Button",
+            "feat_0007": "Reset Form Button",
+            "feat_0008": "Auto-Population of Employee Data",
+            "feat_0009": "Form Validation",
+            "feat_0010": "On-Screen Instructions",
+            "feat_0011": "Navigation Bar",
+            "feat_0012": "Back Button",
+            "feat_0013": "Device Image Preview",
+            "feat_0014": "Confirmation Dialog",
+            "feat_0015": "Integration with Azure AD"
+          }
+        },
+        {
+          "screen_name": "Order Confirmation",
+          "screen_type": "CanvasApp",
+          "screen_details": "Screen to confirm the order before submission.",
+          "features": {
+            "feat_0001": "Confirmation Message",
+            "feat_0002": "Summary of Selected Device",
+            "feat_0003": "Business Justification Review",
+            "feat_0004": "Urgency Level Display",
+            "feat_0005": "Employee Details Confirmation",
+            "feat_0006": "Submit Order Button",
+            "feat_0007": "Edit Order Button",
+            "feat_0008": "Integration with Approval Workflow",
+            "feat_0009": "Data Validation before Submission",
+            "feat_0010": "Confirmation Dialog on Submission",
+            "feat_0011": "Auto-populate Order Details for Review",
+            "feat_0012": "Back Navigation to Modify Selection",
+            "feat_0013": "Read-only View of Order Details",
+            "feat_0014": "Visual Indicators for Required Fields",
+            "feat_0015": "Accessibility Compliance for Screen Content",
+            "feat_0016": "Responsive Design for Different Devices",
+            "feat_0017": "Loading Spinner while Processing Submission",
+            "feat_0018": "Error Handling for Submission Failures",
+            "feat_0019": "Confirmation Email Trigger upon Submission",
+            "feat_0020": "Conditional Visibility of Fields based on User Role"
+          }
+        }
+      ],
+      "processed": true
+    },
+    {
+      "flow_name": "Approval Workflow",
+      "flow_type": "PowerAutomate",
+      "flow_details": "Workflow for managers to receive approval notifications and approve/reject with comments within an SLA of 2 business days.",
+      "flow_actions": [
+        {
+          "action_name": "Receive Notification",
+          "action_type": "PowerAutomate",
+          "action_details": "Manager receives a notification for a new approval request.",
+          "features": null
+        },
+        {
+          "action_name": "Approve/Reject",
+          "action_type": "PowerAutomate",
+          "action_details": "Manager approves or rejects the request with comments.",
+          "features": null
+        }
+      ],
+      "processed": false,
+      "features": null,
+      "actions": null,
+      "connectors": null,
+      "trigger": null
+    }
+  ],
+  "post_mvp_modules": [
+    {
+      "module_name": "Request Tracking",
+      "extension_type": "AppScreen",
+      "extends_component": "Order Request Form",
+      "details": "Allows employees to view the status of their requests and receive email notifications at each step. An optional Power BI dashboard for tracking could be added.",
+      "recommendation": "Extend the Order Request Form with additional screens for status tracking to provide transparency and improve user experience."
+    },
+    {
+      "module_name": "Inventory Management",
+      "extension_type": "AppScreen",
+      "extends_component": "Device Catalog",
+      "details": "Enables IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system.",
+      "recommendation": "Extend the Device Catalog app with additional screens for inventory management to streamline the fulfillment process and maintain accurate stock levels."
+    }
+  ],
+  "user_roles": [
+    {
+      "role_name": "Employee",
+      "permissions": [
+        "Submit order requests"
+      ]
+    },
+    {
+      "role_name": "Manager",
+      "permissions": [
+        "Approve/reject requests from reports"
+      ]
+    }
+  ],
+  "system_roles": [
+    {
+      "role_name": "IT Administrator",
+      "technical_scope": [
+        "Fulfill orders",
+        "Update stock (Post-MVP)"
+      ]
+    },
+    {
+      "role_name": "Procurement",
+      "technical_scope": [
+        "Track purchasing metrics (Post-MVP)"
+      ]
+    }
+  ],
+  "constraints": [
+    "Must use Power Apps Canvas App",
+    "Data must be stored in Dataverse",
+    "Approval process must use Power Automate",
+    "Device models filtered by department policy",
+    "App must support desktop + mobile usage",
+    "No external users (internal only via Azure AD)"
+  ],
+  "integration_points": [
+    "Dataverse for orders, devices, users",
+    "Power Automate for approvals and notifications",
+    "Azure AD for user authentication"
+  ],
+  "notes": "The design should be clean and corporate with responsive layout for phone and desktop, using dropdowns, cards, and status icons. Confirm order screen before submission and ensure accessible design (WCAG AA).",
+  "database_model": null
+}

@@ -1,0 +1,127 @@
+{
+  "purpose": "Support HR and leadership in conducting structured annual performance reviews with trackable employee evaluations and follow-up goals.",
+  "business_value": [
+    "Ensures compliance with corporate evaluation processes",
+    "Provides leadership with data to support promotions or training plans",
+    "Allows HR to document improvement plans and actions"
+  ],
+  "mvp_components": [
+    {
+      "app_name": "Performance Review Management",
+      "app_type": "ModelDrivenApp",
+      "app_details": "A model-driven app to manage the performance review process, including forms for self-assessment and manager input, tracking of review status, and reporting compliance.",
+      "app_screens": [
+        {
+          "screen_name": "Performance Review Form",
+          "screen_type": "ModelDrivenApp",
+          "screen_details": "Structured performance review form that supports input from both the employee and their manager.",
+          "features": {
+            "entity": "A custom entity to store performance review records, including fields for self-assessment, manager input, review status, and development goals.",
+            "form": "A main form for the performance review entity that allows for input from both the employee and their manager, with sections for self-assessment, manager review, and development goals.",
+            "business_process_flow": "A multi-step business process flow to guide users through the draft, review, and confirmation stages of the performance review process.",
+            "security_roles": "Custom security roles for Employee, Manager, and HR Reviewer with permissions aligned with the PRD requirements.",
+            "hierarchical_security_model": "A hierarchical security model to ensure access follows the reporting structure within the organization.",
+            "workflow_or_business_rule": "A workflow or business rule to make the review records read-only after final submission.",
+            "views": "Custom views to track review status by employee and department, and to identify overdue reviews for compliance reporting.",
+            "dashboard": "A dashboard with charts and lists to provide leadership and HR with an overview of the performance review process and data to support decisions.",
+            "integration_with_lms": "A feature to integrate with the internal Learning Management System (LMS) for linking development goals with available training.",
+            "related_entity": "A related entity to store manager feedback history, which can be associated with the employee profile."
+          }
+        },
+        {
+          "screen_name": "Review Status Tracking",
+          "screen_type": "ModelDrivenApp",
+          "screen_details": "Allows users to track the status of reviews by employee and department.",
+          "features": {
+            "views": "Custom views to display the status of reviews by employee and department.",
+            "security_roles": "Predefined roles to control access based on the user's position (Employee, Manager, HR Reviewer).",
+            "business_rules": "Rules to make review records read-only after final submission.",
+            "workflows": "Automated multi-step workflows to manage the review process from draft to review to confirmation.",
+            "dashboards": "Dashboards to monitor review cycles and track overdue documentation for HR Reviewers.",
+            "entity_relationships": "Relationships to link reviews with employees, managers, and departments for hierarchical data structure.",
+            "forms": "Structured performance review forms for input from employees and managers."
+          }
+        },
+        {
+          "screen_name": "Compliance Reporting",
+          "screen_type": "ModelDrivenApp",
+          "screen_details": "Reports on compliance, indicating which reviews are overdue.",
+          "features": {
+            "views": "Custom views to filter and display performance reviews that are overdue.",
+            "charts": "Visual representation of compliance data, such as pie charts or bar graphs showing the percentage of overdue reviews.",
+            "security_roles": "Predefined roles to ensure that only HR Reviewers have access to monitor and report on review cycles and documentation.",
+            "business_rules": "Rules to enforce read-only access on review records after final submission.",
+            "dashboards": "A dashboard to aggregate and present compliance data and charts for HR Reviewers.",
+            "reporting_features": "Built-in reporting tools to generate compliance reports that can be exported or shared with leadership."
+          }
+        }
+      ],
+      "processed": true
+    }
+  ],
+  "post_mvp_modules": [
+    {
+      "module_name": "Development Goals",
+      "extension_type": "AppScreen",
+      "extends_component": "Performance Review Management",
+      "details": "Allows managers and employees to create and track individual development goals.",
+      "recommendation": "Extend the ModelDrivenApp to include functionality for setting and tracking development goals, as this aligns with the strategic goal of supporting leadership in creating training plans."
+    },
+    {
+      "module_name": "LMS Integration",
+      "extension_type": "Other",
+      "extends_component": "Performance Review Management",
+      "details": "Integrate the app with the internal Learning Management System (LMS) to align development goals with available training.",
+      "recommendation": "Integration with the LMS is crucial for aligning employee development goals with training opportunities, hence it should be prioritized in the post-MVP phase."
+    },
+    {
+      "module_name": "Manager Feedback History",
+      "extension_type": "AppScreen",
+      "extends_component": "Performance Review Management",
+      "details": "Add a section to the employee profile for managers to record and view historical feedback.",
+      "recommendation": "Incorporating manager feedback history into employee profiles will provide valuable context for performance reviews and should be included in the post-MVP phase."
+    }
+  ],
+  "user_roles": [
+    {
+      "role_name": "Employee",
+      "permissions": [
+        "View and confirm evaluations",
+        "Add self-assessment"
+      ]
+    },
+    {
+      "role_name": "Manager",
+      "permissions": [
+        "Submit and edit performance reviews for reports"
+      ]
+    },
+    {
+      "role_name": "HR Reviewer",
+      "permissions": [
+        "Monitor review cycles",
+        "Track documentation"
+      ]
+    }
+  ],
+  "system_roles": [
+    {
+      "role_name": "ModelDrivenApp",
+      "technical_scope": [
+        "Manage structured performance reviews",
+        "Track review status and compliance",
+        "Support multi-step workflows"
+      ]
+    }
+  ],
+  "constraints": [
+    "Access must follow hierarchical reporting structure",
+    "Review records must be read-only after final submission",
+    "Must support company-wide reporting"
+  ],
+  "integration_points": [
+    "Integration with internal LMS"
+  ],
+  "notes": null,
+  "database_model": null
+}
