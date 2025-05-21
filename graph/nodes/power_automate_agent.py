@@ -87,7 +87,8 @@ def power_automate_agent(state: Any) -> Any:
     mvp_components[comp_index] = FlowComponent(**comp_dict)
     solution.mvp_components = mvp_components
     state.strategic_context = solution
-    print("[Debug] Updated strategic_context:", state.strategic_context.model_dump() if hasattr(state.strategic_context, 'model_dump') else state.strategic_context)
+    # Remove debug print of updated strategic_context
+    # print("[Debug] Updated strategic_context:", state.strategic_context.model_dump() if hasattr(state.strategic_context, 'model_dump') else state.strategic_context)
     save_to_cache("power_automate_agent", solution)
     print("[PowerAutomateAgent] Action and connector extraction complete.")
-    return state 
+    return state
