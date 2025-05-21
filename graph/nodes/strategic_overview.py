@@ -110,11 +110,39 @@ def strategic_overview(state: Any) -> Any:
         cleaned = clean_llm_json(cleaned)
         fixed = fix_component_types(cleaned)
         context = StrategicContext.parse_raw(fixed)
+
+        # --- Merge all CanvasApp MVP components into a single app ---
+        canvas_apps = [c for c in context.mvp_components if hasattr(c, 'app_type') and getattr(c, 'app_type', None) == 'CanvasApp']
+        if len(canvas_apps) > 1:
+            # Merge screens and details
+            merged_screens = []
+            merged_details = []
+            app_names = []
+            for app in canvas_apps:
+                merged_screens.extend(getattr(app, 'app_screens', []))
+                merged_details.append(getattr(app, 'app_details', ''))
+                app_names.append(getattr(app, 'app_name', ''))
+            # Heuristic: if all names are the same, use it; if not, join unique names
+            unique_names = list(dict.fromkeys([n for n in app_names if n]))
+            if len(unique_names) == 1:
+                merged_name = unique_names[0]
+            elif any('Order' in n for n in unique_names):
+                merged_name = next((n for n in unique_names if 'Order' in n), unique_names[0])
+            else:
+                merged_name = ' / '.join(unique_names)
+            merged_app = type(canvas_apps[0])( # AppComponent
+                app_name=merged_name,
+                app_type='CanvasApp',
+                app_details=' '.join(merged_details),
+                app_screens=merged_screens,
+                processed=False
+            )
+            # Remove all CanvasApp apps and insert the merged one at the start
+            context.mvp_components = [c for c in context.mvp_components if not (hasattr(c, 'app_type') and getattr(c, 'app_type', None) == 'CanvasApp')]
+            context.mvp_components.insert(0, merged_app)
+
         state.strategic_context = context
-        
-        # Save to cache
         save_to_cache("strategic_overview", context)
-        
         if console:
             console.print("[green]Strategic context extracted, validated, and saved to cache.[/green]")
     except Exception as e:

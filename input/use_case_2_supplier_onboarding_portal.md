@@ -20,16 +20,19 @@ Enable suppliers to register their companies, submit documentation (e.g. certifi
 
 ---
 
-## 3. Core Features — MVP
+## 3. Core Features — MVP 
 
+### 📦 Feature: Frontend **PowerPages**
 - Supplier registration form  
-- Document upload & version tracking  
+- Document upload & version tracking
+
+### 📦 Feature: Automation **PowerAutomate**
 - Email notifications for missing data  
 - Approval process across departments  
 
 ---
 
-## 4. Post-MVP Features
+## 4. Post-MVP Features **PowerPages**
 
 - Live status updates for suppliers  
 - Integration with ERP (supplier number assignment)  

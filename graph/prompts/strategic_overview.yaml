@@ -1,8 +1,26 @@
 # Strategic Overview LLM prompt template
 prompt: |
   # Strategic Overview Extraction
-  Extract the strategic overview section from the provided PRD chunk. Summarize the purpose and business value.
+  Extract the strategic overview, business value, and all MVP components from the provided PRD sections.
   
+  # INSTRUCTIONS
+  - For each feature/component, extract the {ComponentType} from the feature heading (e.g., `### ... **CanvasApp**`).
+  - Use this {ComponentType} value directly for the relevant type fields (e.g., app_type, screen_type, flow_type, action_type, extension_type), mapping to the allowed schema values if needed.
+  - Allowed values:
+    - For app_type and screen_type: "CanvasApp", "ModelDrivenApp", "PowerPages", "PowerAutomate", "PowerBI", "Other"
+    - For extension_type: "AppScreen", "Dashboard", "ModelDrivenApp", "PowerAutomate", "Other"
+  - If the label is not an exact match, map it to the closest allowed value (e.g., "Canvas App" → "CanvasApp").
+  - For screens within an app, screen_type must always match the parent app_type.
+  - For post-MVP modules, if the PRD label is "CanvasApp", use "AppScreen" for extension_type.
+  - Do NOT use "AppScreen" as a screen_type. Only use it for extension_type in post-MVP modules.
+  - Do NOT invent new types. If unsure, use "Other".
+  - Ignore features without a {ComponentType} label or mark them as "Other".
+  - Output must be valid JSON and must NOT contain trailing commas, comments, or any non-JSON text. Only output the JSON object, nothing else.
+  
+  # Example
+  # PRD: ### 📦 Feature: Device Catalog **CanvasApp**
+  # Output: { "app_type": "CanvasApp", ... }
+
   # Input
   {{chunk_content}}
   
@@ -24,30 +42,6 @@ system_message: |
   Use only the following allowed types:
     - For app_type/screen_type: "CanvasApp", "ModelDrivenApp", "PowerPages", "PowerBI", "Other"
     - For flow_type/action_type: "PowerAutomate", "Other"
-  
-  - Use **Power BI** if:
-    - The solution includes data visualization, interactive dashboards, KPI tracking, or exportable reports
-    - Users need to filter, drill down, compare metrics, or perform time-based analysis
-
-  - Use **Model-Driven Apps** if:
-    - The use case requires structured, multi-entity data input with form-based interfaces
-    - Role-based security, validation logic, or auditing is critical
-    - Users are internal and data relationships are complex
-
-  - Use **Canvas Apps** if:
-    - The interface needs to be highly customized, mobile-friendly, or embedded
-    - The solution focuses on task-based workflows or single-screen experiences
-
-  - Use **Power Automate** if:
-    - Processes require automation, approvals, or integration with other systems
-    - You need scheduled tasks, event-based flows, or document generation
-
-  - Use **Custom Connectors** if:
-    - Integration with non-native systems (e.g. SAP, Oracle, REST APIs) is required
-
-  - Use **Dataverse** if:
-    - You need relational data storage with security roles, field validation, and model-driven integration
-    - Data will be used across multiple components (apps, flows, BI)
 
   Only suggest components that are clearly required based on the strategic context. Avoid suggesting redundant or speculative modules.
 
@@ -120,4 +114,4 @@ user_template: |
   --- SECTION: {{ chunk.title }} ---
   {{ chunk.content }}
 
-  {% endfor %} 
+  {% endfor %}

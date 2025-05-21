@@ -24,18 +24,18 @@ Enable employees to request company-approved devices (notebooks and phones) thro
 
 ## 3. **Core Features — MVP**
 
-### 📦 Feature: Device Catalog
+### 📦 Feature: Device Catalog **CanvasApp**
 - Browse available devices (notebooks, phones)
 - View specs, photos, availability
 - Filter by department-approved models
 
-### 📝 Feature: Order Request Form
+### 📝 Feature: Order Request Form **CanvasApp**
 - Select device
 - Justify business need (textarea)
 - Select urgency level (Normal, Urgent)
 - Auto-populate employee name/department from Azure AD
 
-### ✅ Feature: Approval Workflow
+### ✅ Feature: Approval Workflow **PowerAutomate**
 - Manager receives approval notification
 - Manager can approve/reject with comments
 - SLA: 2 business days for decision
@@ -44,12 +44,12 @@ Enable employees to request company-approved devices (notebooks and phones) thro
 
 ## 4. **Post-MVP Features**
 
-### 📊 Feature: Request Tracking
+### 📊 Feature: Request Tracking **CanvasApp**
 - Employee can view status (Submitted, Approved, Fulfilled)
 - Email notifications at each step
 - Optional Power BI dashboard for tracking
 
-### 🧾 Feature: Inventory Management
+### 🧾 Feature: Inventory Management **CanvasApp**
 - Admin updates stock levels
 - Mark orders as fulfilled
 - Link to procurement system (e.g., SAP)

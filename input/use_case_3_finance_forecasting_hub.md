@@ -20,16 +20,18 @@ Provide a central place for regional finance controllers to upload forecasts, co
 
 ---
 
-## 3. Core Features — MVP
+## 3. Core Features — MVP 
 
+### 📦 Feature: Report **PowerBI**
 - Upload monthly forecasts by cost center  
 - Compare planned vs. actual in dashboards  
 - Highlight outliers or budget violations  
 
 ---
 
-## 4. Post-MVP Features
+## 4. Post-MVP Features 
 
+ ### 📦 Feature: Report **PowerBI**
 - Drilldown to transaction-level anomalies  
 - Predictive trend line for key KPIs  
 - Export to PDF/Excel with charts  

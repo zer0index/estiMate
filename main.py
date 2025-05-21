@@ -87,7 +87,7 @@ def main():
         # This is a placeholder: in a real system, you would hook into the graph execution
         # and update the spinner with the current node name. Here, we simulate it:
         for node in node_names:
-            with console.status(f"[cyan]{node} running...[/cyan]", spinner="dots"):
+            with console.status(f"[cyan]Register {node} in DAG system...[/cyan]", spinner="dots"):
                 import time; time.sleep(0.7)
         return graph.invoke(state)
     result = run_with_rich_status(graph, state)

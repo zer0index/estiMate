@@ -22,14 +22,17 @@ Allow external customers to log technical issues or service requests, view ticke
 
 ## 3. Core Features — MVP
 
+### 📦 Feature: Frontend **PowerPages**
 - Public issue submission form  
-- View ticket status (Open, In Progress, Resolved)  
-- Receive email updates on progress  
+- View ticket status (Open, In Progress, Resolved)
 - Upload relevant documents or screenshots  
+
+### 📦 Feature: Automation **PowerAutomate**
+- Receive email updates on progress  
 
 ---
 
-## 4. Post-MVP Features
+## 4. Post-MVP Features **PowerPages**
 
 - SLA timers & escalation rules  
 - Customer satisfaction survey after resolution  

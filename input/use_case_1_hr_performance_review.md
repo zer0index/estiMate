@@ -20,16 +20,17 @@ Support HR and leadership in conducting structured annual performance reviews wi
 
 ---
 
-## 3. Core Features — MVP
+## 3. Core Features — MVP **ModelDrivenApp**
 
 - Structured performance review form (self + manager input)  
-- Track review status by employee/department  
-- Support multi-step workflows: draft → review → confirm  
+- Track review status by employee/department
 - Reporting compliance (who is overdue?)
+- Support multi-step workflows: draft → review → confirm  
+
 
 ---
 
-## 4. Post-MVP Features
+## 4. Post-MVP Features **ModelDrivenApp**
 
 - Create individual development goals  
 - Integrate with internal LMS  
