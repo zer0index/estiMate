@@ -3,15 +3,17 @@ Estimation Agent node: Uses LLM and the estimation matrix to estimate effort for
 """
 import os
 import json
+import yaml
 from typing import Any
 from graph.utils.llm import call_llm
-from graph.utils.utils import save_to_cache
+from graph.utils.utils import save_to_cache, clean_llm_json
 from rich.console import Console
 
 console = Console()
 
 MATRIX_PATH = os.path.join("graph", "matrix", "matrix.json")
 ESTIMATION_OUTPUT_PATH = os.path.join("memory", "estimation_agent_output.json")
+PROMPT_PATH = os.path.join(os.path.dirname(__file__), "../prompts/estimation_agent.yaml")
 
 # Helper: Load matrix
 with open(MATRIX_PATH, "r", encoding="utf-8") as f:
@@ -28,30 +30,10 @@ def get_matrix_section(component_type: str):
     }
     return MATRIX.get(mapping.get(component_type, component_type), None)
 
-# Helper: LLM prompt
-LLM_PROMPT = """
-You are an expert Power Platform solution estimator. You will be given:
-- A matrix describing effort levels for a component type (see 'matrix' below)
-- The features/details of a single screen or component (see 'object' below)
-
-Your task:
-1. Select the best-matching level from the matrix for this object.
-2. Estimate the effort in hours as a range: optimistic, most likely, pessimistic (use the matrix's effort_hours, but adjust if needed).
-3. List any assumptions you make (e.g., data provided by customer, security handled externally, etc).
-4. Provide reasoning for your scoring and effort estimate.
-
-Respond in this JSON format:
-{
-  "component_type": string,
-  "component_name": string,
-  "screen_name": string (if applicable),
-  "level_selected": int,
-  "score": int,
-  "effort_hours": {"optimistic": int, "most_likely": int, "pessimistic": int},
-  "assumptions": [string, ...],
-  "reasoning": string
-}
-"""
+def load_estimation_prompt():
+    with open(PROMPT_PATH, "r", encoding="utf-8") as f:
+        prompt_yaml = yaml.safe_load(f)
+    return prompt_yaml["system_message"], prompt_yaml["user_template"]
 
 def estimation_agent(state: Any) -> Any:
     # Check for cached output
@@ -68,6 +50,8 @@ def estimation_agent(state: Any) -> Any:
     strategic = merged["strategic_overview"]
     results = []
 
+    system_message, user_template = load_estimation_prompt()
+
     # CanvasApp, ModelDrivenApp, PowerPages: per screen
     for comp in strategic.get("mvp_components", []):
         if comp.get("app_type") in ("CanvasApp", "ModelDrivenApp", "PowerPages"):
@@ -80,10 +64,11 @@ def estimation_agent(state: Any) -> Any:
                     "screen_details": screen.get("screen_details"),
                     "features": screen.get("features")
                 }
-                llm_input = {"matrix": {"name": comp["app_type"].replace("App", " App"), "levels": matrix_section}, "object": obj}
-                llm_response = call_llm(prompt=json.dumps(llm_input), model="gpt-4-1106-preview", temperature=0.1, system_message=LLM_PROMPT)
+                user_prompt = user_template.replace("{{ matrix }}", json.dumps({"name": comp["app_type"].replace("App", " App"), "levels": matrix_section}, ensure_ascii=False)).replace("{{ object }}", json.dumps(obj, ensure_ascii=False))
+                llm_response = call_llm(prompt=user_prompt, model="gpt-4-1106-preview", temperature=0.1, system_message=system_message)
                 try:
-                    result = json.loads(llm_response)
+                    cleaned = clean_llm_json(llm_response)
+                    result = json.loads(cleaned)
                 except Exception:
                     result = {"error": "LLM output not valid JSON", "raw": llm_response}
                 results.append(result)
@@ -91,10 +76,11 @@ def estimation_agent(state: Any) -> Any:
         elif comp.get("flow_type") == "PowerAutomate":
             matrix_section = get_matrix_section("PowerAutomate")
             obj = comp.copy()
-            llm_input = {"matrix": {"name": "Power Automate", "levels": matrix_section}, "object": obj}
-            llm_response = call_llm(prompt=json.dumps(llm_input), model="gpt-4-1106-preview", temperature=0.1, system_message=LLM_PROMPT)
+            user_prompt = user_template.replace("{{ matrix }}", json.dumps({"name": "Power Automate", "levels": matrix_section}, ensure_ascii=False)).replace("{{ object }}", json.dumps(obj, ensure_ascii=False))
+            llm_response = call_llm(prompt=user_prompt, model="gpt-4-1106-preview", temperature=0.1, system_message=system_message)
             try:
-                result = json.loads(llm_response)
+                cleaned = clean_llm_json(llm_response)
+                result = json.loads(cleaned)
             except Exception:
                 result = {"error": "LLM output not valid JSON", "raw": llm_response}
             results.append(result)
@@ -107,10 +93,11 @@ def estimation_agent(state: Any) -> Any:
                     "screen_details": screen.get("screen_details"),
                     "features": screen.get("features")
                 }
-                llm_input = {"matrix": {"name": "Power BI", "levels": matrix_section}, "object": obj}
-                llm_response = call_llm(prompt=json.dumps(llm_input), model="gpt-4-1106-preview", temperature=0.1, system_message=LLM_PROMPT)
+                user_prompt = user_template.replace("{{ matrix }}", json.dumps({"name": "Power BI", "levels": matrix_section}, ensure_ascii=False)).replace("{{ object }}", json.dumps(obj, ensure_ascii=False))
+                llm_response = call_llm(prompt=user_prompt, model="gpt-4-1106-preview", temperature=0.1, system_message=system_message)
                 try:
-                    result = json.loads(llm_response)
+                    cleaned = clean_llm_json(llm_response)
+                    result = json.loads(cleaned)
                 except Exception:
                     result = {"error": "LLM output not valid JSON", "raw": llm_response}
                 results.append(result)
@@ -123,10 +110,11 @@ def estimation_agent(state: Any) -> Any:
                     "screen_details": screen.get("screen_details"),
                     "features": screen.get("features")
                 }
-                llm_input = {"matrix": {"name": "Power Pages", "levels": matrix_section}, "object": obj}
-                llm_response = call_llm(prompt=json.dumps(llm_input), model="gpt-4-1106-preview", temperature=0.1, system_message=LLM_PROMPT)
+                user_prompt = user_template.replace("{{ matrix }}", json.dumps({"name": "Power Pages", "levels": matrix_section}, ensure_ascii=False)).replace("{{ object }}", json.dumps(obj, ensure_ascii=False))
+                llm_response = call_llm(prompt=user_prompt, model="gpt-4-1106-preview", temperature=0.1, system_message=system_message)
                 try:
-                    result = json.loads(llm_response)
+                    cleaned = clean_llm_json(llm_response)
+                    result = json.loads(cleaned)
                 except Exception:
                     result = {"error": "LLM output not valid JSON", "raw": llm_response}
                 results.append(result)
