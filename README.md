@@ -183,6 +183,47 @@ Licensed under the MIT License.
 
 ---
 
+## 🧩 Detailed Project Architecture
+
+estiMatev2 is an intelligent, modular estimation pipeline for Power Platform projects. It processes Product Requirements Documents (PRDs) in Markdown format, breaking them down into structured, actionable components using LLM-powered agents. The pipeline is orchestrated as a Directed Acyclic Graph (DAG) using LangGraph, with each node handling a specific responsibility.
+
+### Main Components
+
+- **main.py**: Entry point. Loads PRD files from `input/`, lets the user select one, and runs the pipeline with rich CLI feedback.
+- **graph/graph.py**: Defines the DAG using LangGraph's `StateGraph`. Registers nodes for each processing step and their transitions.
+- **graph/nodes/**: Contains modular agent nodes:
+  - `prechunker.py`: Tags PRD for chunking.
+  - `chunker.py`: Splits PRD into logical chunks.
+  - `strategic_overview.py`: Extracts strategic context and high-level architecture.
+  - `component_router.py`: Routes each MVP component to the correct agent.
+  - `canvas_app_agent.py`, `model_driven_agent.py`, `power_automate_agent.py`, `powerbi_agent.py`: Specialized agents for extracting features from different Power Platform components.
+  - `database_node.py`: Proposes a normalized database model.
+- **graph/schemas/**: Pydantic models for state, strategic context, components, database, roles, etc. Enforces type safety and structure.
+- **graph/prompts/**: YAML prompt templates for each agent, defining system/user instructions for the LLM.
+- **graph/utils/**: Utility functions for LLM calls, caching, chunking, and cleaning LLM output.
+- **input/**: Contains example PRD markdown files for different use cases.
+- **memory/**: Stores intermediate and final outputs (e.g., cached JSON results for each node).
+
+### Pipeline Steps
+
+1. **Prechunker**: Tags PRD sections for chunking.
+2. **Chunker**: Splits PRD into manageable chunks.
+3. **Strategic Overview**: Extracts project purpose, business value, MVP components, post-MVP modules, roles, constraints, and integration points.
+4. **Component Router**: Iterates over MVP components, routing each to the appropriate agent.
+5. **Specialized Agents**: Extract features, actions, connectors, screens, etc., for each component type (Canvas App, Model-Driven App, Power Automate, Power BI).
+6. **Database Node**: Proposes a normalized database schema based on the extracted context.
+7. **Caching**: Each node caches its output in `/memory` to avoid redundant computation.
+
+### Design Principles
+
+- Modular, stateless nodes (functions) with clear input/output.
+- Typed state flow using Pydantic models.
+- Prompt-driven LLM logic (YAML templates).
+- Rich CLI output for user feedback.
+- Easily extensible: add new nodes, schemas, and prompts as needed.
+
+---
+
 <p align="center">
   Made with ❤️
 </p>

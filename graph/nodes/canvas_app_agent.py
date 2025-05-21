@@ -69,6 +69,24 @@ def find_relevant_chunk_content(screen, prd_chunks):
         relevant_chunks = [chunk.content if hasattr(chunk, 'content') else chunk.get('content', '') for chunk in prd_chunks]
     return "\n\n".join(relevant_chunks)
 
+def flatten_features(features):
+    """
+    Recursively flatten a features dict so all values are strings.
+    If a value is a dict, join its items as 'key: value' lines.
+    """
+    if not isinstance(features, dict):
+        return features
+    flat = {}
+    for k, v in features.items():
+        if isinstance(v, dict):
+            # Join nested dict as a string
+            flat[k] = ", ".join(f"{ik}: {iv}" for ik, iv in v.items())
+        elif isinstance(v, list):
+            flat[k] = ", ".join(str(item) for item in v)
+        else:
+            flat[k] = str(v)
+    return flat
+
 def canvas_app_agent(state: Any) -> Any:
     """
     Processes a single CanvasApp component, extracting features and SOTA suggestions per screen.
@@ -130,7 +148,7 @@ def canvas_app_agent(state: Any) -> Any:
                 cleaned_response = clean_llm_json(llm_response)
                 data = json.loads(cleaned_response)
                 if "features" in data and data["features"]:
-                    screen["features"] = data["features"]
+                    screen["features"] = flatten_features(data["features"])
                 # Always set sota_suggestions to empty
                 screen["sota_suggestions"] = {}
             except Exception as e:
