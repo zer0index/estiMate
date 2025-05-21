@@ -287,6 +287,190 @@
           "custom PCF controls"
         ]
       }
+    ],
+    "Power BI": [
+      {
+        "level": 1,
+        "score_range": [
+          1,
+          2
+        ],
+        "effort_hours": [
+          8,
+          10
+        ],
+        "indicators": [
+          "1 data source (e.g., Excel)",
+          "basic charts (bar, pie)",
+          "no DAX measures",
+          "no interactivity or filters",
+          "no relationships or data model"
+        ]
+      },
+      {
+        "level": 2,
+        "score_range": [
+          3,
+          4
+        ],
+        "effort_hours": [
+          12,
+          18
+        ],
+        "indicators": [
+          "2\u20133 data sources",
+          "basic relationships between tables",
+          "simple DAX measures (SUM, AVERAGE)",
+          "slicers and basic filters",
+          "dashboard with 3\u20134 visuals"
+        ]
+      },
+      {
+        "level": 3,
+        "score_range": [
+          5,
+          6
+        ],
+        "effort_hours": [
+          20,
+          28
+        ],
+        "indicators": [
+          "3\u20135 data sources",
+          "intermediate DAX (CALCULATE, FILTER)",
+          "interactive visuals with cross-filtering",
+          "RLS setup",
+          "basic performance tuning"
+        ]
+      },
+      {
+        "level": 4,
+        "score_range": [
+          7,
+          9
+        ],
+        "effort_hours": [
+          30,
+          40
+        ],
+        "indicators": [
+          "5+ data sources",
+          "advanced DAX with time intelligence",
+          "composite models",
+          "paginated reports or bookmarks",
+          "advanced performance optimization"
+        ]
+      },
+      {
+        "level": 5,
+        "score_range": [
+          10,
+          12
+        ],
+        "effort_hours": [
+          42,
+          50
+        ],
+        "indicators": [
+          "enterprise-level reports",
+          "large datasets with import/direct query",
+          "custom visuals or themes",
+          "automated refresh and gateway setup",
+          "deployment pipelines and testing"
+        ]
+      }
+    ],
+    "Power Pages": [
+      {
+        "level": 1,
+        "score_range": [
+          1,
+          2
+        ],
+        "effort_hours": [
+          16,
+          20
+        ],
+        "indicators": [
+          "1\u20132 static pages",
+          "no forms or lists",
+          "default styling",
+          "no authentication required",
+          "pure informational content"
+        ]
+      },
+      {
+        "level": 2,
+        "score_range": [
+          3,
+          4
+        ],
+        "effort_hours": [
+          22,
+          30
+        ],
+        "indicators": [
+          "3\u20135 pages",
+          "basic Dataverse forms and views",
+          "standard styling and layout",
+          "simple navigation bar",
+          "basic internal authentication"
+        ]
+      },
+      {
+        "level": 3,
+        "score_range": [
+          5,
+          6
+        ],
+        "effort_hours": [
+          32,
+          45
+        ],
+        "indicators": [
+          "5\u201310 pages",
+          "custom web templates or liquid logic",
+          "Dataverse integration with custom views",
+          "simple JavaScript for interactivity",
+          "role-based content display"
+        ]
+      },
+      {
+        "level": 4,
+        "score_range": [
+          7,
+          9
+        ],
+        "effort_hours": [
+          50,
+          60
+        ],
+        "indicators": [
+          "10+ pages",
+          "multi-language support",
+          "custom HTML/CSS layout",
+          "complex permissions and page access",
+          "Azure AD or B2C authentication"
+        ]
+      },
+      {
+        "level": 5,
+        "score_range": [
+          10,
+          12
+        ],
+        "effort_hours": [
+          65,
+          72
+        ],
+        "indicators": [
+          "external user portals",
+          "deep customization (JS, Liquid, CSS)",
+          "complex forms with business logic",
+          "responsive and accessible design",
+          "integration with external systems or APIs"
+        ]
+      }
     ]
   }
 }
