@@ -53,11 +53,18 @@ component_router ──► canvas_app_agent ─┐
         ↓                              │
        (route) ───► powerbi_agent ─────┘
                                       ↓
+                                 merge_agent
+                                      ↓
+                                 estimation_agent
+                                      ↓
                                      END
 ```
 
 - Built with `StateGraph` from LangGraph
 - Routes data dynamically to specialized agents (Canvas App, Power Automate, Database, Model Driven, Power BI)
+- All agent outputs are merged by `merge_agent` before estimation
+- `merge_agent` ensures all features, actions, connectors, and top-level fields from each agent are included in the final output
+- `estimation_agent` produces the final effort/cost estimate
 - Automatically loops until all data is processed
 
 ---
@@ -74,7 +81,9 @@ graph/
 │   ├── component_router.py
 │   ├── canvas_app_agent.py
 │   ├── power_automate_agent.py
-│   └── database_node.py
+│   ├── database_node.py
+│   ├── merge_agent.py
+│   └── estimation_agent.py
 ├── schemas/
 │   └── state.py
 ├── prompts/
@@ -201,6 +210,8 @@ estiMatev2 is an intelligent, modular estimation pipeline for Power Platform pro
   - `strategic_overview.py`: Extracts strategic context and high-level architecture.
   - `component_router.py`: Routes each MVP component to the correct agent.
   - `canvas_app_agent.py`, `model_driven_agent.py`, `power_automate_agent.py`, `powerbi_agent.py`: Specialized agents for extracting features from different Power Platform components.
+  - `merge_agent.py`: Merges all agent outputs into a single, well-structured JSON for estimation. Ensures all features, actions, connectors, and top-level fields are included.
+  - `estimation_agent.py`: Produces the final effort/cost estimate based on the merged output.
   - `database_node.py`: Proposes a normalized database model.
 - **graph/schemas/**: Pydantic models for state, strategic context, components, database, roles, etc. Enforces type safety and structure.
 - **graph/prompts/**: YAML prompt templates for each agent, defining system/user instructions for the LLM.
@@ -215,8 +226,10 @@ estiMatev2 is an intelligent, modular estimation pipeline for Power Platform pro
 3. **Strategic Overview**: Extracts project purpose, business value, MVP components, post-MVP modules, roles, constraints, and integration points.
 4. **Component Router**: Iterates over MVP components, routing each to the appropriate agent.
 5. **Specialized Agents**: Extract features, actions, connectors, screens, etc., for each component type (Canvas App, Model-Driven App, Power Automate, Power BI).
-6. **Database Node**: Proposes a normalized database schema based on the extracted context.
-7. **Caching**: Each node caches its output in `/memory` to avoid redundant computation.
+6. **Merge Agent**: Merges all agent outputs into a single, well-structured JSON for estimation. Ensures all features, actions, connectors, and top-level fields are included.
+7. **Estimation Agent**: Produces the final effort/cost estimate based on the merged output.
+8. **Database Node**: Proposes a normalized database schema based on the extracted context.
+9. **Caching**: Each node caches its output in `/memory` to avoid redundant computation.
 
 ### Design Principles
 

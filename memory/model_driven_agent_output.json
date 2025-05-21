@@ -84,18 +84,11 @@
           "features": null
         }
       ],
-      "processed": true,
+      "processed": false,
       "features": null,
-      "actions": {
-        "action_0001": "DraftSubmission",
-        "action_0002": "ManagerReview",
-        "action_0003": "FinalConfirmation"
-      },
-      "connectors": {
-        "SharePoint": "Read/Write",
-        "Outlook": "Send Email"
-      },
-      "trigger": "When an item is created or modified in SharePoint"
+      "actions": null,
+      "connectors": null,
+      "trigger": null
     }
   ],
   "post_mvp_modules": [
