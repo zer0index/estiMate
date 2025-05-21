@@ -2,7 +2,7 @@
   {
     "id": "H2_1_Strategic_Overview",
     "title": "Strategic Overview",
-    "content": "**Purpose**:\nSupport HR and leadership in conducting structured annual performance reviews with trackable employee evaluations and follow-up goals.\n\n**Business Value**:\n- Ensures compliance with corporate evaluation processes\n- Provides leadership with data to support promotions or training plans\n- Allows HR to document improvement plans and actions\n\n---",
+    "content": "**Purpose**:\nProvide a central place for regional finance controllers to upload forecasts, compare against targets, and visualize variance in interactive reports.\n\n**Business Value**:\n- Improves forecast accuracy through standard templates\n- Enables CFO and leadership to track financial KPIs across regions\n- Reduces time spent on monthly reporting\n\n---",
     "order": 1,
     "type": "section",
     "raw_heading": "<!-- CHUNK_H2_1 -->"
@@ -10,7 +10,7 @@
   {
     "id": "H2_2_User_Roles",
     "title": "User Roles",
-    "content": "| Role         | Permissions                                         |\n|--------------|------------------------------------------------------|\n| Employee     | View and confirm evaluations, add self-assessment    |\n| Manager      | Submit and edit performance reviews for reports      |\n| HR Reviewer  | Monitor review cycles and track documentation        |\n\n---",
+    "content": "| Role              | Permissions                                 |\n|-------------------|----------------------------------------------|\n| Regional Controller | Upload/update forecast data                 |\n| CFO               | View consolidated financial reports           |\n| Financial Analyst | Analyze trends and download charts           |\n\n---",
     "order": 2,
     "type": "section",
     "raw_heading": "<!-- CHUNK_H2_2 -->"
@@ -18,7 +18,7 @@
   {
     "id": "H2_3_Core_Features_—_MVP",
     "title": "Core Features — MVP",
-    "content": "- Structured performance review form (self + manager input)\n- Track review status by employee/department\n- Support multi-step workflows: draft → review → confirm\n- Reporting compliance (who is overdue?)\n\n---",
+    "content": "- Upload monthly forecasts by cost center\n- Compare planned vs. actual in dashboards\n- Highlight outliers or budget violations\n\n---",
     "order": 3,
     "type": "section",
     "raw_heading": "<!-- CHUNK_H2_3 -->"
@@ -26,7 +26,7 @@
   {
     "id": "H2_4_Post-MVP_Features",
     "title": "Post-MVP Features",
-    "content": "- Create individual development goals\n- Integrate with internal LMS\n- Add manager feedback history to employee profile\n\n---",
+    "content": "- Drilldown to transaction-level anomalies\n- Predictive trend line for key KPIs\n- Export to PDF/Excel with charts\n\n---",
     "order": 4,
     "type": "section",
     "raw_heading": "<!-- CHUNK_H2_4 -->"
@@ -34,7 +34,7 @@
   {
     "id": "H2_5_Constraints_&_Requirements",
     "title": "Constraints & Requirements",
-    "content": "- Access must follow hierarchical reporting structure\n- Review records must be read-only after final submission\n- Must support company-wide reporting",
+    "content": "- Data must be refreshed daily from source system\n- Reports must respect role-based access (e.g., region visibility)\n- Visualizations must support filtering by fiscal year/quarter",
     "order": 5,
     "type": "section",
     "raw_heading": "<!-- CHUNK_H2_5 -->"

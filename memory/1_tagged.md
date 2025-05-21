@@ -2,48 +2,47 @@
 ## 1. Strategic Overview
 
 **Purpose**:  
-Support HR and leadership in conducting structured annual performance reviews with trackable employee evaluations and follow-up goals.
+Provide a central place for regional finance controllers to upload forecasts, compare against targets, and visualize variance in interactive reports.
 
 **Business Value**:  
-- Ensures compliance with corporate evaluation processes  
-- Provides leadership with data to support promotions or training plans  
-- Allows HR to document improvement plans and actions
+- Improves forecast accuracy through standard templates  
+- Enables CFO and leadership to track financial KPIs across regions  
+- Reduces time spent on monthly reporting  
 
 ---
 
 <!-- CHUNK_H2_2 -->
 ## 2. User Roles
 
-| Role         | Permissions                                         |
-|--------------|------------------------------------------------------|
-| Employee     | View and confirm evaluations, add self-assessment    |
-| Manager      | Submit and edit performance reviews for reports      |
-| HR Reviewer  | Monitor review cycles and track documentation        |
+| Role              | Permissions                                 |
+|-------------------|----------------------------------------------|
+| Regional Controller | Upload/update forecast data                 |
+| CFO               | View consolidated financial reports           |
+| Financial Analyst | Analyze trends and download charts           |
 
 ---
 
 <!-- CHUNK_H2_3 -->
 ## 3. Core Features — MVP
 
-- Structured performance review form (self + manager input)  
-- Track review status by employee/department  
-- Support multi-step workflows: draft → review → confirm  
-- Reporting compliance (who is overdue?)
+- Upload monthly forecasts by cost center  
+- Compare planned vs. actual in dashboards  
+- Highlight outliers or budget violations  
 
 ---
 
 <!-- CHUNK_H2_4 -->
 ## 4. Post-MVP Features
 
-- Create individual development goals  
-- Integrate with internal LMS  
-- Add manager feedback history to employee profile  
+- Drilldown to transaction-level anomalies  
+- Predictive trend line for key KPIs  
+- Export to PDF/Excel with charts  
 
 ---
 
 <!-- CHUNK_H2_5 -->
 ## 5. Constraints & Requirements
 
-- Access must follow hierarchical reporting structure  
-- Review records must be read-only after final submission  
-- Must support company-wide reporting
+- Data must be refreshed daily from source system  
+- Reports must respect role-based access (e.g., region visibility)  
+- Visualizations must support filtering by fiscal year/quarter

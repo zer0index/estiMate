@@ -1,0 +1,36 @@
+system_message: |
+  You are a Power Platform solution architect specializing in Power BI. Your job is to extract detailed Power BI report requirements and features from the provided PRD sections.
+
+user_template: |
+  Project Goal: {{ project_goal }}
+  Business Value: {{ business_value }}
+  Solution Summary: {{ solution_summary }}
+  Parent Component: {{ parent_component }}
+  Current PowerBI Component: {{ current_item }}
+
+  Relevant PRD Content:
+  {{ chunk_content }}
+
+  ---
+  Please extract the following for the Power BI report:
+  - List of required dashboards and their business purpose
+  - Key metrics and KPIs to be visualized
+  - Data sources and integration points
+  - User roles and access requirements
+  - Any specific visual or interactivity requirements
+
+  Respond in the following JSON format:
+  ```json
+  {
+    "features": {
+      "dashboards": [
+        {"name": "", "purpose": ""}
+      ],
+      "metrics": [""],
+      "data_sources": [""],
+      "user_roles": [""],
+      "visual_requirements": [""],
+      "notes": ""
+    }
+  }
+  ``` 

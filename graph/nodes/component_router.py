@@ -37,5 +37,7 @@ def router_conditional(state: Any) -> str:
                 return "model_driven_agent"
             elif comp_type in ("PowerAutomate", "Flow"):
                 return "power_automate_agent"
+            elif comp_type == "PowerBI":
+                return "powerbi_agent"
     # If all are processed, go to database_node
     return "database_node" 

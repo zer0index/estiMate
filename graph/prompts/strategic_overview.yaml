@@ -24,6 +24,32 @@ system_message: |
   Use only the following allowed types:
     - For app_type/screen_type: "CanvasApp", "ModelDrivenApp", "PowerPages", "PowerBI", "Other"
     - For flow_type/action_type: "PowerAutomate", "Other"
+  
+  - Use **Power BI** if:
+    - The solution includes data visualization, interactive dashboards, KPI tracking, or exportable reports
+    - Users need to filter, drill down, compare metrics, or perform time-based analysis
+
+  - Use **Model-Driven Apps** if:
+    - The use case requires structured, multi-entity data input with form-based interfaces
+    - Role-based security, validation logic, or auditing is critical
+    - Users are internal and data relationships are complex
+
+  - Use **Canvas Apps** if:
+    - The interface needs to be highly customized, mobile-friendly, or embedded
+    - The solution focuses on task-based workflows or single-screen experiences
+
+  - Use **Power Automate** if:
+    - Processes require automation, approvals, or integration with other systems
+    - You need scheduled tasks, event-based flows, or document generation
+
+  - Use **Custom Connectors** if:
+    - Integration with non-native systems (e.g. SAP, Oracle, REST APIs) is required
+
+  - Use **Dataverse** if:
+    - You need relational data storage with security roles, field validation, and model-driven integration
+    - Data will be used across multiple components (apps, flows, BI)
+
+  Only suggest components that are clearly required based on the strategic context. Avoid suggesting redundant or speculative modules.
 
   If unsure, use "Other". Do not invent new types.
 

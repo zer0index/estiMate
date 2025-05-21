@@ -1,115 +1,91 @@
 {
   "tables": [
     {
-      "table_name": "Employees",
+      "table_name": "Users",
       "fields": [
         {
-          "name": "EmployeeID",
+          "name": "UserID",
           "type": "Integer",
-          "description": "Unique identifier for each employee"
+          "description": "Unique identifier for each user"
         },
         {
-          "name": "FirstName",
+          "name": "UserName",
           "type": "String",
-          "description": "Employee's first name"
+          "description": "Name of the user"
         },
         {
-          "name": "LastName",
+          "name": "Role",
           "type": "String",
-          "description": "Employee's last name"
-        },
-        {
-          "name": "Department",
-          "type": "String",
-          "description": "Department the employee belongs to"
-        },
-        {
-          "name": "ManagerID",
-          "type": "Integer",
-          "description": "Unique identifier for the employee's manager"
+          "description": "Role of the user (Regional Controller, CFO, Financial Analyst)"
         }
       ],
-      "primary_key": "EmployeeID",
-      "foreign_keys": [
-        "ManagerID"
-      ],
-      "description": "Table to store employee data"
+      "primary_key": "UserID",
+      "foreign_keys": [],
+      "description": "Table to store user information"
     },
     {
-      "table_name": "Reviews",
+      "table_name": "Forecasts",
       "fields": [
         {
-          "name": "ReviewID",
+          "name": "ForecastID",
           "type": "Integer",
-          "description": "Unique identifier for each review"
+          "description": "Unique identifier for each forecast"
         },
         {
-          "name": "EmployeeID",
+          "name": "UserID",
           "type": "Integer",
-          "description": "Unique identifier for the employee being reviewed"
+          "description": "ID of the user who uploaded the forecast"
         },
         {
-          "name": "ReviewDate",
-          "type": "Date",
-          "description": "Date of the review"
-        },
-        {
-          "name": "ReviewStatus",
+          "name": "CostCenter",
           "type": "String",
-          "description": "Status of the review (Draft, Submitted, Confirmed)"
+          "description": "Cost center for which the forecast was made"
         },
         {
-          "name": "SelfAssessment",
-          "type": "Text",
-          "description": "Employee's self-assessment"
+          "name": "MonthYear",
+          "type": "Date",
+          "description": "Month and year of the forecast"
         },
         {
-          "name": "ManagerReview",
-          "type": "Text",
-          "description": "Manager's review of the employee"
+          "name": "ForecastData",
+          "type": "Float",
+          "description": "Forecasted financial data"
         }
       ],
-      "primary_key": "ReviewID",
+      "primary_key": "ForecastID",
       "foreign_keys": [
-        "EmployeeID"
+        "UserID"
       ],
-      "description": "Table to store review data"
+      "description": "Table to store forecast data"
     },
     {
-      "table_name": "Goals",
+      "table_name": "Actuals",
       "fields": [
         {
-          "name": "GoalID",
+          "name": "ActualID",
           "type": "Integer",
-          "description": "Unique identifier for each goal"
+          "description": "Unique identifier for each actual data entry"
         },
         {
-          "name": "EmployeeID",
-          "type": "Integer",
-          "description": "Unique identifier for the employee the goal is assigned to"
-        },
-        {
-          "name": "GoalDescription",
-          "type": "Text",
-          "description": "Description of the goal"
-        },
-        {
-          "name": "GoalStatus",
+          "name": "CostCenter",
           "type": "String",
-          "description": "Status of the goal (Not Started, In Progress, Completed)"
+          "description": "Cost center for which the actual data is reported"
         },
         {
-          "name": "DueDate",
+          "name": "MonthYear",
           "type": "Date",
-          "description": "Due date for the goal"
+          "description": "Month and year of the actual data"
+        },
+        {
+          "name": "ActualData",
+          "type": "Float",
+          "description": "Actual financial data"
         }
       ],
-      "primary_key": "GoalID",
-      "foreign_keys": [
-        "EmployeeID"
-      ],
-      "description": "Table to store individual development goals"
+      "primary_key": "ActualID",
+      "foreign_keys": [],
+      "description": "Table to store actual financial data"
     }
   ],
-  "notes": "The Employees table is related to the Reviews table through the EmployeeID field, forming a one-to-many relationship as one employee can have multiple reviews. The same relationship exists between the Employees and Goals tables. The ManagerID in the Employees table is a foreign key referencing the EmployeeID in the same table, forming a self-referencing relationship to represent the hierarchical reporting structure. All tables are normalized to the third normal form to eliminate data redundancy and improve data integrity."
+  "notes": "The Users table is related to the Forecasts table through the UserID field. This allows us to track which user uploaded each forecast. The Forecasts and Actuals tables can be joined on the CostCenter and MonthYear fields to compare forecasted and actual financial data. The database model is normalized to reduce data redundancy and improve data integrity."
 }
