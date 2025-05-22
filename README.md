@@ -25,6 +25,7 @@
 - [🚀 Getting Started](#-getting-started)
 - [💾 Caching System](#-caching-system)
 - [🎨 CLI Output](#-cli-output)
+- [📊 Excel Export (Summary Sheet)](#-excel-export-summary-sheet)
 - [🛠️ Extending estiMate](#️-extending-estimate)
 - [📚 Tech Stack](#-tech-stack)
 - [🎥 Demo](#-demo)
@@ -58,6 +59,8 @@ component_router ──► canvas_app_agent ─┐
                                       ↓
                                  estimation_agent
                                       ↓
+                                 extractoin_agent
+                                      ↓                                      
                                      END
 ```
 
@@ -147,6 +150,28 @@ To re-run: delete the corresponding file.
 - The pipeline provides real-time, colorized feedback in the terminal.
 - Each step uses spinners and color-coded status messages for progress, success, and errors.
 - If the spinner-based logger is missing, some nodes may fall back to plain or `rich`-styled output.
+
+---
+
+## 📊 Excel Export (Summary Sheet)
+
+After each pipeline run, estiMate generates a comprehensive Excel summary (`project_estimation_summary.xlsx`) in the project root. This file includes:
+
+- **Project Metadata:** Project name, PRD file, date, author, and pipeline run ID
+- **High-Level Description:** Purpose, business value, MVP scope
+- **Component Overview Table:**
+  - Component Type (e.g., Canvas App, Power Automate, Database, etc.)
+  - Name/ID
+  - Description
+  - Key Features
+  - Optimistic Hours
+  - Most Likely Hours
+  - Pessimistic Hours
+  - Assumptions
+- **Totals Row:** Sums for all hour columns
+- **Global Assumptions & Notes:** All collected assumptions and important notes
+
+The summary table is automatically deduplicated and aggregated by component, ensuring each component appears only once with summed hours. No 'Unknown' or 'Strategic Overview' entries are included.
 
 ---
 
