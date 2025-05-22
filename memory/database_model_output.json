@@ -4,94 +4,94 @@
       "table_name": "Employees",
       "fields": [
         {
-          "name": "employee_id",
-          "type": "integer",
+          "name": "EmployeeID",
+          "type": "Integer",
           "description": "Unique identifier for each employee"
         },
         {
-          "name": "employee_name",
-          "type": "string",
-          "description": "Full name of the employee"
+          "name": "Name",
+          "type": "String",
+          "description": "Employee's full name"
         },
         {
-          "name": "department",
-          "type": "string",
-          "description": "Department of the employee"
+          "name": "Department",
+          "type": "String",
+          "description": "Department the employee belongs to"
         }
       ],
-      "primary_key": "employee_id",
+      "primary_key": "EmployeeID",
       "foreign_keys": [],
-      "description": "Table storing all employee data"
+      "description": "Stores information about all employees"
     },
     {
       "table_name": "Devices",
       "fields": [
         {
-          "name": "device_id",
-          "type": "integer",
+          "name": "DeviceID",
+          "type": "Integer",
           "description": "Unique identifier for each device"
         },
         {
-          "name": "device_name",
-          "type": "string",
+          "name": "DeviceName",
+          "type": "String",
           "description": "Name of the device"
         },
         {
-          "name": "device_specs",
-          "type": "string",
+          "name": "DeviceSpecs",
+          "type": "String",
           "description": "Specifications of the device"
         },
         {
-          "name": "device_availability",
-          "type": "boolean",
+          "name": "DeviceAvailability",
+          "type": "Boolean",
           "description": "Availability status of the device"
         }
       ],
-      "primary_key": "device_id",
+      "primary_key": "DeviceID",
       "foreign_keys": [],
-      "description": "Table storing all device data"
+      "description": "Stores information about all devices"
     },
     {
       "table_name": "Orders",
       "fields": [
         {
-          "name": "order_id",
-          "type": "integer",
+          "name": "OrderID",
+          "type": "Integer",
           "description": "Unique identifier for each order"
         },
         {
-          "name": "employee_id",
-          "type": "integer",
-          "description": "Employee who placed the order"
+          "name": "EmployeeID",
+          "type": "Integer",
+          "description": "ID of the employee who placed the order"
         },
         {
-          "name": "device_id",
-          "type": "integer",
-          "description": "Device requested in the order"
+          "name": "DeviceID",
+          "type": "Integer",
+          "description": "ID of the device ordered"
         },
         {
-          "name": "justification",
-          "type": "string",
-          "description": "Business justification for the order"
+          "name": "OrderStatus",
+          "type": "String",
+          "description": "Current status of the order"
         },
         {
-          "name": "urgency_level",
-          "type": "string",
+          "name": "Justification",
+          "type": "String",
+          "description": "Business justification provided by the employee"
+        },
+        {
+          "name": "UrgencyLevel",
+          "type": "String",
           "description": "Urgency level of the order"
-        },
-        {
-          "name": "order_status",
-          "type": "string",
-          "description": "Status of the order"
         }
       ],
-      "primary_key": "order_id",
+      "primary_key": "OrderID",
       "foreign_keys": [
-        "employee_id",
-        "device_id"
+        "EmployeeID",
+        "DeviceID"
       ],
-      "description": "Table storing all order data"
+      "description": "Stores information about all orders"
     }
   ],
-  "notes": "The Employees table is related to the Orders table through the employee_id field, which is a foreign key in the Orders table. Similarly, the Devices table is related to the Orders table through the device_id field. This normalization allows us to avoid redundancy and maintain data integrity."
+  "notes": "The Employees table and Devices table are related to the Orders table through foreign keys. This allows us to track which employee ordered which device. The normalization of the database ensures that there is no redundant data and that each piece of data is stored in its most logical place."
 }

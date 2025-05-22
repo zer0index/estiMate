@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import track
 from rich.markdown import Markdown
+from graph.utils.log import log_info, log_success, log_warning, log_error
 
 console = Console()
 
@@ -95,7 +96,7 @@ def canvas_app_agent(state: Any) -> Any:
     # Find the first unprocessed CanvasApp component
     solution = getattr(state, "strategic_context", None)
     if not solution:
-        print("[Error] No strategic context found in state.")
+        log_error("No strategic context found in state.")
         return state
     mvp_components = getattr(solution, "mvp_components", [])
     comp = None
@@ -106,12 +107,12 @@ def canvas_app_agent(state: Any) -> Any:
             comp_index = idx
             break
     if comp is None:
-        print("[CanvasAppAgent] No unprocessed CanvasApp component found.")
+        log_warning("No unprocessed CanvasApp component found.")
         return state
     # Check for cached output
     cached = load_from_cache("canvas_app_agent")
     if cached:
-        print("[Cache] Using cached output for node 'canvas_app_agent'")
+        log_success("[Cache] Using cached output for node 'canvas_app_agent'")
         state.strategic_context = cached.get("strategic_context", state.strategic_context)
         # Mark as processed
         mvp_components[comp_index].processed = True
@@ -129,31 +130,32 @@ def canvas_app_agent(state: Any) -> Any:
     system_message = prompt_yaml.get("system_message", "")
     user_template = prompt_yaml["user_template"]
     if "app_screens" in comp_dict:
-        for sidx, screen in enumerate(comp_dict["app_screens"]):
-            chunk_content = find_relevant_chunk_content(screen, prd_chunks)
-            user_prompt = user_template \
-                .replace("{{ project_goal }}", project_goal) \
-                .replace("{{ business_value }}", json.dumps(business_value, ensure_ascii=False)) \
-                .replace("{{ solution_summary }}", json.dumps(summary, ensure_ascii=False, indent=2)) \
-                .replace("{{ parent_component }}", json.dumps(parent_component, ensure_ascii=False, indent=2)) \
-                .replace("{{ current_item }}", json.dumps(screen, ensure_ascii=False, indent=2)) \
-                .replace("{{ chunk_content }}", chunk_content)
-            llm_response = call_llm(
-                prompt=user_prompt,
-                model="gpt-4-1106-preview",
-                temperature=0.2,
-                system_message=system_message
-            )
-            try:
-                cleaned_response = clean_llm_json(llm_response)
-                data = json.loads(cleaned_response)
-                if "features" in data and data["features"]:
-                    screen["features"] = flatten_features(data["features"])
-                # Always set sota_suggestions to empty
-                screen["sota_suggestions"] = {}
-            except Exception as e:
-                print(f"[Error] Failed to parse LLM output for screen '{screen.get('screen_name', '')}': {e}")
-                print(f"[Debug] Raw LLM response for screen '{screen.get('screen_name', '')}':\n{llm_response}\n")
+        with console.status("[bold blue]Canvas App Agent: Extracting features...", spinner="dots"):
+            for sidx, screen in enumerate(comp_dict["app_screens"]):
+                chunk_content = find_relevant_chunk_content(screen, prd_chunks)
+                user_prompt = user_template \
+                    .replace("{{ project_goal }}", project_goal) \
+                    .replace("{{ business_value }}", json.dumps(business_value, ensure_ascii=False)) \
+                    .replace("{{ solution_summary }}", json.dumps(summary, ensure_ascii=False, indent=2)) \
+                    .replace("{{ parent_component }}", json.dumps(parent_component, ensure_ascii=False, indent=2)) \
+                    .replace("{{ current_item }}", json.dumps(screen, ensure_ascii=False, indent=2)) \
+                    .replace("{{ chunk_content }}", chunk_content)
+                llm_response = call_llm(
+                    prompt=user_prompt,
+                    model="gpt-4-1106-preview",
+                    temperature=0.2,
+                    system_message=system_message
+                )
+                try:
+                    cleaned_response = clean_llm_json(llm_response)
+                    data = json.loads(cleaned_response)
+                    if "features" in data and data["features"]:
+                        screen["features"] = flatten_features(data["features"])
+                    # Always set sota_suggestions to empty
+                    screen["sota_suggestions"] = {}
+                except Exception as e:
+                    log_error(f"Failed to parse LLM output for screen '{screen.get('screen_name', '')}': {e}")
+                    log_info(f"Raw LLM response for screen '{screen.get('screen_name', '')}':\n{llm_response}\n")
     # Update the component in the state
     comp_dict["processed"] = True
     mvp_components[comp_index] = AppComponent(**comp_dict)
@@ -161,8 +163,5 @@ def canvas_app_agent(state: Any) -> Any:
     state.strategic_context = solution
     save_to_cache("canvas_app_agent", solution)
     # Use rich for status output
-    if console:
-        console.print("[bold cyan]Canvas App Agent: feature extraction complete.[/bold cyan]")
-    else:
-        print("Canvas App Agent: feature extraction complete.")
+    log_success("Canvas App Agent: feature extraction complete.")
     return state

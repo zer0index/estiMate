@@ -10,30 +10,42 @@
     {
       "app_name": "Order Request Form",
       "app_type": "CanvasApp",
-      "app_details": "Allows employees to browse available devices, view specs, photos, and availability, and filter by department-approved models. Form for employees to select a device, justify business need, select urgency level, and auto-populate employee name/department from Azure AD.",
+      "app_details": "Allows employees to browse available devices, view specs, photos, availability, and filter by department-approved models. Allows employees to select a device, justify business need, select urgency level, and auto-populate employee name/department from Azure AD.",
       "app_screens": [
         {
           "screen_name": "Device Browser",
           "screen_type": "CanvasApp",
-          "screen_details": "Screen to browse and filter available devices.",
+          "screen_details": "View and filter available devices.",
           "features": null
         },
         {
           "screen_name": "Device Details",
           "screen_type": "CanvasApp",
-          "screen_details": "Screen to view specs, photos, and availability of selected device.",
+          "screen_details": "View specs, photos, and availability of selected device.",
           "features": null
         },
         {
-          "screen_name": "Request Form",
+          "screen_name": "Device Selection",
           "screen_type": "CanvasApp",
-          "screen_details": "Form to submit a new device order request.",
+          "screen_details": "Select a device from the catalog.",
+          "features": null
+        },
+        {
+          "screen_name": "Business Justification",
+          "screen_type": "CanvasApp",
+          "screen_details": "Input business need and urgency level.",
+          "features": null
+        },
+        {
+          "screen_name": "Employee Information",
+          "screen_type": "CanvasApp",
+          "screen_details": "Auto-populate employee details from Azure AD.",
           "features": null
         },
         {
           "screen_name": "Order Confirmation",
           "screen_type": "CanvasApp",
-          "screen_details": "Screen to confirm the order before submission.",
+          "screen_details": "Confirm order details before submission.",
           "features": null
         }
       ],
@@ -42,12 +54,12 @@
     {
       "flow_name": "Approval Workflow",
       "flow_type": "PowerAutomate",
-      "flow_details": "Workflow for managers to receive approval notifications and approve/reject with comments within a 2 business day SLA.",
+      "flow_details": "Managers receive approval notifications and can approve/reject requests with comments within a 2 business day SLA.",
       "flow_actions": [
         {
           "action_name": "Receive Notification",
           "action_type": "PowerAutomate",
-          "action_details": "Manager receives a notification for a new approval request.",
+          "action_details": "Manager receives a notification for approval.",
           "features": null
         },
         {
@@ -69,15 +81,15 @@
       "module_name": "Request Tracking",
       "extension_type": "AppScreen",
       "extends_component": "Order Request Form",
-      "details": "Allows employees to view the status of their order requests and receive email notifications at each step. An optional Power BI dashboard for tracking could be added.",
-      "recommendation": "Extend the Order Request Form with a new screen for tracking to keep all order-related features within a single app, enhancing user experience and adoption."
+      "details": "Allows employees to view the status of their orders and receive email notifications at each step. Optional Power BI dashboard for tracking.",
+      "recommendation": "Extend the Order Request Form with a new screen for tracking to provide a seamless experience within the same app."
     },
     {
       "module_name": "Inventory Management",
       "extension_type": "AppScreen",
       "extends_component": "Device Catalog",
-      "details": "Enables IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system (e.g., SAP).",
-      "recommendation": "Extend the Device Catalog app to include inventory management features for IT Administrators, ensuring a centralized system for device-related management."
+      "details": "Allows IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system.",
+      "recommendation": "Extend the Device Catalog app with new screens for inventory management to centralize device-related functionalities."
     }
   ],
   "user_roles": [
@@ -122,6 +134,6 @@
     "Power Automate for approvals and notifications",
     "Azure AD for user authentication"
   ],
-  "notes": "The app should have a clean, corporate design with device images, a responsive layout for phone and desktop, use dropdowns, cards, and status icons, and confirm order screen before submission. It should also be accessible (WCAG AA). Security & compliance requirements include role-based access via Dataverse security roles, an audit trail of approvals, and retaining order data for 2 years per IT policy.",
+  "notes": "Design should be clean and corporate with responsive layout for phone and desktop. Use dropdowns, cards, and status icons. Ensure accessible design (WCAG AA).",
   "database_model": null
 }

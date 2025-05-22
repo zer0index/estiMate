@@ -10,6 +10,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import track
 from rich.markdown import Markdown
+from graph.utils.log import log_info, log_success, log_warning
 
 console = Console()
 
@@ -22,27 +23,18 @@ def extract_title(heading_line: str) -> str:
 
 def chunker(state: Any) -> Any:
     """Splits tagged PRD into chunks and updates the state."""
-    if console:
-        console.print("[bold cyan]Chunker node: checking cache...[/bold cyan]")
-    else:
-        print("Chunker node: checking cache...")
+    log_info("Chunker node: checking cache...")
     
     # Try to load from cache first
     cached_data = load_from_cache("chunker")
     if cached_data is not None:
-        if console:
-            console.print("[green][Cache] Chunker node: using cached output[/green]")
-        else:
-            print("Chunker node: using cached output")
+        log_success("[Cache] Chunker node: using cached output")
         # Convert dict back to PRDChunk objects
         chunks = [PRDChunk(**chunk) for chunk in cached_data]
         state.chunks = chunks
         return state
 
-    if console:
-        console.print("[yellow]Chunker node: splitting tagged PRD into chunks...[/yellow]")
-    else:
-        print("Chunker node: splitting tagged PRD into chunks...")
+    log_warning("Chunker node: splitting tagged PRD into chunks...")
     chunks = []
     current_chunk = []
     current_heading = None
@@ -87,8 +79,5 @@ def chunker(state: Any) -> Any:
     # Save to cache
     save_to_cache("chunker", [chunk.model_dump() for chunk in chunks])
     
-    if console:
-        console.print("[green]Chunker node: created {len(chunks)} chunks and saved to cache.[/green]")
-    else:
-        print(f"Chunker node: created {len(chunks)} chunks and saved to cache.")
+    log_success(f"Chunker node: created {len(chunks)} chunks and saved to cache.")
     return state

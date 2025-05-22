@@ -10,84 +10,127 @@
     {
       "app_name": "Order Request Form",
       "app_type": "CanvasApp",
-      "app_details": "Allows employees to browse available devices, view specs, photos, and availability, and filter by department-approved models. Form for employees to select a device, justify business need, select urgency level, and auto-populate employee name/department from Azure AD.",
+      "app_details": "Allows employees to browse available devices, view specs, photos, availability, and filter by department-approved models. Allows employees to select a device, justify business need, select urgency level, and auto-populate employee name/department from Azure AD.",
       "app_screens": [
         {
           "screen_name": "Device Browser",
           "screen_type": "CanvasApp",
-          "screen_details": "Screen to browse and filter available devices.",
+          "screen_details": "View and filter available devices.",
           "features": {
             "feat_0001": "Device Catalog",
-            "feat_0002": "Device Filtering",
-            "feat_0003": "Device Details",
-            "feat_0004": "Device Images",
-            "feat_0005": "Availability Indicator",
-            "feat_0006": "Department Filter",
-            "feat_0007": "Order Request Integration",
-            "feat_0008": "Azure AD Integration"
+            "feat_0002": "Device Browser Screen",
+            "feat_0003": "Filter Functionality",
+            "feat_0004": "Device Details View",
+            "feat_0005": "Device Availability Indicator",
+            "feat_0006": "Department-Approved Filter",
+            "feat_0007": "Device Selection Option",
+            "feat_0008": "Business Need Justification Textarea",
+            "feat_0009": "Urgency Level Selection",
+            "feat_0010": "Employee Information Auto-Population",
+            "feat_0011": "Integration with Azure AD"
           }
         },
         {
           "screen_name": "Device Details",
           "screen_type": "CanvasApp",
-          "screen_details": "Screen to view specs, photos, and availability of selected device.",
+          "screen_details": "View specs, photos, and availability of selected device.",
           "features": {
             "feat_0001": "Device Details Screen",
             "feat_0002": "Device Image Gallery",
-            "feat_0003": "Device Specifications Display",
+            "feat_0003": "Device Specifications Viewer",
             "feat_0004": "Device Availability Indicator",
-            "feat_0005": "Back Navigation Button",
-            "feat_0006": "Add to Cart or Request Button"
+            "feat_0005": "Back Button to Catalog",
+            "feat_0006": "Add to Cart Button",
+            "feat_0007": "Device Selection Confirmation",
+            "feat_0008": "Integration with Inventory Data",
+            "feat_0009": "Responsive Layout for Different Screen Sizes",
+            "feat_0010": "Error Handling for Unavailable Devices",
+            "feat_0011": "Navigation to Justification Textarea",
+            "feat_0012": "Navigation to Urgency Level Selection",
+            "feat_0013": "Auto-population of Employee Details from Azure AD",
+            "feat_0014": "Real-time Data Refresh for Availability Status"
           }
         },
         {
-          "screen_name": "Request Form",
+          "screen_name": "Device Selection",
           "screen_type": "CanvasApp",
-          "screen_details": "Form to submit a new device order request.",
+          "screen_details": "Select a device from the catalog.",
           "features": {
-            "feat_0001": "Device Selection Dropdown",
-            "feat_0002": "Business Justification Textarea",
-            "feat_0003": "Urgency Level Radio Buttons",
-            "feat_0004": "Employee Name Text Label",
-            "feat_0005": "Employee Department Text Label",
-            "feat_0006": "Submit Button",
-            "feat_0007": "Reset Form Button",
-            "feat_0008": "Auto-Population of Employee Data",
-            "feat_0009": "Form Validation",
-            "feat_0010": "On-Screen Instructions",
-            "feat_0011": "Navigation Bar",
-            "feat_0012": "Back Button",
-            "feat_0013": "Device Image Preview",
-            "feat_0014": "Device Specifications Display",
-            "feat_0015": "Confirmation Message on Submission",
-            "feat_0016": "Integration with Approval Workflow",
-            "feat_0017": "Loading Spinner for Async Operations",
-            "feat_0018": "Error Handling and User Notifications",
-            "feat_0019": "Responsive Design for Multiple Devices",
-            "feat_0020": "Accessibility Features",
-            "feat_0021": "Data Source Connection to Device Catalog",
-            "feat_0022": "Data Source Connection to Azure AD"
+            "feat_0001": "Device Catalog Gallery",
+            "feat_0002": "Device Specifications Display",
+            "feat_0003": "Device Image Viewer",
+            "feat_0004": "Availability Indicator",
+            "feat_0005": "Department Filter Dropdown",
+            "feat_0006": "Device Selection Button",
+            "feat_0007": "Business Justification Textarea",
+            "feat_0008": "Urgency Level Radio Buttons",
+            "feat_0009": "Employee Name Auto-Populate",
+            "feat_0010": "Employee Department Auto-Populate"
+          }
+        },
+        {
+          "screen_name": "Business Justification",
+          "screen_type": "CanvasApp",
+          "screen_details": "Input business need and urgency level.",
+          "features": {
+            "feat_0001": "Business Justification Text Area",
+            "feat_0002": "Urgency Level Selection",
+            "feat_0003": "Auto-Populate User Details",
+            "feat_0004": "Screen Navigation Controls",
+            "feat_0005": "Input Validation for Justification",
+            "feat_0006": "Save Draft Functionality",
+            "feat_0007": "Submit Button",
+            "feat_0008": "User Help Information",
+            "feat_0009": "Consistent UI Theming",
+            "feat_0010": "Accessibility Features",
+            "feat_0011": "Error Handling and User Feedback",
+            "feat_0012": "Data Binding to Azure AD",
+            "feat_0013": "Urgency Level Information Tooltip"
+          }
+        },
+        {
+          "screen_name": "Employee Information",
+          "screen_type": "CanvasApp",
+          "screen_details": "Auto-populate employee details from Azure AD.",
+          "features": {
+            "feat_0001": "Auto-populate Employee Name",
+            "feat_0002": "Auto-populate Employee Department",
+            "feat_0003": "Integration with Azure Active Directory",
+            "feat_0004": "Employee Information Display",
+            "feat_0005": "Read-only Fields for Auto-populated Data",
+            "feat_0006": "Manual Entry for Non-auto-populated Fields",
+            "feat_0007": "Data Validation for Manual Entries",
+            "feat_0008": "Navigation Controls to Move to Next Screen",
+            "feat_0009": "On-screen Instructions or Tooltips",
+            "feat_0010": "Responsive Design for Different Device Access",
+            "feat_0011": "Consistent Branding with Company Themes and Logos",
+            "feat_0012": "Accessibility Features (e.g., Screen Reader Support)",
+            "feat_0013": "Error Handling for Directory Lookup Failures",
+            "feat_0014": "Loading Indicators for Data Retrieval Processes",
+            "feat_0015": "Session Timeout Warning for Inactivity",
+            "feat_0016": "Save Progress Option for Multi-step Form"
           }
         },
         {
           "screen_name": "Order Confirmation",
           "screen_type": "CanvasApp",
-          "screen_details": "Screen to confirm the order before submission.",
+          "screen_details": "Confirm order details before submission.",
           "features": {
-            "feat_0001": "Confirmation Summary",
+            "feat_0001": "Confirmation Header",
             "feat_0002": "Device Image Preview",
-            "feat_0003": "Selected Device Specs",
-            "feat_0004": "Business Justification Review",
-            "feat_0005": "Urgency Level Display",
-            "feat_0006": "Employee Details Confirmation",
-            "feat_0007": "Order Submission Button",
-            "feat_0008": "Order Edit Option",
-            "feat_0009": "Integration with Approval Workflow",
-            "feat_0010": "Confirmation Message upon Submission",
-            "feat_0011": "Back Navigation to Device Catalog or Order Form",
-            "feat_0012": "Data Validation before Submission",
-            "feat_0013": "Auto-populated Order Date",
-            "feat_0014": "Estimated Approval Time Display based on SLA"
+            "feat_0003": "Device Specifications Summary",
+            "feat_0004": "Selected Device Name",
+            "feat_0005": "Business Justification Summary",
+            "feat_0006": "Urgency Level Display",
+            "feat_0007": "Employee Details Confirmation",
+            "feat_0008": "Order Summary Section",
+            "feat_0009": "Total Cost Calculation",
+            "feat_0010": "Submit Order Button",
+            "feat_0011": "Edit Order Button",
+            "feat_0012": "Confirmation Message Area",
+            "feat_0013": "Data Validation before Submission",
+            "feat_0014": "Integration with Approval Workflow",
+            "feat_0015": "Back Navigation Control"
           }
         }
       ],
@@ -96,12 +139,12 @@
     {
       "flow_name": "Approval Workflow",
       "flow_type": "PowerAutomate",
-      "flow_details": "Workflow for managers to receive approval notifications and approve/reject with comments within a 2 business day SLA.",
+      "flow_details": "Managers receive approval notifications and can approve/reject requests with comments within a 2 business day SLA.",
       "flow_actions": [
         {
           "action_name": "Receive Notification",
           "action_type": "PowerAutomate",
-          "action_details": "Manager receives a notification for a new approval request.",
+          "action_details": "Manager receives a notification for approval.",
           "features": null
         },
         {
@@ -123,15 +166,15 @@
       "module_name": "Request Tracking",
       "extension_type": "AppScreen",
       "extends_component": "Order Request Form",
-      "details": "Allows employees to view the status of their order requests and receive email notifications at each step. An optional Power BI dashboard for tracking could be added.",
-      "recommendation": "Extend the Order Request Form with a new screen for tracking to keep all order-related features within a single app, enhancing user experience and adoption."
+      "details": "Allows employees to view the status of their orders and receive email notifications at each step. Optional Power BI dashboard for tracking.",
+      "recommendation": "Extend the Order Request Form with a new screen for tracking to provide a seamless experience within the same app."
     },
     {
       "module_name": "Inventory Management",
       "extension_type": "AppScreen",
       "extends_component": "Device Catalog",
-      "details": "Enables IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system (e.g., SAP).",
-      "recommendation": "Extend the Device Catalog app to include inventory management features for IT Administrators, ensuring a centralized system for device-related management."
+      "details": "Allows IT Administrators to update stock levels, mark orders as fulfilled, and link to the procurement system.",
+      "recommendation": "Extend the Device Catalog app with new screens for inventory management to centralize device-related functionalities."
     }
   ],
   "user_roles": [
@@ -176,6 +219,6 @@
     "Power Automate for approvals and notifications",
     "Azure AD for user authentication"
   ],
-  "notes": "The app should have a clean, corporate design with device images, a responsive layout for phone and desktop, use dropdowns, cards, and status icons, and confirm order screen before submission. It should also be accessible (WCAG AA). Security & compliance requirements include role-based access via Dataverse security roles, an audit trail of approvals, and retaining order data for 2 years per IT policy.",
+  "notes": "Design should be clean and corporate with responsive layout for phone and desktop. Use dropdowns, cards, and status icons. Ensure accessible design (WCAG AA).",
   "database_model": null
 }
