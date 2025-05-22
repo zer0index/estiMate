@@ -39,4 +39,9 @@ Thumbs.db
 # Python compiled
 *.pyd
 *.so
+
+# Outcomes (pipeline results)
+outcomes
+outcomes/** */
+
 .copilot-hints.md

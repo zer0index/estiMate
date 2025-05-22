@@ -12,22 +12,23 @@ console = Console()
 
 def component_router(state: Any) -> Any:
     """
-    Updates the state with the next component_index to process, if any.
+    Updates the state and returns a dict with the next node to process.
     """
     log_info("Component Router node: routing MVP components to specialized agents...")
     solution = getattr(state, "strategic_context", None)
     if not solution:
         log_error("No strategic context found in state.")
         log_error("[Router] Returning next: END")
-        return state
+        return {"next": "END", "state": state}
     mvp_components = getattr(solution, "mvp_components", [])
     for idx, comp in enumerate(mvp_components):
         comp_type = getattr(comp, "app_type", getattr(comp, "flow_type", None))
-        if comp_type in ("CanvasApp", "PowerAutomate", "Flow") and not getattr(comp, "processed", False):
-            # Route to the first unprocessed component (no need to update state)
-            return state
-    # If all are processed, just return state (router_conditional will return END)
-    return state
+        if comp_type in ("CanvasApp", "PowerAutomate", "Flow", "PowerPages", "PowerBI", "ModelDrivenApp") and not getattr(comp, "processed", False):
+            # Route to the first unprocessed component
+            next_node = router_conditional(state)
+            return {"next": next_node, "state": state}
+    # If all are processed, just return END
+    return {"next": "END", "state": state}
 
 def router_conditional(state: Any) -> str:
     solution = getattr(state, "strategic_context", None)
@@ -46,5 +47,7 @@ def router_conditional(state: Any) -> str:
                 return "power_automate_agent"
             elif comp_type == "PowerBI":
                 return "powerbi_agent"
+            elif comp_type == "PowerPages":
+                return "power_pages_agent"
     # If all are processed, go to database_node
     return "database_node"

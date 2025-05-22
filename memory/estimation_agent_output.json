@@ -1,130 +1,69 @@
 [
   {
-    "error": "LLM output not valid JSON",
-    "raw": "{\n  \"component_type\": \"Canvas App\",\n  \"component_name\": \"Order Request Form\",\n  \"screen_name\": \"Device Browser\",\n  \"level_selected\": 3,\n  \"score\": 7,\n  \"effort_hours\": {\"optimistic\": 28, \"most_likely\": 32, \"pessimistic\": 36},\n  \"assumptions\": [\n    \"Data sources and schema are predefined and accessible.\",\n    \"Integration with Azure AD is limited to fetching employee information and does not involve complex authentication flows.\",\n    \"Device details and availability data are readily available from a single data source.\",\n    \"The UI design mockups are provided.\",\n    \"No advanced custom styling or theming is required.\"\n  ],\n  \"reasoning\": \"The 'Device Browser' screen of the 'Order Request Form' app appears to be moderately complex. It includes features such as a device catalog, filtering functionality, device details view, availability indicator, department-approved filter, device selection, business need justification, urgency level selection, and employee information auto-population with Azure AD integration. This suggests the use of multiple controls, conditional logic for filtering and displaying device availability, and integration with at least one external data source (Azure AD) in addition to the main device catalog data source.\n\nThe screen does not seem to require offline capabilities, advanced error handling, or fully responsive layout across devices, which are characteristics of a level 5 complexity. However, it goes beyond the simple navigation and basic layout customization of level 2. Therefore, level 3 is the best match, with a score of 7, which falls within the score range of 7-9 for this level.\n\nThe effort hours are adjusted slightly upwards to account for the integration with Azure AD, which might require additional time for setup and testing. The optimistic estimate is kept at the lower end of the level 3 range (28 hours), the most likely is slightly above the midpoint (32 hours), and the pessimistic estimate is at the upper end of the range (36 hours).\"\n}"
-  },
-  {
-    "component_type": "Canvas App",
-    "component_name": "Order Request Form",
-    "screen_name": "Device Details",
-    "level_selected": 4,
-    "score": 10,
-    "effort_hours": {
-      "optimistic": 40,
-      "most_likely": 45,
-      "pessimistic": 50
-    },
-    "assumptions": [
-      "Azure AD integration is pre-configured and available for use.",
-      "Inventory data source is accessible and has a well-defined API.",
-      "Images and specifications for devices are provided and formatted for use.",
-      "The app will be used on multiple device types, requiring responsive design.",
-      "Error handling requirements are documented and specific to unavailable devices."
-    ],
-    "reasoning": "The 'Device Details' screen has several features that align with a Level 4 complexity: integration with inventory data, responsive layout, error handling, and real-time data refresh. The auto-population of employee details from Azure AD and the navigation to other screens with specific actions (justification, urgency level) suggest a higher level of complexity and state management. The presence of a gallery and indicators also points to a more complex UI. The effort estimate is adjusted to the higher end of the range to account for the additional complexity introduced by real-time data refresh and responsive design considerations."
-  },
-  {
-    "component_type": "Canvas App",
-    "component_name": "Order Request Form",
-    "screen_name": "Device Selection",
-    "level_selected": 3,
-    "score": 7,
-    "effort_hours": {
-      "optimistic": 28,
-      "most_likely": 32,
-      "pessimistic": 36
-    },
-    "assumptions": [
-      "Data sources and schema are predefined and accessible",
-      "Images and device specifications are readily available",
-      "Employee data for auto-population is accessible from a single data source",
-      "No complex business logic beyond the screen's immediate functionality",
-      "Basic error handling is included, but advanced error handling is not required",
-      "The app is intended for use on a single device type or platform"
-    ],
-    "reasoning": "The 'Device Selection' screen has several features that indicate moderate complexity. There is a gallery for device catalog browsing (feat_0001), which implies data binding and item templates. Displaying device specifications (feat_0002) and an image viewer (feat_0003) suggests the need for dynamic content loading based on user interaction. An availability indicator (feat_0004) requires conditional logic and possibly real-time data fetching. Filtering devices by department (feat_0005) introduces additional user interaction and data manipulation. The selection button (feat_0006), justification textarea (feat_0007), and urgency level radio buttons (feat_0008) add to the UI complexity and require data handling. Auto-populating employee name and department (feat_0009 and feat_0010) indicates integration with another data source, likely a user directory. The combination of these features aligns with Level 3 indicators such as moderate UI complexity, use of variables and collections, and some conditional logic. The effort hours are adjusted slightly upwards to account for the integration of multiple features and potential complexity in ensuring a smooth user experience."
-  },
-  {
-    "component_type": "Canvas App",
-    "component_name": "Order Request Form",
-    "screen_name": "Business Justification",
-    "level_selected": 3,
-    "score": 7,
-    "effort_hours": {
-      "optimistic": 28,
-      "most_likely": 36,
-      "pessimistic": 40
-    },
-    "assumptions": [
-      "Data sources and user details are readily available for auto-population.",
-      "UI theming and accessibility features are standard and do not require extensive custom development.",
-      "Error handling will be implemented using built-in Power Apps functions and patterns.",
-      "Integration with Azure AD for data binding is straightforward and does not involve complex logic."
-    ],
-    "reasoning": "The screen 'Business Justification' includes a variety of features that align with level 3 complexity. Features such as input validation, save draft functionality, submit button with error handling, and user feedback indicate moderate UI complexity and data validation. Auto-populating user details and data binding to Azure AD suggest the use of multiple data sources. Screen navigation controls and urgency level information tooltip imply some conditional logic and UI complexity. The inclusion of consistent UI theming and accessibility features indicates a need for basic layout customization. The effort hours have been adjusted to account for the additional complexity introduced by error handling and data binding to Azure AD, which may require more time to implement correctly."
-  },
-  {
-    "component_type": "Canvas App",
-    "component_name": "Order Request Form",
-    "screen_name": "Employee Information",
-    "level_selected": 3,
-    "score": 8,
-    "effort_hours": {
-      "optimistic": 28,
-      "most_likely": 32,
-      "pessimistic": 36
-    },
-    "assumptions": [
-      "Azure AD integration is pre-configured and available for use within the Power Platform environment.",
-      "Branding assets such as company themes and logos are provided by the customer.",
-      "Accessibility requirements are standard and do not require extensive custom development.",
-      "Session timeout and save progress features are to be implemented using standard Power Apps capabilities without complex custom logic."
-    ],
-    "reasoning": "The screen 'Employee Information' in the 'Order Request Form' app includes integration with Azure Active Directory to auto-populate employee details, which indicates a level of complexity beyond the most basic app. The screen also includes read-only fields, manual entry fields with data validation, navigation controls, on-screen instructions, responsive design, consistent branding, accessibility features, error handling, loading indicators, session timeout warning, and a save progress option. These features suggest a moderate level of UI complexity, error handling, and data validation, which aligns with level 3 indicators such as 'moderate UI complexity', 'error handling and data validation', and 'reuse of components and collections'. The app does not seem to require offline capabilities, advanced error handling, or integration with complex external APIs, which would be indicative of a higher level. Therefore, level 3 is selected with a score of 8, which is in the middle of the score range for this level. The effort hours are adjusted slightly upwards to account for the integration with Azure AD and the additional features such as responsive design and branding."
-  },
-  {
-    "component_type": "Canvas App",
-    "component_name": "Order Request Form",
-    "screen_name": "Order Confirmation",
-    "level_selected": 3,
-    "score": 8,
-    "effort_hours": {
-      "optimistic": 28,
-      "most_likely": 32,
-      "pessimistic": 36
-    },
-    "assumptions": [
-      "Data sources and APIs for device information, cost calculation, and approval workflow are pre-existing and accessible.",
-      "Device image assets are provided by the customer.",
-      "Business logic for data validation and total cost calculation is defined and provided.",
-      "Approval workflow is an external system that the app will integrate with, not developed within this app.",
-      "User interface design mockups are provided.",
-      "Employee details are fetched from a single data source, such as an employee directory."
-    ],
-    "reasoning": "The 'Order Confirmation' screen has a moderate level of complexity, with features such as device image preview, data validation, integration with an approval workflow, and navigation controls. These features indicate a need for multiple data sources, conditional logic, and some level of UI complexity. The screen also includes dynamic content such as a total cost calculation and device specifications summary, which suggests the use of variables and collections. The presence of a confirmation message area and data validation before submission implies error handling and data validation mechanisms. The integration with an approval workflow and the ability to edit the order before submission adds to the complexity. The screen does not seem to require offline capability, advanced state management, or custom components reused across screens, which are characteristics of a level 4 complexity. Therefore, level 3 is the best match, with a score of 8, which falls within the score range of 7-9 for this level. The effort hours are adjusted slightly upwards to account for the integration with the approval workflow, which can be complex."
-  },
-  {
-    "component_type": "Power Automate",
-    "component_name": "Approval Workflow",
+    "component_type": "PowerPages",
+    "component_name": "Supplier Registration Portal",
+    "screen_name": "Registration Form",
     "level_selected": 2,
     "score": 3,
     "effort_hours": {
-      "optimistic": 6,
-      "most_likely": 8,
-      "pessimistic": 10
+      "optimistic": 22,
+      "most_likely": 26,
+      "pessimistic": 30
     },
     "assumptions": [
-      "The data for the approval process is provided by the customer.",
-      "The SharePoint and Outlook connectors are standard and do not require custom configuration.",
-      "The approval process is assumed to be straightforward without complex business logic.",
-      "Security and permissions are managed externally and are not part of the flow development.",
-      "The SLA of 2 business days is managed through the flow's logic without the need for additional external systems."
+      "The registration form will be built using basic Dataverse forms.",
+      "Standard styling and layout will be applied.",
+      "Basic internal authentication is required for suppliers to access the form.",
+      "No complex business logic or external system integration is required.",
+      "The customer will provide all necessary field requirements and validation rules."
     ],
-    "reasoning": "The Approval Workflow described involves receiving a notification and the ability to approve or reject a request with comments. This indicates the use of standard connectors (SharePoint for triggering the flow and Outlook for sending emails). The flow is triggered when an item is created or modified in SharePoint, which is a single trigger. There are two actions described, which are within the range of a Level 2 complexity. There is no mention of complex branching, loops, or expressions, which would indicate a higher level. The use of SharePoint and Outlook connectors is standard and does not suggest the need for custom connectors or APIs. Given the information provided, the workflow seems to fit within the Level 2 complexity with a score of 3, which aligns with the indicators of having simple conditional branches and limited expressions. The effort hours are adjusted to reflect a most likely scenario of 8 hours, considering potential minor complexities that may arise during the implementation of the approval logic."
+    "reasoning": "The 'Registration Form' screen is part of a 'Supplier Registration Portal' which implies that it will be used for suppliers to input company details and submit for registration. This typically involves creating a form with various fields for data input. Since the object details do not specify any advanced features such as deep customization, complex business logic, or external integrations, it is reasonable to assume that this form will be a basic Dataverse form with standard styling and layout. The form will likely require some level of authentication for suppliers to access and submit their details, which aligns with level 2 indicators. The score of 3 is chosen because it fits within the score range for level 2 (3-4), and the effort hours are adjusted slightly upwards to account for potential complexities in form validation and testing."
+  },
+  {
+    "component_type": "PowerPages",
+    "component_name": "Supplier Registration Portal",
+    "screen_name": "Document Upload",
+    "level_selected": 3,
+    "score": 5,
+    "effort_hours": {
+      "optimistic": 32,
+      "most_likely": 40,
+      "pessimistic": 45
+    },
+    "assumptions": [
+      "The document upload feature will require integration with Dataverse for document management.",
+      "Version tracking implies the need for custom logic to handle document revisions.",
+      "Basic document management features such as upload, delete, and list are included.",
+      "User authentication is handled by the existing system and not part of this estimate.",
+      "No complex business logic beyond version tracking is required.",
+      "No external system integration is needed for this component."
+    ],
+    "reasoning": "The 'Document Upload' screen is a specialized component that allows suppliers to upload, version-track, and manage their documents. This functionality goes beyond basic forms and views, as it requires custom logic for version tracking and document management. However, it does not seem to require deep customization or integration with external systems. Therefore, level 3 is selected, which includes custom web templates or liquid logic and Dataverse integration with custom views. The score of 5 is chosen because it fits within the score range of level 3 (5-6) and reflects the complexity of the required features. The effort hours are adjusted to the higher end of the range to account for the custom logic needed for version tracking and document management."
+  },
+  {
+    "component_type": "Power Automate",
+    "component_name": "Supplier Onboarding Automation",
+    "level_selected": 3,
+    "score": 5,
+    "effort_hours": {
+      "optimistic": 12,
+      "most_likely": 16,
+      "pessimistic": 20
+    },
+    "assumptions": [
+      "The flow is triggered by a SharePoint item creation or modification, which is a standard trigger.",
+      "Email notifications are sent using standard Outlook connectors.",
+      "The approval process is managed by the standard Approvals connector.",
+      "The flow includes conditional logic to check for incomplete registrations.",
+      "The customer provides all necessary details for the flow, including the fields to check for completeness and the departments involved in the approval process.",
+      "No custom connectors or APIs are required.",
+      "No advanced error handling or nested flows are required."
+    ],
+    "reasoning": "The flow described involves more than 5 actions, including sending email notifications and handling an approval workflow. It uses standard connectors (SharePoint, Outlook, Approvals) and includes conditional logic to determine if a registration is incomplete. The trigger is based on SharePoint item creation or modification. There is no mention of loops, nested conditions, or custom connectors, which suggests that the complexity is moderate. The flow likely involves dynamic content manipulation and some expressions to handle the conditional logic and approval process. Therefore, Level 3 is the best match, with a score of 5 indicating moderate complexity. The effort hours are adjusted to account for potential complexities in setting up the approval workflow, which can be time-consuming, hence the slightly increased pessimistic estimate."
   },
   {
     "component_type": "DatabaseModel",
-    "component_name": "EmployeeDeviceOrderManagement",
+    "component_name": "Supplier Management System",
     "screen_name": null,
     "level_selected": 3,
     "score": 75,
@@ -133,111 +72,122 @@
       "most_likely": 40,
       "pessimistic": 48
     },
-    "table_name": "Employees, Devices, Orders",
-    "description": "The database consists of three tables: Employees, Devices, and Orders. The Employees table stores information about the employees, the Devices table contains details about devices, and the Orders table tracks orders placed by employees for devices. The Employees and Devices tables are related to the Orders table through foreign keys to maintain referential integrity and enable tracking of which employee ordered which device. The database is normalized to eliminate redundancy and ensure data is stored efficiently.",
+    "table_name": "Suppliers, Documents, Approvals",
+    "description": "The database consists of three tables: Suppliers, Documents, and Approvals. The Suppliers table is the central entity with one-to-many relationships to both the Documents and Approvals tables. Each supplier can have multiple associated documents and approval records. The design aims to minimize redundancy and ensure data integrity through normalization.",
     "fields": [
       {
-        "name": "EmployeeID",
-        "type": "Integer",
-        "description": "Unique identifier for each employee",
+        "name": "supplier_id",
+        "type": "integer",
+        "description": "Unique identifier for each supplier",
         "constraints": [
           "PRIMARY KEY",
           "NOT NULL"
         ]
       },
       {
-        "name": "Name",
-        "type": "String",
-        "description": "Employee's full name",
+        "name": "company_name",
+        "type": "string",
+        "description": "Name of the supplier company",
         "constraints": []
       },
       {
-        "name": "Department",
-        "type": "String",
-        "description": "Department the employee belongs to",
+        "name": "contact_name",
+        "type": "string",
+        "description": "Name of the contact person from the supplier company",
         "constraints": []
       },
       {
-        "name": "DeviceID",
-        "type": "Integer",
-        "description": "Unique identifier for each device",
+        "name": "contact_email",
+        "type": "string",
+        "description": "Email of the contact person from the supplier company",
+        "constraints": []
+      },
+      {
+        "name": "registration_status",
+        "type": "string",
+        "description": "Status of the supplier's registration process",
+        "constraints": []
+      },
+      {
+        "name": "document_id",
+        "type": "integer",
+        "description": "Unique identifier for each document",
         "constraints": [
           "PRIMARY KEY",
           "NOT NULL"
         ]
       },
       {
-        "name": "DeviceName",
-        "type": "String",
-        "description": "Name of the device",
-        "constraints": []
-      },
-      {
-        "name": "DeviceSpecs",
-        "type": "String",
-        "description": "Specifications of the device",
-        "constraints": []
-      },
-      {
-        "name": "DeviceAvailability",
-        "type": "Boolean",
-        "description": "Availability status of the device",
-        "constraints": []
-      },
-      {
-        "name": "OrderID",
-        "type": "Integer",
-        "description": "Unique identifier for each order",
-        "constraints": [
-          "PRIMARY KEY",
-          "NOT NULL"
-        ]
-      },
-      {
-        "name": "EmployeeID_FK",
-        "type": "Integer",
-        "description": "ID of the employee who placed the order",
+        "name": "supplier_id_fk",
+        "type": "integer",
+        "description": "Identifier of the supplier who uploaded the document",
         "constraints": [
           "NOT NULL",
-          "FOREIGN KEY REFERENCES Employees(EmployeeID)"
+          "FOREIGN KEY REFERENCES Suppliers(supplier_id)"
         ]
       },
       {
-        "name": "DeviceID_FK",
-        "type": "Integer",
-        "description": "ID of the device ordered",
+        "name": "document_type",
+        "type": "string",
+        "description": "Type of the document",
+        "constraints": []
+      },
+      {
+        "name": "upload_date",
+        "type": "date",
+        "description": "Date when the document was uploaded",
+        "constraints": []
+      },
+      {
+        "name": "document_status",
+        "type": "string",
+        "description": "Status of the document review process",
+        "constraints": []
+      },
+      {
+        "name": "approval_id",
+        "type": "integer",
+        "description": "Unique identifier for each approval process",
+        "constraints": [
+          "PRIMARY KEY",
+          "NOT NULL"
+        ]
+      },
+      {
+        "name": "supplier_id_fk",
+        "type": "integer",
+        "description": "Identifier of the supplier under approval",
         "constraints": [
           "NOT NULL",
-          "FOREIGN KEY REFERENCES Devices(DeviceID)"
+          "FOREIGN KEY REFERENCES Suppliers(supplier_id)"
         ]
       },
       {
-        "name": "OrderStatus",
-        "type": "String",
-        "description": "Current status of the order",
+        "name": "approver",
+        "type": "string",
+        "description": "Name of the person who approved the supplier",
         "constraints": []
       },
       {
-        "name": "Justification",
-        "type": "String",
-        "description": "Business justification provided by the employee",
+        "name": "approval_date",
+        "type": "date",
+        "description": "Date when the supplier was approved",
         "constraints": []
       },
       {
-        "name": "UrgencyLevel",
-        "type": "String",
-        "description": "Urgency level of the order",
+        "name": "approval_status",
+        "type": "string",
+        "description": "Status of the approval process",
         "constraints": []
       }
     ],
     "assumptions": [
-      "The database design will be implemented in a relational database management system (RDBMS).",
-      "The customer has provided all necessary business rules and data requirements.",
-      "Standard data types are used (e.g., Integer, String, Boolean).",
-      "No complex constraints or triggers are required beyond foreign keys.",
-      "No data migration or legacy system integration is required.",
-      "Security and access control are handled externally and are not part of the estimation."
+      "The customer has provided clear specifications for each table and their relationships.",
+      "Standard data types are used (e.g., integer, string, date), and no custom data types are required.",
+      "No complex constraints beyond primary keys, foreign keys, and basic data validation are needed.",
+      "Indexes, triggers, and stored procedures are not required at this stage of database design.",
+      "The effort estimate does not include time for setting up the database server or maintenance tasks post-deployment."
     ],
-    "reasoning": "The level is selected as 3 due to the presence of multiple tables with relationships and the need for normalization. The score of 75 reflects the complexity of setting up foreign key constraints and ensuring data integrity. The effort hours are estimated based on the complexity of the database model, with an optimistic scenario where everything goes smoothly, a most likely scenario accounting for typical development challenges, and a pessimistic scenario considering potential complications in design and implementation."
+    "reasoning": "The level is selected based on the complexity of the database model, which includes three tables with one-to-many relationships and normalization considerations. The score reflects the moderate complexity of the database schema. The effort hours are estimated based on the need to design and implement the database schema, create relationships, and ensure data integrity. The range accounts for potential revisions and clarifications that may be needed during the development process."
   }
 ]

@@ -11,6 +11,7 @@ from graph.nodes.powerbi_agent import powerbi_agent
 from graph.nodes.merge_agent import merge_agent
 from graph.nodes.estimation_agent import estimation_agent
 from graph.nodes.extractor_agent import extractor_agent
+from graph.nodes.power_pages_agent import power_pages_agent
 from graph.schemas.state import State
 
 def build_graph():
@@ -27,6 +28,7 @@ def build_graph():
     graph.add_node("merge_agent", merge_agent)
     graph.add_node("estimation_agent", estimation_agent)
     graph.add_node("extractor_agent", extractor_agent)
+    graph.add_node("power_pages_agent", power_pages_agent)
     # Define edges
     graph.add_edge(START, "prechunker")
     graph.add_edge("prechunker", "chunker")
@@ -40,6 +42,7 @@ def build_graph():
     graph.add_edge("database_node", "merge_agent")
     graph.add_edge("model_driven_agent", "component_router")
     graph.add_edge("powerbi_agent", "component_router")
+    graph.add_edge("power_pages_agent", "component_router")
     graph.add_edge("merge_agent", "estimation_agent")
     graph.add_edge("estimation_agent", "extractor_agent")
     graph.add_edge("extractor_agent", END)

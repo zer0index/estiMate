@@ -15,13 +15,40 @@
           "screen_name": "Registration Form",
           "screen_type": "PowerPages",
           "screen_details": "Allows suppliers to input company details and submit for registration.",
-          "features": null
+          "features": {
+            "feature_0001": "Custom registration form for suppliers to input company details, including fields for company name, address, contact information, and business type.",
+            "feature_0002": "Multi-step form functionality to guide suppliers through the registration process in a structured manner.",
+            "feature_0003": "Web roles to differentiate between suppliers and procurement staff with distinct permissions.",
+            "feature_0004": "Authentication system to allow suppliers to create accounts and sign in to submit and track their registration status.",
+            "feature_0005": "Access control to ensure that suppliers can only view and edit their own registration information and documents.",
+            "feature_0006": "File upload capability for suppliers to submit necessary documentation such as business licenses, tax forms, and compliance certificates.",
+            "feature_0007": "Document management system to store, retrieve, and manage the uploaded files securely within Dataverse.",
+            "feature_0008": "Custom web templates to create a user-friendly interface for the registration form and document upload process.",
+            "feature_0009": "Integration with Power Automate to automate the approval workflow once the supplier submits the registration form and documents.",
+            "feature_0010": "Security features including data encryption, role-based access control, and audit logging to ensure compliance with data protection regulations.",
+            "feature_0011": "Responsive design to ensure the registration form is accessible and functional across various devices and screen sizes.",
+            "feature_0012": "Multilingual support to allow suppliers from different regions to register in their preferred language."
+          }
         },
         {
           "screen_name": "Document Upload",
           "screen_type": "PowerPages",
           "screen_details": "Enables suppliers to upload, version-track, and manage their documents.",
-          "features": null
+          "features": {
+            "feature_0001": "Custom registration form for supplier company information collection, including validation rules to ensure data quality.",
+            "feature_0002": "Secure authentication system to allow suppliers to create accounts and log in to the portal.",
+            "feature_0003": "Role-based access control to ensure suppliers can only access and manage their own documents and registration information.",
+            "feature_0004": "Document upload functionality allowing suppliers to upload necessary files with support for version tracking.",
+            "feature_0005": "Integration with Dataverse to store and manage supplier registration data and uploaded documents.",
+            "feature_0006": "Web roles and permissions setup to differentiate between supplier users and procurement team members.",
+            "feature_0007": "Multi-step form process to guide suppliers through the registration and document submission in a structured manner.",
+            "feature_0008": "Power Automate workflows to notify procurement team upon new supplier registration or document upload.",
+            "feature_0009": "Custom web templates to ensure consistent branding and user experience across the portal.",
+            "feature_0010": "Responsive design to ensure the portal is accessible on various devices including desktops, tablets, and smartphones.",
+            "feature_0011": "Multilingual support to cater to suppliers from different regions with language preferences.",
+            "feature_0012": "Security features including SSL encryption, data validation, and anti-spam measures to protect the portal and data.",
+            "feature_0013": "Compliance features to ensure the portal adheres to relevant data protection and privacy regulations."
+          }
         }
       ],
       "processed": true
@@ -44,18 +71,11 @@
           "features": null
         }
       ],
-      "processed": true,
+      "processed": false,
       "features": null,
-      "actions": {
-        "action_0001": "Send an email notification to the supplier if registration is incomplete",
-        "action_0002": "Start an approval process for the supplier registration"
-      },
-      "connectors": {
-        "SharePoint": "Read/Write",
-        "Outlook": "Send Email",
-        "Approvals": "Create and wait for an approval"
-      },
-      "trigger": "When an item is created or modified in SharePoint"
+      "actions": null,
+      "connectors": null,
+      "trigger": null
     }
   ],
   "post_mvp_modules": [

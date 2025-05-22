@@ -54,6 +54,8 @@ component_router ──► canvas_app_agent ─┐
        (route) ───► model_driven_agent │
         ↓                              │
        (route) ───► powerbi_agent ─────┘
+        ↓                              │
+       (route) ───► power_pages_agent  │
                                       ↓
                                  merge_agent
                                       ↓
@@ -65,7 +67,7 @@ component_router ──► canvas_app_agent ─┐
 ```
 
 - Built with `StateGraph` from LangGraph
-- Routes data dynamically to specialized agents (Canvas App, Power Automate, Database, Model Driven, Power BI)
+- Routes data dynamically to specialized agents (Canvas App, Power Automate, Database, Model Driven, Power BI, Power Pages)
 - All agent outputs are merged by `merge_agent` before estimation
 - `merge_agent` ensures all features, actions, connectors, and top-level fields from each agent are included in the final output
 - `estimation_agent` produces the final effort/cost estimate
@@ -86,6 +88,7 @@ graph/
 │   ├── canvas_app_agent.py
 │   ├── power_automate_agent.py
 │   ├── database_node.py
+│   ├── power_pages_agent.py
 │   ├── merge_agent.py
 │   └── estimation_agent.py
 ├── schemas/
@@ -104,7 +107,7 @@ graph/
 - 🧱 **Modular architecture** – Each node handles one responsibility
 - 🔁 **LLM routing logic** – Chooses the right agent per component
 - 💾 **Smart caching** – Skip nodes already processed
-- 🧠 **Prompt-driven** – Easily editable YAML-based prompts
+- 🧠 **Prompt-driven** – Easily editable YAML-based prompts for all agents, including Power Pages
 - 🔒 **Typed state flow** – Pydantic enforces schema integrity
 - 🎨 **Rich CLI** – Styled logs, spinners, color-coded output
 
@@ -254,7 +257,7 @@ estiMatev2 is an intelligent, modular estimation pipeline for Power Platform pro
   - `chunker.py`: Splits PRD into logical chunks.
   - `strategic_overview.py`: Extracts strategic context and high-level architecture.
   - `component_router.py`: Routes each MVP component to the correct agent.
-  - `canvas_app_agent.py`, `model_driven_agent.py`, `power_automate_agent.py`, `powerbi_agent.py`: Specialized agents for extracting features from different Power Platform components.
+  - `canvas_app_agent.py`, `model_driven_agent.py`, `power_automate_agent.py`, `powerbi_agent.py`, `power_pages_agent.py`: Specialized agents for extracting features from different Power Platform components (including Power Pages).
   - `merge_agent.py`: Merges all agent outputs into a single, well-structured JSON for estimation. Ensures all features, actions, connectors, and top-level fields are included.
   - `estimation_agent.py`: Produces the final effort/cost estimate based on the merged output.
   - `database_node.py`: Proposes a normalized database model.
@@ -270,7 +273,7 @@ estiMatev2 is an intelligent, modular estimation pipeline for Power Platform pro
 2. **Chunker**: Splits PRD into manageable chunks.
 3. **Strategic Overview**: Extracts project purpose, business value, MVP components, post-MVP modules, roles, constraints, and integration points.
 4. **Component Router**: Iterates over MVP components, routing each to the appropriate agent.
-5. **Specialized Agents**: Extract features, actions, connectors, screens, etc., for each component type (Canvas App, Model-Driven App, Power Automate, Power BI).
+5. **Specialized Agents**: Extract features, actions, connectors, screens, etc., for each component type (Canvas App, Model-Driven App, Power Automate, Power BI, Power Pages).
 6. **Merge Agent**: Merges all agent outputs into a single, well-structured JSON for estimation. Ensures all features, actions, connectors, and top-level fields are included.
 7. **Estimation Agent**: Produces the final effort/cost estimate based on the merged output.
 8. **Database Node**: Proposes a normalized database schema based on the extracted context.
@@ -283,6 +286,8 @@ estiMatev2 is an intelligent, modular estimation pipeline for Power Platform pro
 - Prompt-driven LLM logic (YAML templates).
 - Rich CLI output for user feedback.
 - Easily extensible: add new nodes, schemas, and prompts as needed.
+
+- (NEW) **Power Pages Agent**: Specialized agent for extracting features from Power Pages (portal) components, including forms, authentication, web roles, document upload, integrations, and compliance. Prompt-driven and screen-level extraction, similar to Canvas App and Model-Driven agents.
 
 ---
 
